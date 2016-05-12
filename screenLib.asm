@@ -11,6 +11,7 @@ ST7/
 	MOTOROLA
 	
 	#include "ST7Lite2.INC"
+	#include "time.INC"
 
 
 ;************************************************************************
@@ -42,6 +43,42 @@ ST7/
 ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES
 ;
 ;************************************************************************
+
+initTFT:
+
+
+
+cmdList:
+
+
+
+writeCmd:
+
+
+
+writeData:
+
+
+
+writeSPI:
+
+
+
+fillRectTFT:
+
+
+
+fillScreenTFT:
+
+
+
+setAddrWindow:
+
+
+
+drawPixel:
+
+
 
 
 
