@@ -1,12 +1,17 @@
-000457;00063;
+000502;00068;
 'CONSTANTS' 
 
 'ram0' D
+      80 waitTime
 
 'stack' V
 
 'rom' C
-    E000 initPortSPI
+    E000 wait1ms
+    E00A wait2ms
+    E014 wait500ms
+    E01F wait
+    E02A initPortSPI
 
 'vectit' S
 

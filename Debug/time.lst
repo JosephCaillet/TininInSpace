@@ -1,6 +1,6 @@
 STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
-Page 1  "initPort.asm"
-                                               e:\Projet\code\initport.asm
+Page 1  "time.ASM"
+                                               e:\Projet\code\time.asm
 
    1                             ST7/      
    2                             
@@ -12,7 +12,7 @@ Page 1  "initPort.asm"
    7                             ;*************************************************************
                                  ;***********
    8                             
-   9  0000                                 TITLE    "initPort.asm"
+   9  0000                                 TITLE    "time.ASM"
   10                                       
   11  0000                                 MOTOROLA 
   12                                       
@@ -60,7 +60,7 @@ Page 1  "initPort.asm"
                                                                   ;register
   28                                       
 STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
-Page 2  "initPort.asm"
+Page 2  "time.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
   29                             ;*************************************************************
@@ -121,7 +121,7 @@ Page 2  "initPort.asm"
                                  ;*********
   66                             
 STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
-Page 3  "initPort.asm"
+Page 3  "time.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
   67  0000                                 EXTERN   FCSR.b        ; flash control/satus register
@@ -182,7 +182,7 @@ Page 3  "initPort.asm"
  106                             
  107  0000                                 EXTERN   RCCR.b        ; RC oscilator control register
 STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
-Page 4  "initPort.asm"
+Page 4  "time.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
  108  0000                                 EXTERN   SICSR.b       ; system integrity 
@@ -235,49 +235,47 @@ Page 4  "initPort.asm"
  144                             
 <END_OF_INCLUSION>
   14                             
-  15                                                              ; Enlever le commentaire si vous
-                                                                  ; utilisez les afficheurs
-  16                             ;	#include "MAX7219.INC"
-  17                             
-  18                             
-  19                             ;*************************************************************
+  15                             
+  16                             ;*************************************************************
                                  ;***********
-  20                             ;
+  17                             ;
+  18                             ;  ZONE DE DECLARATION DES SYMBOLES
+  19                             ;
+  20                             ;*************************************************************
+                                 ;***********
 STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
-Page 5  "initPort.asm"
-                                               e:\Projet\code\initport.asm
+Page 5  "time.ASM"
+                                               e:\Projet\code\time.asm
 
-  21                             ;  ZONE DE DECLARATION DES SYMBOLES
-  22                             ;
-  23                             ;*************************************************************
+  21                                       
+  22  0000                                 PUBLIC   wait1ms
+  23  0000                                 PUBLIC   wait2ms
+  24  0000                                 PUBLIC   wait500ms
+  25  0000                                 PUBLIC   wait
+  26                                       
+  27  0000                                 PUBLIC   waitTime
+  28                             
+  29                             ;*************************************************************
                                  ;***********
-  24                             
-  25  0000                                 PUBLIC   initPortSPI
-  26                             
-  27                             
-  28                             ;*************************************************************
+  30                             ;
+  31                             ;  ZONE DE DECLARATION DES VARIABLES
+  32                             ;
+  33                             ;*************************************************************
                                  ;***********
-  29                             ;
-  30                             ;  ZONE DE DECLARATION DES VARIABLES
-  31                             ;
-  32                             ;*************************************************************
+  34  0000                                 BYTES    
+  35                                       segment  byte 'ram0'
+  36                             
+  37  0080                       waitTime  DS.B     1
+  38                             
+  39                             ;*************************************************************
                                  ;***********
-  33  0000                                 BYTES    
-  34                                       segment  byte 'ram0'
-  35                             
-  36  0081                       var       DS.B     1             ;fourre tout pour contrer 
-                                                                  ;limitation mode d'adressage
-  37                             
-  38                             ;*************************************************************
+  40                             ;
+  41                             ;  ZONE DE DECLARATION DES CONSTANTES
+  42                             ;
+  43                             ;*************************************************************
                                  ;***********
-  39                             ;
-  40                             ;  ZONE DE DECLARATION DES CONSTANTES
-  41                             ;
-  42                             ;*************************************************************
-                                 ;***********
-  43  0082                                 WORDS    
-  44                                       segment  byte 'rom'
-  45                                       
+  44  0081                                 WORDS    
+  45                                       segment  byte 'rom'
   46                             
   47                             ;*************************************************************
                                  ;***********
@@ -287,92 +285,101 @@ Page 5  "initPort.asm"
   51                             ;*************************************************************
                                  ;***********
   52                             
-  53                             initPortSPI:  
-  54  E02A   B60C                          LD       A,$0C         ;ctrl spi
-  55  E02C   B732                          LD       SPICR,A
-  56                                       
-  57  E02E   B603                          LD       A,$03         ;status spi
-  58  E030   B733                          LD       SPISR,A
-  59                                       
-  60  E032   B65C                          LD       A,$5C         ;ctrl spi
-  61  E034   B732                          LD       SPICR,A
-  62                                       
-  63                                       
-  64  E036   B605                          LD       A,PBOR        ;PB2
-  65  E038   BA04                          OR       A,$04
-  66  E03A   B605                          LD       A,PBOR
-  67                                       
-  68  E03C   B604                          LD       A,PBDDR
-  69  E03E   BA04                          OR       A,$04
+  53                             
+  54                             ;;;;;;;;;;;;;;;;;;;;;;;;
+  55                             ; temporisation de 1ms ;
+  56                             ;;;;;;;;;;;;;;;;;;;;;;;;
+  57                             
+  58                             wait1ms:  
+  59                                                              ;Nloop_1ms	EQU	98	; nombre de 
+                                                                  ;boucle pour tempo de 1ms = 98 x
+                                                                  ; Fcpu en MHz
+  60                                                              ; 98 si fcpu = 1MHz; 74 si fcpu 
+                                                                  ;= 0,76MHz; 
+  61  E000   89                            PUSH     X             ; 3 cycles
+  62                                                              ; nombre de boucle = Nloop_1ms
+  63  E001   AE62                          LD       X,#98         ; 2 cycles      
+  64                             tempo10cyc:  
+  65                                                              ; boucle 10 cycles
+  66  E003   9D                            NOP                    ; 2 cycles
+  67  E004   9D                            NOP                    ; 2 cycles
+  68  E005   5A                            DEC      X             ; 3 cycles X = X-1
 STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
-Page 6  "initPort.asm"
-                                               e:\Projet\code\initport.asm
+Page 6  "time.ASM"
+                                               e:\Projet\code\time.asm
 
-  70  E040   B604                          LD       A,PBDDR
-  71                                       
-  72                                       
-  73  E042   B605                          LD       A,PBOR        ;PB4
-  74  E044   BA10                          OR       A,$10
-  75  E046   B605                          LD       A,PBOR
-  76                                       
-  77  E048   B604                          LD       A,PBDDR
-  78  E04A   BA10                          OR       A,$10
-  79  E04C   B604                          LD       A,PBDDR
-  80                                       
-  81                                       
-  82  E04E   B605                          LD       A,PBOR        ;PB5
-  83  E050   BA20                          OR       A,$20
-  84  E052   B605                          LD       A,PBOR
-  85                                       
-  86  E054   B604                          LD       A,PBDDR
-  87  E056   BA20                          OR       A,$20
-  88  E058   B604                          LD       A,PBDDR
-  89                                       
-  90                                       
-  91  E05A   BE04                          LD       X,$04         ;PB2
-  92  E05C   53                            CPL      X
-  93  E05D   BF81                          LD       var,X
-  94  E05F   B603                          LD       A,PBDR
-  95  E061   B481                          AND      A,var
-  96  E063   B703                          LD       PBDR,A
-  97                                       
-  98  E065   BE10                          LD       X,$10         ;PB4
-  99  E067   53                            CPL      X
- 100  E068   BF81                          LD       var,X
- 101  E06A   B603                          LD       A,PBDR
- 102  E06C   B481                          AND      A,var
- 103  E06E   B703                          LD       PBDR,A
- 104                                       
- 105  E070   B603                          LD       A,PBDR        ;PB5
- 106  E072   BA20                          OR       A,$20
- 107  E074   B603                          LD       A,PBDR
+  69  E006   26FB                          JRNE     tempo10cyc    ; 3 cycles si X <> 0 alors 
+                                                                  ;continue tempo
+  70  E008   85                            POP      X             ; 4 cycles
+  71  E009   81                            RET                    ;= 6 cycles
+  72                             
+  73                             
+  74                             
+  75                             ;;;;;;;;;;;;;;;;;;;;;;;;
+  76                             ; temporisation de 2ms ;
+  77                             ;;;;;;;;;;;;;;;;;;;;;;;;
+  78                             
+  79                             wait2ms:  
+  80                                                              ;Nloop_2ms	EQU	198	; nombre de 
+                                                                  ;boucle pour tempo de 2ms = 198 
+                                                                  ;x Fcpu en MHz
+  81                                                              ; 198 si fcpu = 1MHz; 150 si 
+                                                                  ;fcpu = 0,76MHz; 
+  82  E00A   89                            PUSH     X             ; 3 cycles
+  83                                                              ; nombre de boucle = Nloop_2ms
+  84  E00B   AEC6                          LD       X,#198        ; 	2 cycles      
+  85                             tempo10cyc2:  
+  86                                                              ; boucle 10 cycles
+  87  E00D   9D                            NOP                    ; 2 cycles
+  88  E00E   9D                            NOP                    ; 2 cycles
+  89  E00F   5A                            DEC      X             ; 3 cycles X = X-1
+  90  E010   26FB                          JRNE     tempo10cyc2   ; 3 cycles si X <> 0 alors 
+                                                                  ;continue tempo
+  91  E012   85                            POP      X             ; 4 cycles
+  92  E013   81                            RET                    ;= 6 cycles
+  93                             
+  94                             
+  95                             
+  96                             ;;;;;;;;;;;;;;;;;;;;;;;;;;
+  97                             ; temporisation de 500ms ;
+  98                             ;;;;;;;;;;;;;;;;;;;;;;;;;;
+  99                             wait500ms:  
+ 100  E014   89                            PUSH     X
+ 101  E015   BEFA                          LD       X,250
+ 102                             boucle_250_wait500ms:  
+ 103  E017   CDE00A                        CALL     wait2ms
+ 104  E01A   5A                            DEC      X
+ 105  E01B   26FA                          JRNE     boucle_250_wait500ms
+ 106  E01D   85                            POP      X
+ 107  E01E   81                            RET      
  108                                       
  109                                       
- 110  E076   B602                          LD       A,PAOR        ;PA2
- 111  E078   BA04                          OR       A,$04
- 112  E07A   B602                          LD       A,PAOR
- 113                                       
- 114  E07C   B601                          LD       A,PADDR       ;PA2
- 115  E07E   BA04                          OR       A,$04
- 116  E080   B601                          LD       A,PADDR
- 117                                       
- 118  E082   B600                          LD       A,PADR        ;PA2
- 119  E084   BA04                          OR       A,$04
- 120  E086   B600                          LD       A,PADR
- 121                                       
- 122  E088   81                            RET      
- 123                             
- 124                             ;*************************************************************
-                                 ;***********
- 125                             
+ 110                                       
+ 111                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 112                             ; temporisation de waitTime ms ;
+ 113                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 114                             wait:     
+ 115  E01F   89                            PUSH     X
+ 116  E020   BE80                          LD       X,waitTime
+ 117                             boucle_waitTime_wait500ms:  
+ 118  E022   CDE000                        CALL     wait1ms
+ 119  E025   5A                            DEC      X
+ 120  E026   26FA                          JRNE     boucle_waitTime_wait500ms
 STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
-Page 7  "initPort.asm"
-                                               e:\Projet\code\initport.asm
+Page 7  "time.ASM"
+                                               e:\Projet\code\time.asm
 
- 126  E089                                 END      
+ 121  E028   85                            POP      X
+ 122  E029   81                            RET      
+ 123                             
+ 124                             
+ 125                             ;*************************************************************
+                                 ;***********
+ 126                             
+ 127  E02A                                 END      
 STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
-Page 8  "initPort.asm"
-                                               e:\Projet\code\initport.asm
+Page 8  "time.ASM"
+                                               e:\Projet\code\time.asm
 
 Symbol Name                       Value     Call       Type  Scope      Rel.  Line  Privacy  Segment   Size  Bytes File
 
@@ -432,8 +439,8 @@ PADDR                                   01         no  BYTE  Internal   ABS     
 PAOR                                    02         no  BYTE  Internal   ABS     13  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 PBDR                                    03         no  BYTE  Internal   ABS     15  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
-Page 9  "initPort.asm"
-                                               e:\Projet\code\initport.asm
+Page 9  "time.ASM"
+                                               e:\Projet\code\time.asm
 
 PBDDR                                   04         no  BYTE  Internal   ABS     16  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 PBOR                                    05         no  BYTE  Internal   ABS     17  private  text         0     0  e:\Projet\code\ST7Lite2.INC
@@ -454,10 +461,18 @@ TRANCR                                  21         no  BYTE  Internal   ABS     
 
 WDGCR                                   2E         no  BYTE  Internal   ABS     60  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-initPortSPI                           E02A         no  WORD  Internal   ABS     53  public   text        95     0  -
+boucle_250_wait500ms                  E017         no  WORD  Internal   ABS    102  private  text         8     0  -
+boucle_waitTime_wait500ms             E022         no  WORD  Internal   ABS    117  private  text         8     0  -
 
-var                                     81         no  BYTE  Internal   ABS     36  private  bss          1     1  -
+tempo10cyc                            E003         no  WORD  Internal   ABS     64  private  text         7     0  -
+tempo10cyc2                           E00D         no  WORD  Internal   ABS     85  private  text         7     0  -
+
+wait1ms                               E000         no  WORD  Internal   ABS     58  public   text         3     0  -
+wait2ms                               E00A         no  WORD  Internal   ABS     79  public   text         3     0  -
+wait500ms                             E014         no  WORD  Internal   ABS     99  public   text         3     0  -
+wait                                  E01F         no  WORD  Internal   ABS    114  public   text         3     0  -
+waitTime                                80         no  BYTE  Internal   ABS     37  public   bss          1     1  -
 
 
-63 labels
-No errors on assembly of 'e:\Projet\code\initport.asm'
+70 labels
+No errors on assembly of 'e:\Projet\code\time.asm'
