@@ -1,4 +1,4 @@
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:27 2016
 Page 1  "time.ASM"
                                                e:\Projet\code\time.asm
 
@@ -59,7 +59,7 @@ Page 1  "time.ASM"
   27  0000                                 EXTERN   LTICR.b       ; Lite Timer Input Capture 
                                                                   ;register
   28                                       
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:27 2016
 Page 2  "time.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -120,7 +120,7 @@ Page 2  "time.ASM"
   65                             ;*************************************************************
                                  ;*********
   66                             
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:27 2016
 Page 3  "time.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -181,7 +181,7 @@ Page 3  "time.ASM"
                                  ;*********
  106                             
  107  0000                                 EXTERN   RCCR.b        ; RC oscilator control register
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:27 2016
 Page 4  "time.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -243,141 +243,154 @@ Page 4  "time.ASM"
   19                             ;
   20                             ;*************************************************************
                                  ;***********
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:27 2016
 Page 5  "time.ASM"
                                                e:\Projet\code\time.asm
 
   21                                       
-  22  0000                                 PUBLIC   wait1ms
-  23  0000                                 PUBLIC   wait2ms
-  24  0000                                 PUBLIC   wait500ms
-  25  0000                                 PUBLIC   wait
-  26                                       
-  27  0000                                 PUBLIC   waitTime
-  28                             
-  29                             ;*************************************************************
-                                 ;***********
-  30                             ;
-  31                             ;  ZONE DE DECLARATION DES VARIABLES
-  32                             ;
+  22  0000                                 PUBLIC   initOsc
+  23  0000                                 PUBLIC   wait1ms
+  24  0000                                 PUBLIC   wait2ms
+  25  0000                                 PUBLIC   wait500ms
+  26  0000                                 PUBLIC   wait
+  27                                       
+  28  0000                                 PUBLIC   waitTime
+  29                             
+  30                             
+  31  FFDE                       RCCR0     EQU      $FFDE
+  32                                       
   33                             ;*************************************************************
                                  ;***********
-  34  0000                                 BYTES    
-  35                                       segment  byte 'ram0'
-  36                             
-  37  0080                       waitTime  DS.B     1
-  38                             
-  39                             ;*************************************************************
+  34                             ;
+  35                             ;  ZONE DE DECLARATION DES VARIABLES
+  36                             ;
+  37                             ;*************************************************************
                                  ;***********
-  40                             ;
-  41                             ;  ZONE DE DECLARATION DES CONSTANTES
-  42                             ;
+  38  0000                                 BYTES    
+  39                                       segment  byte 'ram0'
+  40                             
+  41  0080                       waitTime  DS.B     1
+  42                             
   43                             ;*************************************************************
                                  ;***********
-  44  0081                                 WORDS    
-  45                                       segment  byte 'rom'
-  46                             
+  44                             ;
+  45                             ;  ZONE DE DECLARATION DES CONSTANTES
+  46                             ;
   47                             ;*************************************************************
                                  ;***********
-  48                             ;
-  49                             ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES
-  50                             ;
+  48  0081                                 WORDS    
+  49                                       segment  byte 'rom'
+  50                             
   51                             ;*************************************************************
                                  ;***********
-  52                             
-  53                             
-  54                             ;;;;;;;;;;;;;;;;;;;;;;;;
-  55                             ; temporisation de 1ms ;
-  56                             ;;;;;;;;;;;;;;;;;;;;;;;;
+  52                             ;
+  53                             ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES
+  54                             ;
+  55                             ;*************************************************************
+                                 ;***********
+  56                             
   57                             
-  58                             wait1ms:  
-  59                                                              ;Nloop_1ms	EQU	98	; nombre de 
-                                                                  ;boucle pour tempo de 1ms = 98 x
-                                                                  ; Fcpu en MHz
-  60                                                              ; 98 si fcpu = 1MHz; 74 si fcpu 
-                                                                  ;= 0,76MHz; 
-  61  E000   89                            PUSH     X             ; 3 cycles
-  62                                                              ; nombre de boucle = Nloop_1ms
-  63  E001   AE62                          LD       X,#98         ; 2 cycles      
-  64                             tempo10cyc:  
-  65                                                              ; boucle 10 cycles
-  66  E003   9D                            NOP                    ; 2 cycles
-  67  E004   9D                            NOP                    ; 2 cycles
-  68  E005   5A                            DEC      X             ; 3 cycles X = X-1
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+  58                             ;;;;;;;;;;;;;;;;;;;;;;;;;
+  59                             ; correction oscilateur ;
+  60                             ;;;;;;;;;;;;;;;;;;;;;;;;;
+  61                             initOsc:  
+  62  E000   C6FFDE                        ld       A,RCCR0
+  63  E003   B739                          ld       RCCR,A
+  64  E005   81                            RET      
+  65                             
+  66                             
+  67                             ;;;;;;;;;;;;;;;;;;;;;;;;
+  68                             ; temporisation de 1ms ;
+  69                             ;;;;;;;;;;;;;;;;;;;;;;;;
+  70                             
+  71                             wait1ms:  
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:27 2016
 Page 6  "time.ASM"
                                                e:\Projet\code\time.asm
 
-  69  E006   26FB                          JRNE     tempo10cyc    ; 3 cycles si X <> 0 alors 
+  72                                                              ;Nloop_1ms	EQU	98	; nombre de 
+                                                                  ;boucle pour tempo de 1ms = 98 x
+                                                                  ; Fcpu en MHz
+  73                                                              ; 98 si fcpu = 1MHz; 74 si fcpu 
+                                                                  ;= 0,76MHz; 
+  74  E006   89                            PUSH     X             ; 3 cycles
+  75                                                              ; nombre de boucle = Nloop_1ms
+  76  E007   AE62                          LD       X,#98         ; 2 cycles      
+  77                             tempo10cyc:  
+  78                                                              ; boucle 10 cycles
+  79  E009   9D                            NOP                    ; 2 cycles
+  80  E00A   9D                            NOP                    ; 2 cycles
+  81  E00B   5A                            DEC      X             ; 3 cycles X = X-1
+  82  E00C   26FB                          JRNE     tempo10cyc    ; 3 cycles si X <> 0 alors 
                                                                   ;continue tempo
-  70  E008   85                            POP      X             ; 4 cycles
-  71  E009   81                            RET                    ;= 6 cycles
-  72                             
-  73                             
-  74                             
-  75                             ;;;;;;;;;;;;;;;;;;;;;;;;
-  76                             ; temporisation de 2ms ;
-  77                             ;;;;;;;;;;;;;;;;;;;;;;;;
-  78                             
-  79                             wait2ms:  
-  80                                                              ;Nloop_2ms	EQU	198	; nombre de 
+  83  E00E   85                            POP      X             ; 4 cycles
+  84  E00F   81                            RET                    ;= 6 cycles
+  85                             
+  86                             
+  87                             
+  88                             ;;;;;;;;;;;;;;;;;;;;;;;;
+  89                             ; temporisation de 2ms ;
+  90                             ;;;;;;;;;;;;;;;;;;;;;;;;
+  91                             
+  92                             wait2ms:  
+  93                                                              ;Nloop_2ms	EQU	198	; nombre de 
                                                                   ;boucle pour tempo de 2ms = 198 
                                                                   ;x Fcpu en MHz
-  81                                                              ; 198 si fcpu = 1MHz; 150 si 
+  94                                                              ; 198 si fcpu = 1MHz; 150 si 
                                                                   ;fcpu = 0,76MHz; 
-  82  E00A   89                            PUSH     X             ; 3 cycles
-  83                                                              ; nombre de boucle = Nloop_2ms
-  84  E00B   AEC6                          LD       X,#198        ; 	2 cycles      
-  85                             tempo10cyc2:  
-  86                                                              ; boucle 10 cycles
-  87  E00D   9D                            NOP                    ; 2 cycles
-  88  E00E   9D                            NOP                    ; 2 cycles
-  89  E00F   5A                            DEC      X             ; 3 cycles X = X-1
-  90  E010   26FB                          JRNE     tempo10cyc2   ; 3 cycles si X <> 0 alors 
+  95  E010   89                            PUSH     X             ; 3 cycles
+  96                                                              ; nombre de boucle = Nloop_2ms
+  97  E011   AEC6                          LD       X,#198        ; 	2 cycles      
+  98                             tempo10cyc2:  
+  99                                                              ; boucle 10 cycles
+ 100  E013   9D                            NOP                    ; 2 cycles
+ 101  E014   9D                            NOP                    ; 2 cycles
+ 102  E015   5A                            DEC      X             ; 3 cycles X = X-1
+ 103  E016   26FB                          JRNE     tempo10cyc2   ; 3 cycles si X <> 0 alors 
                                                                   ;continue tempo
-  91  E012   85                            POP      X             ; 4 cycles
-  92  E013   81                            RET                    ;= 6 cycles
-  93                             
-  94                             
-  95                             
-  96                             ;;;;;;;;;;;;;;;;;;;;;;;;;;
-  97                             ; temporisation de 500ms ;
-  98                             ;;;;;;;;;;;;;;;;;;;;;;;;;;
-  99                             wait500ms:  
- 100  E014   89                            PUSH     X
- 101  E015   BEFA                          LD       X,250
- 102                             boucle_250_wait500ms:  
- 103  E017   CDE00A                        CALL     wait2ms
- 104  E01A   5A                            DEC      X
- 105  E01B   26FA                          JRNE     boucle_250_wait500ms
- 106  E01D   85                            POP      X
- 107  E01E   81                            RET      
- 108                                       
- 109                                       
- 110                                       
- 111                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- 112                             ; temporisation de waitTime ms ;
- 113                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- 114                             wait:     
- 115  E01F   89                            PUSH     X
- 116  E020   BE80                          LD       X,waitTime
- 117                             boucle_waitTime_wait500ms:  
- 118  E022   CDE000                        CALL     wait1ms
- 119  E025   5A                            DEC      X
- 120  E026   26FA                          JRNE     boucle_waitTime_wait500ms
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+ 104  E018   85                            POP      X             ; 4 cycles
+ 105  E019   81                            RET                    ;= 6 cycles
+ 106                             
+ 107                             
+ 108                             
+ 109                             ;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 110                             ; temporisation de 500ms ;
+ 111                             ;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 112                             wait500ms:  
+ 113  E01A   89                            PUSH     X
+ 114  E01B   BEFA                          LD       X,250
+ 115                             boucle_250_wait500ms:  
+ 116  E01D   CDE010                        CALL     wait2ms
+ 117  E020   5A                            DEC      X
+ 118  E021   26FA                          JRNE     boucle_250_wait500ms
+ 119  E023   85                            POP      X
+ 120  E024   81                            RET      
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:27 2016
 Page 7  "time.ASM"
                                                e:\Projet\code\time.asm
 
- 121  E028   85                            POP      X
- 122  E029   81                            RET      
- 123                             
- 124                             
- 125                             ;*************************************************************
+ 121                                       
+ 122                                       
+ 123                                       
+ 124                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 125                             ; temporisation de waitTime ms ;
+ 126                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 127                             wait:     
+ 128  E025   89                            PUSH     X
+ 129  E026   BE80                          LD       X,waitTime
+ 130                             boucle_waitTime_wait500ms:  
+ 131  E028   CDE006                        CALL     wait1ms
+ 132  E02B   5A                            DEC      X
+ 133  E02C   26FA                          JRNE     boucle_waitTime_wait500ms
+ 134  E02E   85                            POP      X
+ 135  E02F   81                            RET      
+ 136                             
+ 137                             
+ 138                             ;*************************************************************
                                  ;***********
- 126                             
- 127  E02A                                 END      
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+ 139                             
+ 140  E030                                 END      
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:27 2016
 Page 8  "time.ASM"
                                                e:\Projet\code\time.asm
 
@@ -438,7 +451,7 @@ PADR                                    00         no  BYTE  Internal   ABS     
 PADDR                                   01         no  BYTE  Internal   ABS     12  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 PAOR                                    02         no  BYTE  Internal   ABS     13  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 PBDR                                    03         no  BYTE  Internal   ABS     15  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:27 2016
 Page 9  "time.ASM"
                                                e:\Projet\code\time.asm
 
@@ -451,6 +464,7 @@ PWM2CSR                                 15         no  BYTE  Internal   ABS     
 PWM3CSR                                 16         no  BYTE  Internal   ABS     42  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
 RCCR                                    39         no  BYTE  Internal   ABS    107  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+RCCR0                                 FFDE         no  WORD  Internal   ABS     31  private  text         0     0  -
 
 SPIDR                                   31         no  BYTE  Internal   ABS     79  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 SPICR                                   32         no  BYTE  Internal   ABS     80  private  text         0     0  e:\Projet\code\ST7Lite2.INC
@@ -461,18 +475,20 @@ TRANCR                                  21         no  BYTE  Internal   ABS     
 
 WDGCR                                   2E         no  BYTE  Internal   ABS     60  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-boucle_250_wait500ms                  E017         no  WORD  Internal   ABS    102  private  text         8     0  -
-boucle_waitTime_wait500ms             E022         no  WORD  Internal   ABS    117  private  text         8     0  -
+boucle_250_wait500ms                  E01D         no  WORD  Internal   ABS    115  private  text         8     0  -
+boucle_waitTime_wait500ms             E028         no  WORD  Internal   ABS    130  private  text         8     0  -
 
-tempo10cyc                            E003         no  WORD  Internal   ABS     64  private  text         7     0  -
-tempo10cyc2                           E00D         no  WORD  Internal   ABS     85  private  text         7     0  -
+initOsc                               E000         no  WORD  Internal   ABS     61  public   text         6     0  -
 
-wait1ms                               E000         no  WORD  Internal   ABS     58  public   text         3     0  -
-wait2ms                               E00A         no  WORD  Internal   ABS     79  public   text         3     0  -
-wait500ms                             E014         no  WORD  Internal   ABS     99  public   text         3     0  -
-wait                                  E01F         no  WORD  Internal   ABS    114  public   text         3     0  -
-waitTime                                80         no  BYTE  Internal   ABS     37  public   bss          1     1  -
+tempo10cyc                            E009         no  WORD  Internal   ABS     77  private  text         7     0  -
+tempo10cyc2                           E013         no  WORD  Internal   ABS     98  private  text         7     0  -
+
+wait1ms                               E006         no  WORD  Internal   ABS     71  public   text         3     0  -
+wait2ms                               E010         no  WORD  Internal   ABS     92  public   text         3     0  -
+wait500ms                             E01A         no  WORD  Internal   ABS    112  public   text         3     0  -
+wait                                  E025         no  WORD  Internal   ABS    127  public   text         3     0  -
+waitTime                                80         no  BYTE  Internal   ABS     41  public   bss          1     1  -
 
 
-70 labels
+72 labels
 No errors on assembly of 'e:\Projet\code\time.asm'

@@ -2,11 +2,11 @@
 Segment List
 ------------
 
-e:\Projet\code\time.asm[1]   35-   44        80 -       80                 'ram0'  [void]
+e:\Projet\code\time.asm[1]   39-   48        80 -       80                 'ram0'  [void]
 e:\Projet\code\initport.asm[1]   34-   43        81 -       81                 'ram0'  [void]
-e:\Projet\code\time.asm[2]   45-  126      E000 -     E029                 'rom'  [text]
-e:\Projet\code\initport.asm[2]   44-  125      E02A -     E088                 'rom'  [text]
-e:\Projet\code\main.asm[2]   55-  126      E089 -     E090                 'rom'  [text]
+e:\Projet\code\time.asm[2]   49-  139      E000 -     E02F                 'rom'  [text]
+e:\Projet\code\initport.asm[2]   44-  128      E030 -     E08E                 'rom'  [text]
+e:\Projet\code\main.asm[2]   55-  126      E08F -     E096                 'rom'  [text]
 e:\Projet\code\main.asm[3]  127-  147      FFE0 -     FFFF                 'vectit'  [data]
 e:\Projet\code\st7lite2.asm[1]   24-  177         0 -       50                 'periph'  [void]
 
@@ -16,7 +16,7 @@ Class List
 
 0 '        ram0'   byte from       80 to       81 (lim      17F) =  0% D
 0 '       stack'   byte from      180 to      17F (lim      1FF) =  0% V
-0 '         rom'   byte from     E000 to     E090 (lim     FFDF) =  1% C
+0 '         rom'   byte from     E000 to     E096 (lim     FFDF) =  1% C
 0 '      vectit'   byte from     FFE0 to     FFFF (lim     FFFF) =100% S
 0 '      periph'   byte from        0 to       50 (lim       7F) = 62% D
 
@@ -101,13 +101,14 @@ TRANCR                                  21  BYTE  e:\Projet\code\st7lite2.asm(76
 
 WDGCR                                   2E  BYTE  e:\Projet\code\st7lite2.asm(86)
 
-initPortSPI                           E02A  WORD  e:\Projet\code\initport.asm(53)
+initOsc                               E000  WORD  e:\Projet\code\time.asm(61)
+initPortSPI                           E030  WORD  e:\Projet\code\initport.asm(56)
 
-wait1ms                               E000  WORD  e:\Projet\code\time.asm(58)
-wait2ms                               E00A  WORD  e:\Projet\code\time.asm(79)
-wait500ms                             E014  WORD  e:\Projet\code\time.asm(99)
-wait                                  E01F  WORD  e:\Projet\code\time.asm(114)
-waitTime                                80  BYTE  e:\Projet\code\time.asm(37)
+wait1ms                               E006  WORD  e:\Projet\code\time.asm(71)
+wait2ms                               E010  WORD  e:\Projet\code\time.asm(92)
+wait500ms                             E01A  WORD  e:\Projet\code\time.asm(112)
+wait                                  E025  WORD  e:\Projet\code\time.asm(127)
+waitTime                                80  BYTE  e:\Projet\code\time.asm(41)
 
 
-67 labels
+68 labels

@@ -50,6 +50,9 @@ var DS.B 1	;fourre tout pour contrer limitation mode d'adressage
 ;
 ;************************************************************************
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; initialisation port spi ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
 initPortSPI:
 	LD	A,$0C	;ctrl spi
 	LD	SPICR,A

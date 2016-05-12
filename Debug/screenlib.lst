@@ -1,4 +1,4 @@
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:28 2016
 Page 1  "screen_lib.ASM"
                                                e:\Projet\code\screenlib.asm
 
@@ -59,7 +59,7 @@ Page 1  "screen_lib.ASM"
   27  0000                                 EXTERN   LTICR.b       ; Lite Timer Input Capture 
                                                                   ;register
   28                                       
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:28 2016
 Page 2  "screen_lib.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -120,7 +120,7 @@ Page 2  "screen_lib.ASM"
   65                             ;*************************************************************
                                  ;*********
   66                             
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:28 2016
 Page 3  "screen_lib.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -181,7 +181,7 @@ Page 3  "screen_lib.ASM"
                                  ;*********
  106                             
  107  0000                                 EXTERN   RCCR.b        ; RC oscilator control register
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:28 2016
 Page 4  "screen_lib.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -243,7 +243,7 @@ Page 4  "screen_lib.ASM"
   19                             ;
   20                             ;*************************************************************
                                  ;***********
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:28 2016
 Page 5  "screen_lib.ASM"
                                                e:\Projet\code\screenlib.asm
 
@@ -285,7 +285,7 @@ Page 5  "screen_lib.ASM"
                                  ;***********
   50                             
   51  0000                                 END      
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:28 2016
 Page 6  "screen_lib.ASM"
                                                e:\Projet\code\screenlib.asm
 
@@ -346,7 +346,7 @@ PADR                                    00         no  BYTE  Internal   ABS     
 PADDR                                   01         no  BYTE  Internal   ABS     12  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
 PAOR                                    02         no  BYTE  Internal   ABS     13  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
 PBDR                                    03         no  BYTE  Internal   ABS     15  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:32:36 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 17:39:28 2016
 Page 7  "screen_lib.ASM"
                                                e:\Projet\code\screenlib.asm
 

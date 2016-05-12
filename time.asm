@@ -19,6 +19,7 @@ ST7/
 ;
 ;************************************************************************
 	
+	PUBLIC initOsc
 	PUBLIC wait1ms
 	PUBLIC wait2ms
 	PUBLIC wait500ms
@@ -26,6 +27,9 @@ ST7/
 	
 	PUBLIC waitTime
 
+
+RCCR0 EQU $FFDE
+	
 ;************************************************************************
 ;
 ;  ZONE DE DECLARATION DES VARIABLES
@@ -49,6 +53,15 @@ waitTime DS.B 1
 ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES
 ;
 ;************************************************************************
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+; correction oscilateur ;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+initOsc:
+	ld A,RCCR0
+	ld RCCR,A
+	RET
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;

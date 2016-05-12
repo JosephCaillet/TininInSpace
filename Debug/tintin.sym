@@ -1,4 +1,4 @@
-000502;00068;
+000511;00069;
 'CONSTANTS' 
 
 'ram0' D
@@ -7,15 +7,17 @@
 'stack' V
 
 'rom' C
-    E000 wait1ms
-    E00A wait2ms
-    E014 wait500ms
-    E01F wait
-    E02A initPortSPI
+    E000 initOsc
+    E006 wait1ms
+    E010 wait2ms
+    E01A wait500ms
+    E025 wait
+    E030 initPortSPI
 
 'vectit' S
 
 'periph' D
+      39 RCCR
       0D ATCSR
       10 ATRH
       11 ATRL
@@ -70,7 +72,6 @@
       14 PWM1CSR
       15 PWM2CSR
       16 PWM3CSR
-      39 RCCR
       31 SPIDR
       32 SPICR
       33 SPISR
