@@ -1,6 +1,6 @@
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 14:38:59 2016
-Page 1  "init_port.ASM"
-                                               e:\Projet\code\init_port.asm
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:50 2016
+Page 1  "initPort.asm"
+                                               e:\Projet\code\initport.asm
 
    1                             ST7/      
    2                             
@@ -12,7 +12,7 @@ Page 1  "init_port.ASM"
    7                             ;*************************************************************
                                  ;***********
    8                             
-   9  0000                                 TITLE    "init_port.ASM"
+   9  0000                                 TITLE    "initPort.asm"
   10                                       
   11  0000                                 MOTOROLA 
   12                                       
@@ -59,8 +59,8 @@ Page 1  "init_port.ASM"
   27  0000                                 EXTERN   LTICR.b       ; Lite Timer Input Capture 
                                                                   ;register
   28                                       
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 14:38:59 2016
-Page 2  "init_port.ASM"
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:50 2016
+Page 2  "initPort.asm"
                                                e:\Projet\code\ST7Lite2.INC
 
   29                             ;*************************************************************
@@ -120,8 +120,8 @@ Page 2  "init_port.ASM"
   65                             ;*************************************************************
                                  ;*********
   66                             
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 14:38:59 2016
-Page 3  "init_port.ASM"
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:50 2016
+Page 3  "initPort.asm"
                                                e:\Projet\code\ST7Lite2.INC
 
   67  0000                                 EXTERN   FCSR.b        ; flash control/satus register
@@ -181,8 +181,8 @@ Page 3  "init_port.ASM"
                                  ;*********
  106                             
  107  0000                                 EXTERN   RCCR.b        ; RC oscilator control register
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 14:38:59 2016
-Page 4  "init_port.ASM"
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:50 2016
+Page 4  "initPort.asm"
                                                e:\Projet\code\ST7Lite2.INC
 
  108  0000                                 EXTERN   SICSR.b       ; system integrity 
@@ -243,9 +243,9 @@ Page 4  "init_port.ASM"
   19                             ;*************************************************************
                                  ;***********
   20                             ;
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 14:38:59 2016
-Page 5  "init_port.ASM"
-                                               e:\Projet\code\init_port.asm
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:50 2016
+Page 5  "initPort.asm"
+                                               e:\Projet\code\initport.asm
 
   21                             ;  ZONE DE DECLARATION DES SYMBOLES
   22                             ;
@@ -254,131 +254,47 @@ Page 5  "init_port.ASM"
   24                             
   25  0000                                 PUBLIC   initPortSPI
   26                             
-  27                             ;*************************************************************
+  27                             
+  28                             ;*************************************************************
                                  ;***********
-  28                             ;
-  29                             ;  FIN DE LA ZONE DE DECLARATION DES SYMBOLES
-  30                             ;
-  31                             ;*************************************************************
+  29                             ;
+  30                             ;  ZONE DE DECLARATION DES VARIABLES
+  31                             ;
+  32                             ;*************************************************************
                                  ;***********
-  32                             
-  33                                       
-  34                                                              ;BYTES
-  35                                       
-  36                                                              ;segment byte 'ram0'
-  37                             
-  38                             ;*************************************************************
+  33  0000                                 BYTES    
+  34                                       segment  byte 'ram0'
+  35                             
+  36                             
+  37                             ;*************************************************************
                                  ;***********
-  39                             ;
-  40                             ;  ZONE DE DECLARATION DES VARIABLES
-  41                             ;
-  42                             ;*************************************************************
+  38                             ;
+  39                             ;  ZONE DE DECLARATION DES CONSTANTES
+  40                             ;
+  41                             ;*************************************************************
                                  ;***********
-  43                             
-  44                             
+  42  0000                                 WORDS    
+  43                                       segment  byte 'rom'
+  44                                       
   45                             
-  46                             
-  47                             ;*************************************************************
+  46                             ;*************************************************************
                                  ;***********
-  48                             ;
-  49                             ;  FIN DE LA ZONE DE DECLARATION DES VARIABLES
-  50                             ;
-  51                             ;*************************************************************
+  47                             ;
+  48                             ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES
+  49                             ;
+  50                             ;*************************************************************
                                  ;***********
-  52                             
-  53                             
-  54  0000                                 WORDS    
-  55                             
-  56                                       segment  byte 'rom'
-  57                             
-  58                             ;*************************************************************
+  51                             
+  52                             initPortSPI:  
+  53  E000   81                            RET      
+  54                             
+  55                             ;*************************************************************
                                  ;***********
-  59                             ;
-  60                             ;  ZONE DE DECLARATION DES CONSTANTES
-  61                             ;
-  62                             ;*************************************************************
-                                 ;***********
-  63                             
-  64                             
-  65                             
-  66                             
-  67                             ;*************************************************************
-                                 ;***********
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 14:38:59 2016
-Page 6  "init_port.ASM"
-                                               e:\Projet\code\init_port.asm
-
-  68                             ;
-  69                             ;  FIN DE LA ZONE DE DECLARATION DES CONSTANTES
-  70                             ;
-  71                             ;*************************************************************
-                                 ;***********
-  72                             
-  73                             ;-------------------------------------------------------------
-                                 ;-----------
-  74                             
-  75                             ;*************************************************************
-                                 ;***********
-  76                             ;
-  77                             ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES
-  78                             ;
-  79                             ;*************************************************************
-                                 ;***********
-  80                             
-  81                             initPortSPI:  
-  82  E000   81                            RET      
-  83                             
-  84                             
-  85                             
-  86                             
-  87                             ;*************************************************************
-                                 ;***********
-  88                             ;
-  89                             ;  FIN DE LA ZONE DE DECLARATION DES SOUS-PROGRAMMES
-  90                             ;
-  91                             ;*************************************************************
-                                 ;***********
-  92                             
-  93                             
-  94                             ;*************************************************************
-                                 ;***********
-  95                             ;
-  96                             ;  PROGRAMME PRINCIPAL
-  97                             ;
-  98                             ;*************************************************************
-                                 ;***********
-  99                             
- 100                             
- 101                             
- 102                             
- 103                             
- 104                             ;*************************************************************
-                                 ;***********
- 105                             ;
- 106                             ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES D'INTERRUPTION
- 107                             ;
- 108                             ;*************************************************************
-                                 ;***********
- 109                             
- 110                             
- 111                             
- 112                             
- 113                             ;*************************************************************
-                                 ;***********
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 14:38:59 2016
-Page 7  "init_port.ASM"
-                                               e:\Projet\code\init_port.asm
-
- 114                             ;
- 115                             ;  ZONE DE DECLARATION DES VECTEURS D'INTERRUPTION
- 116                             ;
- 117                             ;*************************************************************
-                                 ;***********
- 118                             
- 119  E001                                 END      
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 14:38:59 2016
-Page 8  "init_port.ASM"
-                                               e:\Projet\code\init_port.asm
+  56                             
+  57  E001                                 END      
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:50 2016
+Page 6  "initPort.asm"
+                                               e:\Projet\code\initport.asm
 
 Symbol Name                       Value     Call       Type  Scope      Rel.  Line  Privacy  Segment   Size  Bytes File
 
@@ -437,9 +353,9 @@ PADR                                    00         no  BYTE  Internal   ABS     
 PADDR                                   01         no  BYTE  Internal   ABS     12  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 PAOR                                    02         no  BYTE  Internal   ABS     13  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 PBDR                                    03         no  BYTE  Internal   ABS     15  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 14:38:59 2016
-Page 9  "init_port.ASM"
-                                               e:\Projet\code\init_port.asm
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:50 2016
+Page 7  "initPort.asm"
+                                               e:\Projet\code\initport.asm
 
 PBDDR                                   04         no  BYTE  Internal   ABS     16  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 PBOR                                    05         no  BYTE  Internal   ABS     17  private  text         0     0  e:\Projet\code\ST7Lite2.INC
@@ -460,8 +376,8 @@ TRANCR                                  21         no  BYTE  Internal   ABS     
 
 WDGCR                                   2E         no  BYTE  Internal   ABS     60  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-initPortSPI                           E000         no  WORD  Internal   ABS     81  public   text         1     0  -
+initPortSPI                           E000         no  WORD  Internal   ABS     52  public   text         1     0  -
 
 
 62 labels
-No errors on assembly of 'e:\Projet\code\init_port.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'

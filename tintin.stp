@@ -69,6 +69,7 @@ Int.108=0
 String.6.0=2016,5,12,10,44,14
 String.100.0=$(TargetFName)
 String.101.0=
+String.102.0=
 String.103.0=.\;
 
 [Root.Config.0.Settings.2]
@@ -78,11 +79,11 @@ String.100.0=ST7FLITE20
 
 [Root.Config.0.Settings.3]
 String.2.0=Assembling $(InputFile)...
-String.3.0=asm $(InputFile) $(ToolsetIncOpts) -obj=$(IntermPath)$(InputName).$(ObjectExt)
+String.3.0=asm $(InputFile) $(ToolsetIncOpts) -obj=$(IntermPath)$(InputName).$(ObjectExt) -I=E:\Projet\code
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(InputName).lst
-String.6.0=2016,5,12,10,44,14
-String.100.0=asm -sym $(InputFile) $(ToolsetIncOpts) -li=$(OutputPath)$(InputName).lst -fi=$(OutputPath)$(TargetSName).map
+String.6.0=2016,5,12,14,55,50
+String.100.0=asm -sym $(InputFile) $(ToolsetIncOpts) -li=$(OutputPath)$(InputName).lst -fi=$(OutputPath)$(TargetSName).map -I=E:\Projet\code
 
 [Root.Config.0.Settings.4]
 String.2.0=Running Pre-Link step
@@ -104,10 +105,14 @@ String.101.0=mapping.asm
 
 [Root.Config.0.Settings.6]
 String.2.0=Running Post-Link step
-String.3.0=asm -sym $(InputFile) $(ToolsetIncOpts) -li=$(OutputPath)$(InputName).lst -fi=$(OutputPath)$(TargetSName).map
+String.3.0=asm -sym mapping.asm -I="C:\Program Files\SofTec Microsystems\ST7 Toolset\Asm\include" -li=Debug\mapping.lst -fi=Debug\tintin.map -I=E:\Projet\code 
+String.3.1=asm -sym st7lite2.asm -I="C:\Program Files\SofTec Microsystems\ST7 Toolset\Asm\include" -li=Debug\st7lite2.lst -fi=Debug\tintin.map -I=E:\Projet\code 
+String.3.2=asm -sym initport.asm -I="C:\Program Files\SofTec Microsystems\ST7 Toolset\Asm\include" -li=Debug\initport.lst -fi=Debug\tintin.map -I=E:\Projet\code 
+String.3.3=asm -sym screenlib.asm -I="C:\Program Files\SofTec Microsystems\ST7 Toolset\Asm\include" -li=Debug\screenlib.lst -fi=Debug\tintin.map -I=E:\Projet\code 
+String.3.4=asm -sym main.asm -I="C:\Program Files\SofTec Microsystems\ST7 Toolset\Asm\include" -li=Debug\main.lst -fi=Debug\tintin.map -I=E:\Projet\code
 String.4.0=
 String.5.0=
-String.6.0=2016,5,12,10,44,14
+String.6.0=2016,5,12,14,55,50
 
 [Root.Config.0.Settings.7]
 String.2.0=Running Post-Build step
@@ -140,11 +145,11 @@ String.100.0=ST7FLITE20
 
 [Root.Config.1.Settings.3]
 String.2.0=Assembling $(InputFile)...
-String.3.0=asm $(InputFile) $(ToolsetIncOpts) -obj=$(IntermPath)$(InputName).$(ObjectExt)
+String.3.0=asm $(InputFile) $(ToolsetIncOpts) -obj=$(IntermPath)$(InputName).$(ObjectExt) -I=..\..\tp\c8e3
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(InputName).lst
 String.6.0=2016,5,12,10,44,14
-String.100.0=asm -sym $(InputFile) $(ToolsetIncOpts) -li=$(OutputPath)$(InputName).lst -fi=$(OutputPath)$(TargetSName).map
+String.100.0=asm -sym $(InputFile) $(ToolsetIncOpts) -li=$(OutputPath)$(InputName).lst -fi=$(OutputPath)$(TargetSName).map -I=..\..\tp\c8e3 
 
 [Root.Config.1.Settings.4]
 String.2.0=Running Pre-Link step
@@ -165,10 +170,14 @@ String.101.0=mapping.asm
 
 [Root.Config.1.Settings.6]
 String.2.0=Running Post-Link step
-String.3.0=asm -sym $(InputFile) $(ToolsetIncOpts) -li=$(OutputPath)$(InputName).lst -fi=$(OutputPath)$(TargetSName).map
+String.3.0=asm -sym mapping.asm -I="C:\Program Files\SofTec Microsystems\ST7 Toolset\Asm\include" -li=Release\mapping.lst -fi=Release\tintin.map -I=..\..\tp\c8e3 
+String.3.1=asm -sym st7lite2.asm -I="C:\Program Files\SofTec Microsystems\ST7 Toolset\Asm\include" -li=Release\st7lite2.lst -fi=Release\tintin.map -I=..\..\tp\c8e3 
+String.3.2=asm -sym screen_lib.asm -I="C:\Program Files\SofTec Microsystems\ST7 Toolset\Asm\include" -li=Release\screen_lib.lst -fi=Release\tintin.map -I=..\..\tp\c8e3 
+String.3.3=asm -sym init_port.asm -I="C:\Program Files\SofTec Microsystems\ST7 Toolset\Asm\include" -li=Release\init_port.lst -fi=Release\tintin.map -I=..\..\tp\c8e3 
+String.3.4=asm -sym main.asm -I="C:\Program Files\SofTec Microsystems\ST7 Toolset\Asm\include" -li=Release\main.lst -fi=Release\tintin.map -I=..\..\tp\c8e3
 String.4.0=
 String.5.0=
-String.6.0=2016,5,12,10,44,14
+String.6.0=2016,5,12,14,54,18
 
 [Root.Config.1.Settings.7]
 String.2.0=Running Post-Build step
@@ -200,11 +209,11 @@ Int.1=0
 
 [Root.Source Files.Config.0.Settings.1]
 String.2.0=Assembling $(InputFile)...
-String.3.0=asm $(InputFile) $(ToolsetIncOpts) -obj=$(IntermPath)$(InputName).$(ObjectExt)
+String.3.0=asm $(InputFile) $(ToolsetIncOpts) -obj=$(IntermPath)$(InputName).$(ObjectExt) -I=E:\Projet\code
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(InputName).lst
-String.6.0=2016,5,12,10,44,14
-String.100.0=asm -sym $(InputFile) $(ToolsetIncOpts) -li=$(OutputPath)$(InputName).lst -fi=$(OutputPath)$(TargetSName).map
+String.6.0=2016,5,12,14,55,50
+String.100.0=asm -sym $(InputFile) $(ToolsetIncOpts) -li=$(OutputPath)$(InputName).lst -fi=$(OutputPath)$(TargetSName).map -I=E:\Projet\code
 
 [Root.Source Files.Config.0.Settings.2]
 String.2.0=Performing Custom Build on $(InputFile)
@@ -218,11 +227,11 @@ Int.1=0
 
 [Root.Source Files.Config.1.Settings.1]
 String.2.0=Assembling $(InputFile)...
-String.3.0=asm $(InputFile) $(ToolsetIncOpts) -obj=$(IntermPath)$(InputName).$(ObjectExt)
+String.3.0=asm $(InputFile) $(ToolsetIncOpts) -obj=$(IntermPath)$(InputName).$(ObjectExt) -I=..\..\tp\c8e3
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(InputName).lst
 String.6.0=2016,5,12,10,44,14
-String.100.0=asm -sym $(InputFile) $(ToolsetIncOpts) -li=$(OutputPath)$(InputName).lst -fi=$(OutputPath)$(TargetSName).map
+String.100.0=asm -sym $(InputFile) $(ToolsetIncOpts) -li=$(OutputPath)$(InputName).lst -fi=$(OutputPath)$(TargetSName).map -I=..\..\tp\c8e3 
 
 [Root.Source Files.Config.1.Settings.2]
 String.2.0=Performing Custom Build on $(InputFile)
@@ -231,21 +240,36 @@ String.6.0=2016,5,12,10,44,14
 [Root.Source Files.mapping.asm]
 ElemType=File
 PathName=mapping.asm
-Next=Root.Source Files.main.asm
-
-[Root.Source Files.main.asm]
-ElemType=File
-PathName=main.asm
 Next=Root.Source Files.st7lite2.asm
 
 [Root.Source Files.st7lite2.asm]
 ElemType=File
 PathName=st7lite2.asm
-Next=Root.Source Files.screen_lib.asm
+Next=Root.Source Files.initport.asm
 
-[Root.Source Files.screen_lib.asm]
+[Root.Source Files.initport.asm]
 ElemType=File
-PathName=screen_lib.asm
+PathName=initport.asm
+Next=Root.Source Files.initport.inc
+
+[Root.Source Files.initport.inc]
+ElemType=File
+PathName=initport.inc
+Next=Root.Source Files.screenlib.inc
+
+[Root.Source Files.screenlib.inc]
+ElemType=File
+PathName=screenlib.inc
+Next=Root.Source Files.screenlib.asm
+
+[Root.Source Files.screenlib.asm]
+ElemType=File
+PathName=screenlib.asm
+Next=Root.Source Files.main.asm
+
+[Root.Source Files.main.asm]
+ElemType=File
+PathName=main.asm
 
 [Root.Include Files]
 ElemType=Folder
@@ -271,11 +295,11 @@ Int.1=0
 
 [Root.Include Files.Config.0.Settings.1]
 String.2.0=Assembling $(InputFile)...
-String.3.0=asm $(InputFile) $(ToolsetIncOpts) -obj=$(IntermPath)$(InputName).$(ObjectExt)
+String.3.0=asm $(InputFile) $(ToolsetIncOpts) -obj=$(IntermPath)$(InputName).$(ObjectExt) -I=E:\Projet\code
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(InputName).lst
-String.6.0=2016,5,12,10,44,14
-String.100.0=asm -sym $(InputFile) $(ToolsetIncOpts) -li=$(OutputPath)$(InputName).lst -fi=$(OutputPath)$(TargetSName).map
+String.6.0=2016,5,12,14,54,18
+String.100.0=asm -sym $(InputFile) $(ToolsetIncOpts) -li=$(OutputPath)$(InputName).lst -fi=$(OutputPath)$(TargetSName).map -I=E:\Projet\code
 
 [Root.Include Files.Config.0.Settings.2]
 String.2.0=Performing Custom Build on $(InputFile)
@@ -289,11 +313,11 @@ Int.1=0
 
 [Root.Include Files.Config.1.Settings.1]
 String.2.0=Assembling $(InputFile)...
-String.3.0=asm $(InputFile) $(ToolsetIncOpts) -obj=$(IntermPath)$(InputName).$(ObjectExt)
+String.3.0=asm $(InputFile) $(ToolsetIncOpts) -obj=$(IntermPath)$(InputName).$(ObjectExt) -I=..\..\tp\c8e3
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(InputName).lst
 String.6.0=2016,5,12,10,44,14
-String.100.0=asm -sym $(InputFile) $(ToolsetIncOpts) -li=$(OutputPath)$(InputName).lst -fi=$(OutputPath)$(TargetSName).map
+String.100.0=asm -sym $(InputFile) $(ToolsetIncOpts) -li=$(OutputPath)$(InputName).lst -fi=$(OutputPath)$(TargetSName).map -I=..\..\tp\c8e3 
 
 [Root.Include Files.Config.1.Settings.2]
 String.2.0=Performing Custom Build on $(InputFile)

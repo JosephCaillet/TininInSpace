@@ -1,4 +1,4 @@
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 13:53:02 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:51 2016
 Page 1  "SQUELET.ASM"
                                                e:\Projet\code\main.asm
 
@@ -59,7 +59,7 @@ Page 1  "SQUELET.ASM"
   27  0000                                 EXTERN   LTICR.b       ; Lite Timer Input Capture 
                                                                   ;register
   28                                       
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 13:53:02 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:51 2016
 Page 2  "SQUELET.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -120,7 +120,7 @@ Page 2  "SQUELET.ASM"
   65                             ;*************************************************************
                                  ;*********
   66                             
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 13:53:02 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:51 2016
 Page 3  "SQUELET.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -181,7 +181,7 @@ Page 3  "SQUELET.ASM"
                                  ;*********
  106                             
  107  0000                                 EXTERN   RCCR.b        ; RC oscilator control register
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 13:53:02 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:51 2016
 Page 4  "SQUELET.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -234,29 +234,8 @@ Page 4  "SQUELET.ASM"
  143  0000                                 EXTERN   DMBK2L.b      ; DM Breakpoint Register 2 Low
  144                             
 <END_OF_INCLUSION>
-   0  0000                                 #include "screen_lib.inc"
-   1                             ;*************************************************************
-                                 ;***********
-   2                             ; TITLE:                
-   3                             ; AUTHOR:               
-   4                             ; DESCRIPTION:          
-   5                             ;*************************************************************
-                                 ;***********
-   6                             
-<END_OF_INCLUSION>
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 13:53:02 2016
-Page 5  "SQUELET.ASM"
-                                               e:\Projet\code\init_port.inc
-
-   0  0000                                 #include "init_port.inc"
-   1                             ;*************************************************************
-                                 ;***********
-   2                             ; TITLE:                
-   3                             ; AUTHOR:               
-   4                             ; DESCRIPTION:          
-   5                             ;*************************************************************
-                                 ;***********
-   6                             
+  14                                                              ;#include "screenLib.inc"
+   0  0000                                 #include "initPort.inc"
 <END_OF_INCLUSION>
   16                             
   17                                                              ; Enlever le commentaire si vous
@@ -265,6 +244,10 @@ Page 5  "SQUELET.ASM"
   19                             
   20                             
   21                             ;*************************************************************
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:51 2016
+Page 5  "SQUELET.ASM"
+                                               e:\Projet\code\main.asm
+
                                  ;***********
   22                             ;
   23                             ;  ZONE DE DECLARATION DES SYMBOLES
@@ -272,7 +255,7 @@ Page 5  "SQUELET.ASM"
   25                             ;*************************************************************
                                  ;***********
   26                             
-  27                             
+  27  0000                                 EXTERN   initPortSPI
   28                             
   29                             ;*************************************************************
                                  ;***********
@@ -306,10 +289,6 @@ Page 5  "SQUELET.ASM"
   53                             ;*************************************************************
                                  ;***********
   54                             
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 13:53:02 2016
-Page 6  "SQUELET.ASM"
-                                               e:\Projet\code\main.asm
-
   55                             
   56  0000                                 WORDS    
   57                             
@@ -326,6 +305,10 @@ Page 6  "SQUELET.ASM"
   66                             
   67                             
   68                             
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:51 2016
+Page 6  "SQUELET.ASM"
+                                               e:\Projet\code\main.asm
+
   69                             ;*************************************************************
                                  ;***********
   70                             ;
@@ -349,36 +332,32 @@ Page 6  "SQUELET.ASM"
   84                             
   85                             
   86                             
-  87                             
-  88                             ;*************************************************************
+  87                             ;*************************************************************
                                  ;***********
-  89                             ;
-  90                             ;  FIN DE LA ZONE DE DECLARATION DES SOUS-PROGRAMMES
-  91                             ;
-  92                             ;*************************************************************
+  88                             ;
+  89                             ;  FIN DE LA ZONE DE DECLARATION DES SOUS-PROGRAMMES
+  90                             ;
+  91                             ;*************************************************************
                                  ;***********
+  92                             
   93                             
-  94                             
-  95                             ;*************************************************************
+  94                             ;*************************************************************
                                  ;***********
-  96                             ;
-  97                             ;  PROGRAMME PRINCIPAL
-  98                             ;
-  99                             ;*************************************************************
+  95                             ;
+  96                             ;  PROGRAMME PRINCIPAL
+  97                             ;
+  98                             ;*************************************************************
                                  ;***********
- 100                             
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 13:53:02 2016
-Page 7  "SQUELET.ASM"
-                                               e:\Projet\code\main.asm
-
- 101                             main:     
- 102  E000   9C                            RSP                    ; Reset Stack Pointer
+  99                             
+ 100                             main:     
+ 101  E001   9C                            RSP                    ; Reset Stack Pointer
+ 102  E002   CDE000                        CALL     initPortSPI
  103                                                              ;CALL totodknfdiobfvjfdbgjreb
  104                                                              ;LD
  105                             boucl     
  106                             
  107                                       
- 108  E001   CCE001                        JP       boucl
+ 108  E005   CCE005                        JP       boucl
  109                             
  110                             
  111                             
@@ -387,11 +366,15 @@ Page 7  "SQUELET.ASM"
  113                             ;
  114                             ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES D'INTERRUPTION
  115                             ;
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:51 2016
+Page 7  "SQUELET.ASM"
+                                               e:\Projet\code\main.asm
+
  116                             ;*************************************************************
                                  ;***********
  117                             
  118                             
- 119  E004   80                  dummy_rt:  IRET                   ; Procédure vide : retour au 
+ 119  E008   80                  dummy_rt:  IRET                   ; Procédure vide : retour au 
                                                                   ;programme principal.
  120                             
  121                             
@@ -408,26 +391,26 @@ Page 7  "SQUELET.ASM"
  130                                       segment  'vectit'
  131                             
  132                             
- 133  FFE0   E004                          DC.W     dummy_rt      ; Adresse FFE0-FFE1h
- 134  FFE2   E004                SPI_it    DC.W     dummy_rt      ; Adresse FFE2-FFE3h
- 135  FFE4   E004                lt_RTC1_it  DC.W     dummy_rt      ; Adresse FFE4-FFE5h
- 136  FFE6   E004                lt_IC_it  DC.W     dummy_rt      ; Adresse FFE6-FFE7h
- 137  FFE8   E004                at_timerover_it  DC.W     dummy_rt      ; Adresse FFE8-FFE9h
- 138  FFEA   E004                at_timerOC_it  DC.W     dummy_rt      ; Adresse FFEA-FFEBh
- 139  FFEC   E004                AVD_it    DC.W     dummy_rt      ; Adresse FFEC-FFEDh
- 140  FFEE   E004                          DC.W     dummy_rt      ; Adresse FFEE-FFEFh
- 141  FFF0   E004                lt_RTC2_it  DC.W     dummy_rt      ; Adresse FFF0-FFF1h
- 142  FFF2   E004                ext3_it   DC.W     dummy_rt      ; Adresse FFF2-FFF3h
- 143  FFF4   E004                ext2_it   DC.W     dummy_rt      ; Adresse FFF4-FFF5h
- 144  FFF6   E004                ext1_it   DC.W     dummy_rt      ; Adresse FFF6-FFF7h
- 145  FFF8   E004                ext0_it   DC.W     dummy_rt      ; Adresse FFF8-FFF9h
- 146  FFFA   E004                AWU_it    DC.W     dummy_rt      ; Adresse FFFA-FFFBh
- 147  FFFC   E004                softit    DC.W     dummy_rt      ; Adresse FFFC-FFFDh
- 148  FFFE   E000                reset     DC.W     main          ; Adresse FFFE-FFFFh
+ 133  FFE0   E008                          DC.W     dummy_rt      ; Adresse FFE0-FFE1h
+ 134  FFE2   E008                SPI_it    DC.W     dummy_rt      ; Adresse FFE2-FFE3h
+ 135  FFE4   E008                lt_RTC1_it  DC.W     dummy_rt      ; Adresse FFE4-FFE5h
+ 136  FFE6   E008                lt_IC_it  DC.W     dummy_rt      ; Adresse FFE6-FFE7h
+ 137  FFE8   E008                at_timerover_it  DC.W     dummy_rt      ; Adresse FFE8-FFE9h
+ 138  FFEA   E008                at_timerOC_it  DC.W     dummy_rt      ; Adresse FFEA-FFEBh
+ 139  FFEC   E008                AVD_it    DC.W     dummy_rt      ; Adresse FFEC-FFEDh
+ 140  FFEE   E008                          DC.W     dummy_rt      ; Adresse FFEE-FFEFh
+ 141  FFF0   E008                lt_RTC2_it  DC.W     dummy_rt      ; Adresse FFF0-FFF1h
+ 142  FFF2   E008                ext3_it   DC.W     dummy_rt      ; Adresse FFF2-FFF3h
+ 143  FFF4   E008                ext2_it   DC.W     dummy_rt      ; Adresse FFF4-FFF5h
+ 144  FFF6   E008                ext1_it   DC.W     dummy_rt      ; Adresse FFF6-FFF7h
+ 145  FFF8   E008                ext0_it   DC.W     dummy_rt      ; Adresse FFF8-FFF9h
+ 146  FFFA   E008                AWU_it    DC.W     dummy_rt      ; Adresse FFFA-FFFBh
+ 147  FFFC   E008                softit    DC.W     dummy_rt      ; Adresse FFFC-FFFDh
+ 148  FFFE   E001                reset     DC.W     main          ; Adresse FFFE-FFFFh
  149                             
  150                             
  151  0000                                 END      
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 13:53:02 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:51 2016
 Page 8  "SQUELET.ASM"
                                                e:\Projet\code\main.asm
 
@@ -488,7 +471,7 @@ MCCSR                                   38         no  BYTE  Internal   ABS    1
 
 PADR                                    00         no  BYTE  Internal   ABS     11  private  data         0     0  e:\Projet\code\ST7Lite2.INC
 PADDR                                   01         no  BYTE  Internal   ABS     12  private  data         0     0  e:\Projet\code\ST7Lite2.INC
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 13:53:02 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:51 2016
 Page 9  "SQUELET.ASM"
                                                e:\Projet\code\main.asm
 
@@ -517,25 +500,27 @@ WDGCR                                   2E         no  BYTE  Internal   ABS     
 at_timerover_it                       FFE8         no  WORD  Internal   ABS    137  private  data         2     2  -
 at_timerOC_it                         FFEA         no  WORD  Internal   ABS    138  private  data         2     2  -
 
-boucl                                 E001         no  WORD  Internal   ABS    105  private  text         3     0  -
+boucl                                 E005         no  WORD  Internal   ABS    105  private  text         3     0  -
 
-dummy_rt                              E004         no  WORD  Internal   ABS    119  private  text         1     0  -
+dummy_rt                              E008         no  WORD  Internal   ABS    119  private  text         1     0  -
 
 ext3_it                               FFF2         no  WORD  Internal   ABS    142  private  data         2     2  -
 ext2_it                               FFF4         no  WORD  Internal   ABS    143  private  data         2     2  -
 ext1_it                               FFF6         no  WORD  Internal   ABS    144  private  data         2     2  -
 ext0_it                               FFF8         no  WORD  Internal   ABS    145  private  data         2     2  -
 
+initPortSPI                           E000         no  WORD  Internal   ABS     27  private  data         0     0  -
+
 lt_RTC1_it                            FFE4         no  WORD  Internal   ABS    135  private  data         2     2  -
 lt_IC_it                              FFE6         no  WORD  Internal   ABS    136  private  data         2     2  -
 lt_RTC2_it                            FFF0         no  WORD  Internal   ABS    141  private  data         2     2  -
 
-main                                  E000         no  WORD  Internal   ABS    101  private  text         1     0  -
+main                                  E001         no  WORD  Internal   ABS    100  private  text         4     0  -
 
 reset                                 FFFE         no  WORD  Internal   ABS    148  private  data         2     2  -
 
 softit                                FFFC         no  WORD  Internal   ABS    147  private  data         2     2  -
 
 
-78 labels
+79 labels
 No errors on assembly of 'e:\Projet\code\main.asm'

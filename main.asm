@@ -11,8 +11,8 @@ ST7/
 	MOTOROLA
 	
 	#include "ST7Lite2.INC"
-	#include "screen_lib.inc"
-	#include "init_port.inc"
+	;#include "screenLib.inc"
+	#include "initPort.inc"
 
 	; Enlever le commentaire si vous utilisez les afficheurs
 ;	#include "MAX7219.INC"
@@ -24,7 +24,7 @@ ST7/
 ;
 ;************************************************************************
 
-
+	EXTERN	initPortSPI
 
 ;************************************************************************
 ;
@@ -84,7 +84,6 @@ ST7/
 
 
 
-
 ;************************************************************************
 ;
 ;  FIN DE LA ZONE DE DECLARATION DES SOUS-PROGRAMMES
@@ -100,7 +99,7 @@ ST7/
 
 main:
 	RSP			; Reset Stack Pointer
-	CALL initPortSPI
+	CALL	initPortSPI
 	;CALL totodknfdiobfvjfdbgjreb
 	;LD
 boucl
