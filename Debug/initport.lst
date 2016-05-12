@@ -1,6 +1,6 @@
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:50 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 16:55:26 2016
 Page 1  "initPort.asm"
-                                               e:\Projet\code\initport.asm
+                                               E:\Projet\code\initport.asm
 
    1                             ST7/      
    2                             
@@ -59,9 +59,9 @@ Page 1  "initPort.asm"
   27  0000                                 EXTERN   LTICR.b       ; Lite Timer Input Capture 
                                                                   ;register
   28                                       
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:50 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 16:55:26 2016
 Page 2  "initPort.asm"
-                                               e:\Projet\code\ST7Lite2.INC
+                                               E:\Projet\code\ST7Lite2.INC
 
   29                             ;*************************************************************
                                  ;*********
@@ -120,9 +120,9 @@ Page 2  "initPort.asm"
   65                             ;*************************************************************
                                  ;*********
   66                             
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:50 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 16:55:26 2016
 Page 3  "initPort.asm"
-                                               e:\Projet\code\ST7Lite2.INC
+                                               E:\Projet\code\ST7Lite2.INC
 
   67  0000                                 EXTERN   FCSR.b        ; flash control/satus register
   68                             
@@ -181,9 +181,9 @@ Page 3  "initPort.asm"
                                  ;*********
  106                             
  107  0000                                 EXTERN   RCCR.b        ; RC oscilator control register
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:50 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 16:55:26 2016
 Page 4  "initPort.asm"
-                                               e:\Projet\code\ST7Lite2.INC
+                                               E:\Projet\code\ST7Lite2.INC
 
  108  0000                                 EXTERN   SICSR.b       ; system integrity 
                                                                   ;control/status register
@@ -243,9 +243,9 @@ Page 4  "initPort.asm"
   19                             ;*************************************************************
                                  ;***********
   20                             ;
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:50 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 16:55:26 2016
 Page 5  "initPort.asm"
-                                               e:\Projet\code\initport.asm
+                                               E:\Projet\code\initport.asm
 
   21                             ;  ZONE DE DECLARATION DES SYMBOLES
   22                             ;
@@ -265,119 +265,199 @@ Page 5  "initPort.asm"
   33  0000                                 BYTES    
   34                                       segment  byte 'ram0'
   35                             
-  36                             
-  37                             ;*************************************************************
+  36  0080                       var       DS.B     1             ;fourre tout pour contrer 
+                                                                  ;limitation mode d'adressage
+  37                             
+  38                             ;*************************************************************
                                  ;***********
-  38                             ;
-  39                             ;  ZONE DE DECLARATION DES CONSTANTES
-  40                             ;
-  41                             ;*************************************************************
+  39                             ;
+  40                             ;  ZONE DE DECLARATION DES CONSTANTES
+  41                             ;
+  42                             ;*************************************************************
                                  ;***********
-  42  0000                                 WORDS    
-  43                                       segment  byte 'rom'
-  44                                       
-  45                             
-  46                             ;*************************************************************
+  43  0081                                 WORDS    
+  44                                       segment  byte 'rom'
+  45                                       
+  46                             
+  47                             ;*************************************************************
                                  ;***********
-  47                             ;
-  48                             ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES
-  49                             ;
-  50                             ;*************************************************************
+  48                             ;
+  49                             ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES
+  50                             ;
+  51                             ;*************************************************************
                                  ;***********
-  51                             
-  52                             initPortSPI:  
-  53  E000   81                            RET      
-  54                             
-  55                             ;*************************************************************
-                                 ;***********
-  56                             
-  57  E001                                 END      
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:50 2016
+  52                             
+  53                             initPortSPI:  
+  54  E000   B60C                          LD       A,$0C         ;ctrl spi
+  55  E002   B732                          LD       SPICR,A
+  56                                       
+  57  E004   B603                          LD       A,$03         ;status spi
+  58  E006   B733                          LD       SPISR,A
+  59                                       
+  60  E008   B65C                          LD       A,$5C         ;ctrl spi
+  61  E00A   B732                          LD       SPICR,A
+  62                                       
+  63                                       
+  64  E00C   B605                          LD       A,PBOR        ;PB2
+  65  E00E   BA04                          OR       A,$04
+  66  E010   B605                          LD       A,PBOR
+  67                                       
+  68  E012   B604                          LD       A,PBDDR
+  69  E014   BA04                          OR       A,$04
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 16:55:26 2016
 Page 6  "initPort.asm"
-                                               e:\Projet\code\initport.asm
+                                               E:\Projet\code\initport.asm
+
+  70  E016   B604                          LD       A,PBDDR
+  71                                       
+  72                                       
+  73  E018   B605                          LD       A,PBOR        ;PB4
+  74  E01A   BA10                          OR       A,$10
+  75  E01C   B605                          LD       A,PBOR
+  76                                       
+  77  E01E   B604                          LD       A,PBDDR
+  78  E020   BA10                          OR       A,$10
+  79  E022   B604                          LD       A,PBDDR
+  80                                       
+  81                                       
+  82  E024   B605                          LD       A,PBOR        ;PB5
+  83  E026   BA20                          OR       A,$20
+  84  E028   B605                          LD       A,PBOR
+  85                                       
+  86  E02A   B604                          LD       A,PBDDR
+  87  E02C   BA20                          OR       A,$20
+  88  E02E   B604                          LD       A,PBDDR
+  89                                       
+  90                                       
+  91  E030   BE04                          LD       X,$04         ;PB2
+  92  E032   53                            CPL      X
+  93  E033   BF80                          LD       var,X
+  94  E035   B603                          LD       A,PBDR
+  95  E037   B480                          AND      A,var
+  96  E039   B703                          LD       PBDR,A
+  97                                       
+  98  E03B   BE10                          LD       X,$10         ;PB4
+  99  E03D   53                            CPL      X
+ 100  E03E   BF80                          LD       var,X
+ 101  E040   B603                          LD       A,PBDR
+ 102  E042   B480                          AND      A,var
+ 103  E044   B703                          LD       PBDR,A
+ 104                                       
+ 105  E046   B603                          LD       A,PBDR        ;PB5
+ 106  E048   BA20                          OR       A,$20
+ 107  E04A   B603                          LD       A,PBDR
+ 108                                       
+ 109                                       
+ 110  E04C   B602                          LD       A,PAOR        ;PA2
+ 111  E04E   BA04                          OR       A,$04
+ 112  E050   B602                          LD       A,PAOR
+ 113                                       
+ 114  E052   B601                          LD       A,PADDR       ;PA2
+ 115  E054   BA04                          OR       A,$04
+ 116  E056   B601                          LD       A,PADDR
+ 117                                       
+ 118  E058   B600                          LD       A,PADR        ;PA2
+ 119  E05A   BA04                          OR       A,$04
+ 120  E05C   B600                          LD       A,PADR
+ 121                                       
+ 122  E05E   81                            RET      
+ 123                             
+ 124                             ;*************************************************************
+                                 ;***********
+ 125                             
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 16:55:26 2016
+Page 7  "initPort.asm"
+                                               E:\Projet\code\initport.asm
+
+ 126  E05F                                 END      
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 16:55:26 2016
+Page 8  "initPort.asm"
+                                               E:\Projet\code\initport.asm
 
 Symbol Name                       Value     Call       Type  Scope      Rel.  Line  Privacy  Segment   Size  Bytes File
 
-ATCSR                                   0D         no  BYTE  Internal   ABS     33  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-ATRH                                    10         no  BYTE  Internal   ABS     36  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-ATRL                                    11         no  BYTE  Internal   ABS     37  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-ATICRH                                  1F         no  BYTE  Internal   ABS     51  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-ATICRL                                  20         no  BYTE  Internal   ABS     52  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-ADCCSR                                  34         no  BYTE  Internal   ABS     87  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-ADCDRH                                  35         no  BYTE  Internal   ABS     88  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-ADCDRL                                  36         no  BYTE  Internal   ABS     89  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-AWUPR                                   49         no  BYTE  Internal   ABS    131  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-AWUCSR                                  4A         no  BYTE  Internal   ABS    132  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+ATCSR                                   0D         no  BYTE  Internal   ABS     33  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+ATRH                                    10         no  BYTE  Internal   ABS     36  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+ATRL                                    11         no  BYTE  Internal   ABS     37  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+ATICRH                                  1F         no  BYTE  Internal   ABS     51  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+ATICRL                                  20         no  BYTE  Internal   ABS     52  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+ADCCSR                                  34         no  BYTE  Internal   ABS     87  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+ADCDRH                                  35         no  BYTE  Internal   ABS     88  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+ADCDRL                                  36         no  BYTE  Internal   ABS     89  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+AWUPR                                   49         no  BYTE  Internal   ABS    131  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+AWUCSR                                  4A         no  BYTE  Internal   ABS    132  private  text         0     0  E:\Projet\code\ST7Lite2.INC
 
-BREAKCR                                 22         no  BYTE  Internal   ABS     54  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+BREAKCR                                 22         no  BYTE  Internal   ABS     54  private  text         0     0  E:\Projet\code\ST7Lite2.INC
 
-CNTRH                                   0E         no  BYTE  Internal   ABS     34  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-CNTRL                                   0F         no  BYTE  Internal   ABS     35  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+CNTRH                                   0E         no  BYTE  Internal   ABS     34  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+CNTRL                                   0F         no  BYTE  Internal   ABS     35  private  text         0     0  E:\Projet\code\ST7Lite2.INC
 
-DCR0H                                   17         no  BYTE  Internal   ABS     43  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DCR0L                                   18         no  BYTE  Internal   ABS     44  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DCR1H                                   19         no  BYTE  Internal   ABS     45  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DCR1L                                   1A         no  BYTE  Internal   ABS     46  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DCR2H                                   1B         no  BYTE  Internal   ABS     47  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DCR2L                                   1C         no  BYTE  Internal   ABS     48  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DCR3H                                   1D         no  BYTE  Internal   ABS     49  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DCR3L                                   1E         no  BYTE  Internal   ABS     50  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DCMCLK                                  40         no  BYTE  Internal   ABS    120  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DCMFA                                   41         no  BYTE  Internal   ABS    121  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DCMFD                                   42         no  BYTE  Internal   ABS    122  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DCMBD                                   43         no  BYTE  Internal   ABS    123  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DCMCR                                   44         no  BYTE  Internal   ABS    124  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DCMCSR                                  45         no  BYTE  Internal   ABS    125  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DMCR                                    4B         no  BYTE  Internal   ABS    138  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DMSR                                    4C         no  BYTE  Internal   ABS    139  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DMBK1H                                  4D         no  BYTE  Internal   ABS    140  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DMBK1L                                  4E         no  BYTE  Internal   ABS    141  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DMBK2H                                  4F         no  BYTE  Internal   ABS    142  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-DMBK2L                                  50         no  BYTE  Internal   ABS    143  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DCR0H                                   17         no  BYTE  Internal   ABS     43  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DCR0L                                   18         no  BYTE  Internal   ABS     44  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DCR1H                                   19         no  BYTE  Internal   ABS     45  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DCR1L                                   1A         no  BYTE  Internal   ABS     46  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DCR2H                                   1B         no  BYTE  Internal   ABS     47  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DCR2L                                   1C         no  BYTE  Internal   ABS     48  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DCR3H                                   1D         no  BYTE  Internal   ABS     49  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DCR3L                                   1E         no  BYTE  Internal   ABS     50  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DCMCLK                                  40         no  BYTE  Internal   ABS    120  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DCMFA                                   41         no  BYTE  Internal   ABS    121  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DCMFD                                   42         no  BYTE  Internal   ABS    122  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DCMBD                                   43         no  BYTE  Internal   ABS    123  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DCMCR                                   44         no  BYTE  Internal   ABS    124  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DCMCSR                                  45         no  BYTE  Internal   ABS    125  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DMCR                                    4B         no  BYTE  Internal   ABS    138  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DMSR                                    4C         no  BYTE  Internal   ABS    139  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DMBK1H                                  4D         no  BYTE  Internal   ABS    140  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DMBK1L                                  4E         no  BYTE  Internal   ABS    141  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DMBK2H                                  4F         no  BYTE  Internal   ABS    142  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+DMBK2L                                  50         no  BYTE  Internal   ABS    143  private  text         0     0  E:\Projet\code\ST7Lite2.INC
 
-EECSR                                   30         no  BYTE  Internal   ABS     73  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-EICR                                    37         no  BYTE  Internal   ABS     95  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-EISR                                    3C         no  BYTE  Internal   ABS    114  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+EECSR                                   30         no  BYTE  Internal   ABS     73  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+EICR                                    37         no  BYTE  Internal   ABS     95  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+EISR                                    3C         no  BYTE  Internal   ABS    114  private  text         0     0  E:\Projet\code\ST7Lite2.INC
 
-FCSR                                    2F         no  BYTE  Internal   ABS     67  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+FCSR                                    2F         no  BYTE  Internal   ABS     67  private  text         0     0  E:\Projet\code\ST7Lite2.INC
 
-LTCSR2                                  08         no  BYTE  Internal   ABS     23  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-LTCARR                                  09         no  BYTE  Internal   ABS     24  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-LTCNTR                                  0A         no  BYTE  Internal   ABS     25  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-LTCSR1                                  0B         no  BYTE  Internal   ABS     26  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-LTICR                                   0C         no  BYTE  Internal   ABS     27  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+LTCSR2                                  08         no  BYTE  Internal   ABS     23  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+LTCARR                                  09         no  BYTE  Internal   ABS     24  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+LTCNTR                                  0A         no  BYTE  Internal   ABS     25  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+LTCSR1                                  0B         no  BYTE  Internal   ABS     26  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+LTICR                                   0C         no  BYTE  Internal   ABS     27  private  text         0     0  E:\Projet\code\ST7Lite2.INC
 
-MCCSR                                   38         no  BYTE  Internal   ABS    101  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+MCCSR                                   38         no  BYTE  Internal   ABS    101  private  text         0     0  E:\Projet\code\ST7Lite2.INC
 
-PADR                                    00         no  BYTE  Internal   ABS     11  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-PADDR                                   01         no  BYTE  Internal   ABS     12  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-PAOR                                    02         no  BYTE  Internal   ABS     13  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-PBDR                                    03         no  BYTE  Internal   ABS     15  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 15:17:50 2016
-Page 7  "initPort.asm"
-                                               e:\Projet\code\initport.asm
+PADR                                    00         no  BYTE  Internal   ABS     11  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+PADDR                                   01         no  BYTE  Internal   ABS     12  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+PAOR                                    02         no  BYTE  Internal   ABS     13  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+PBDR                                    03         no  BYTE  Internal   ABS     15  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 16:55:26 2016
+Page 9  "initPort.asm"
+                                               E:\Projet\code\initport.asm
 
-PBDDR                                   04         no  BYTE  Internal   ABS     16  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-PBOR                                    05         no  BYTE  Internal   ABS     17  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-PWMCR                                   12         no  BYTE  Internal   ABS     38  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-PWM0CSR                                 13         no  BYTE  Internal   ABS     39  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-PWM1CSR                                 14         no  BYTE  Internal   ABS     40  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-PWM2CSR                                 15         no  BYTE  Internal   ABS     41  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-PWM3CSR                                 16         no  BYTE  Internal   ABS     42  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+PBDDR                                   04         no  BYTE  Internal   ABS     16  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+PBOR                                    05         no  BYTE  Internal   ABS     17  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+PWMCR                                   12         no  BYTE  Internal   ABS     38  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+PWM0CSR                                 13         no  BYTE  Internal   ABS     39  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+PWM1CSR                                 14         no  BYTE  Internal   ABS     40  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+PWM2CSR                                 15         no  BYTE  Internal   ABS     41  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+PWM3CSR                                 16         no  BYTE  Internal   ABS     42  private  text         0     0  E:\Projet\code\ST7Lite2.INC
 
-RCCR                                    39         no  BYTE  Internal   ABS    107  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+RCCR                                    39         no  BYTE  Internal   ABS    107  private  text         0     0  E:\Projet\code\ST7Lite2.INC
 
-SPIDR                                   31         no  BYTE  Internal   ABS     79  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-SPICR                                   32         no  BYTE  Internal   ABS     80  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-SPISR                                   33         no  BYTE  Internal   ABS     81  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-SICSR                                   3A         no  BYTE  Internal   ABS    108  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+SPIDR                                   31         no  BYTE  Internal   ABS     79  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+SPICR                                   32         no  BYTE  Internal   ABS     80  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+SPISR                                   33         no  BYTE  Internal   ABS     81  private  text         0     0  E:\Projet\code\ST7Lite2.INC
+SICSR                                   3A         no  BYTE  Internal   ABS    108  private  text         0     0  E:\Projet\code\ST7Lite2.INC
 
-TRANCR                                  21         no  BYTE  Internal   ABS     53  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+TRANCR                                  21         no  BYTE  Internal   ABS     53  private  text         0     0  E:\Projet\code\ST7Lite2.INC
 
-WDGCR                                   2E         no  BYTE  Internal   ABS     60  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+WDGCR                                   2E         no  BYTE  Internal   ABS     60  private  text         0     0  E:\Projet\code\ST7Lite2.INC
 
-initPortSPI                           E000         no  WORD  Internal   ABS     52  public   text         1     0  -
+initPortSPI                           E000         no  WORD  Internal   ABS     53  public   text        95     0  -
+
+var                                     80         no  BYTE  Internal   ABS     36  private  bss          1     1  -
 
 
-62 labels
-No errors on assembly of 'e:\Projet\code\initport.asm'
+63 labels
+No errors on assembly of 'E:\Projet\code\initport.asm'

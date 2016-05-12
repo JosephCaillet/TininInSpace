@@ -6,14 +6,11 @@ ST7/
 ; DESCRIPTION:          
 ;************************************************************************
 
-	TITLE "initPort.asm"
+	TITLE "time.ASM"
 	
 	MOTOROLA
 	
 	#include "ST7Lite2.INC"
-
-	; Enlever le commentaire si vous utilisez les afficheurs
-;	#include "MAX7219.INC"
 
 
 ;************************************************************************
@@ -21,9 +18,8 @@ ST7/
 ;  ZONE DE DECLARATION DES SYMBOLES
 ;
 ;************************************************************************
-
-	PUBLIC	initPortSPI
-
+	
+	
 
 ;************************************************************************
 ;
@@ -33,8 +29,6 @@ ST7/
 	BYTES
 	segment byte 'ram0'
 
-var DS.B 1	;fourre tout pour contrer limitation mode d'adressage
-
 ;************************************************************************
 ;
 ;  ZONE DE DECLARATION DES CONSTANTES
@@ -42,7 +36,6 @@ var DS.B 1	;fourre tout pour contrer limitation mode d'adressage
 ;************************************************************************
 	WORDS
 	segment byte 'rom'
-	
 
 ;************************************************************************
 ;
@@ -50,95 +43,11 @@ var DS.B 1	;fourre tout pour contrer limitation mode d'adressage
 ;
 ;************************************************************************
 
-initPortSPI:
-	LD	A,$0C	;ctrl spi
-	LD	SPICR,A
-	
-	LD	A,$03	;status spi
-	LD	SPISR,A	
-	LD	A,$5C	;ctrl spi
-	LD	SPICR,A
-	
-	
-	LD	A,PBOR	;PB2
-	OR	A,$04
-	LD	A,PBOR
-	
-	LD	A,PBDDR
-	OR	A,$04
-	LD	A,PBDDR
-	
-	
-	LD	A,PBOR	;PB4
-	OR	A,$10
-	LD	A,PBOR
-	
-	LD 	A,PBDDR
-	OR	A,$10
-	LD	A,PBDDR
-	
-	
-	LD	A,PBOR	;PB5
-	OR	A,$20
-	LD	A,PBOR
-	
-	LD	A,PBDDR
-	OR	A,$20
-	LD	A,PBDDR
-	
-	
-	LD	X,$04	;PB2
-	CPL	X
-	LD	var,X
-	LD	A,PBDR
-	AND	A,var
-	LD	PBDR,A
-	
-	LD	X,$10	;PB4
-	CPL	X
-	LD	var,X
-	LD	A,PBDR
-	AND	A,var
-	LD	PBDR,A
-	
-	LD	A,PBDR	;PB5
-	OR	A,$20
-	LD	A,PBDR
-	
-	
-	LD	A,PAOR	;PA2
-	OR	A,$04
-	LD	A,PAOR
-	
-	LD	A,PADDR	;PA2
-	OR	A,$04
-	LD	A,PADDR
-	
-	LD	A,PADR	;PA2
-	OR	A,$04
-	LD	A,PADR
-	
-	RET
+
+
 
 ;************************************************************************
 
 	END
 
 ;************************************************************************
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -14,9 +14,6 @@ ST7/
 	;#include "screenLib.inc"
 	#include "initPort.inc"
 
-	; Enlever le commentaire si vous utilisez les afficheurs
-;	#include "MAX7219.INC"
-
 
 ;************************************************************************
 ;
@@ -53,7 +50,7 @@ ST7/
 ;************************************************************************
 
 
-        WORDS
+	WORDS
 
 	segment byte 'rom'
 
