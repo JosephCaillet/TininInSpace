@@ -30,11 +30,10 @@ ST7/
 	BYTES
 	segment byte 'ram0'
 
-;writeSpi
-dataout	DS.B 1 ;p
+var DS.B 1	;fourre tout pour contrer limitation mode d'adressage
+
+dataout	DS.B 1;p write*
 temp DS.B 1
-;writeCmd
-cmdout DS.B ;p
 
 ;************************************************************************
 ;
@@ -80,9 +79,9 @@ Mor MACRO dest src
 	POP X
 	MEND
 	
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; envoi de cmd sur port spi ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; envoi de donnees sur port spi ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;p: dataout
 ;u: temp
 writeSPI:
@@ -101,13 +100,33 @@ boucle_wait_spi:
 	RET
 
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; envoi de cmd sur port spi ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;p: dataout
 writeCmd:
+	PUSH	A 
+	MandComp PBDR, $04
+	MandComp PBDR, $20
+	CALL writeSPI
+	Mor PBDR, $20
+	POP A
+	RET
 
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; envoi de data sur port spi ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;p: dataout
 writeData:
-
+	PUSH	A 
+	Mor PBDR, $04
+	MandComp PBDR, $20
+	CALL writeSPI
+	Mor PBDR, $20
+	POP A
+	RET
 
 
 initTFT:
