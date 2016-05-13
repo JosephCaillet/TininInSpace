@@ -31,8 +31,10 @@ ST7/
 	segment byte 'ram0'
 
 ;writeSpi
-dataout	DS.B 1 ;param
+dataout	DS.B 1 ;p
 temp DS.B 1
+;writeCmd
+cmdout DS.B ;p
 
 ;************************************************************************
 ;
@@ -52,10 +54,10 @@ temp DS.B 1
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; macro pour 'et' bit à bit et complement a un ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-MandComp MACRO dest src
+MandComp MACRO dest mask
 	PUSH	X
 	PUSH	A
-	LD	X,src
+	LD	X,mask
 	CPL	X
 	LD	var,X
 	LD	A,dest
@@ -68,21 +70,24 @@ MandComp MACRO dest src
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; macro pour 'or' bit à bit ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-Mor MACRO dest mask
+Mor MACRO dest src
 	PUSH X
 	PUSH A
 	LD	A,dest
-	OR	A,mask
+	OR	A,src
 	LD	A,dest
 	POP A
 	POP X
 	MEND
 	
-
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; envoi de cmd sur port spi ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;p: dataout
+;u: temp
 writeSPI:
 	PUSH A
-	LD A,dataout
+	LD	A,dataout
 	LD	SPIDR,A
 boucle_wait_spi:
 	LD	A,SPISR

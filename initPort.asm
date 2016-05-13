@@ -50,10 +50,10 @@ var DS.B 1	;fourre tout pour contrer limitation mode d'adressage
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; macro pour 'et' bit à bit et complement a un ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-MandComp MACRO dest src
+MandComp MACRO dest mask
 	PUSH	X
 	PUSH	A
-	LD	X,src
+	LD	X,mask
 	CPL	X
 	LD	var,X
 	LD	A,dest
@@ -66,11 +66,11 @@ MandComp MACRO dest src
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; macro pour 'or' bit à bit ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-Mor MACRO dest mask
+Mor MACRO dest src
 	PUSH X
 	PUSH A
 	LD	A,dest
-	OR	A,mask
+	OR	A,src
 	LD	A,dest
 	POP A
 	POP X
