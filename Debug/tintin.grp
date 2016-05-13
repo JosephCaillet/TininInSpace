@@ -1,4 +1,5 @@
 Default E000-E02F
-Default E030-E098
-Default E099-E0A0
+Default E030-E0BE
+Default E0BF-E0D0
+Default E0D1-E0DD
 Default FFE0-FFFF

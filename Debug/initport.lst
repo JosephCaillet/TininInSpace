@@ -1,4 +1,4 @@
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 1  "initPort.asm"
                                                e:\Projet\code\initport.asm
 
@@ -59,7 +59,7 @@ Page 1  "initPort.asm"
   27  0000                                 EXTERN   LTICR.b       ; Lite Timer Input Capture 
                                                                   ;register
   28                                       
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 2  "initPort.asm"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -120,7 +120,7 @@ Page 2  "initPort.asm"
   65                             ;*************************************************************
                                  ;*********
   66                             
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 3  "initPort.asm"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -181,7 +181,7 @@ Page 3  "initPort.asm"
                                  ;*********
  106                             
  107  0000                                 EXTERN   RCCR.b        ; RC oscilator control register
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 4  "initPort.asm"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -243,7 +243,7 @@ Page 4  "initPort.asm"
   19                             ;
   20                             ;*************************************************************
                                  ;***********
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 5  "initPort.asm"
                                                e:\Projet\code\initport.asm
 
@@ -286,155 +286,233 @@ Page 5  "initPort.asm"
   50                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   51                             ; macro pour 'et' bit à bit et complement a un ;
   52                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  53  E030                       Mor       MACRO    dest src
-  54                                       LD       X,src
-  55                                       CPL      X
-  56                                       LD       var,X
-  57                                       LD       A,dest
-  58                                       AND      A,var
-  59                                       LD       dest,A
-  60  E030                                 MEND     
-  61                             
-  62                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  63                             ; macro pour 'or' bit à bit ;
-  64                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  65  E030                       MandComp  MACRO    dest mask
-  66                                       LD       A,dest
-  67                                       OR       A,mask
-  68                                       LD       A,dest
-  69  E030                                 MEND     
-  70                                       
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+  53  E030                       MandComp  MACRO    dest src
+  54                                       PUSH     X
+  55                                       PUSH     A
+  56                                       LD       X,src
+  57                                       CPL      X
+  58                                       LD       var,X
+  59                                       LD       A,dest
+  60                                       AND      A,var
+  61                                       LD       dest,A
+  62                                       POP      A
+  63                                       POP      X
+  64  E030                                 MEND     
+  65                             
+  66                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  67                             ; macro pour 'or' bit à bit ;
+  68                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  69  E030                       Mor       MACRO    dest mask
+  70                                       PUSH     X
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 6  "initPort.asm"
                                                e:\Projet\code\initport.asm
 
-  71                             ;LEs fonction d'init qui ne seront apelé qu'une fois en début 
+  71                                       PUSH     A
+  72                                       LD       A,dest
+  73                                       OR       A,mask
+  74                                       LD       A,dest
+  75                                       POP      A
+  76                                       POP      X
+  77  E030                                 MEND     
+  78                                       
+  79                             ;LEs fonction d'init qui ne seront apelé qu'une fois en début 
                                  ;de prgm ne sauvent pas les registres.
-  72                             
-  73                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  74                             ; initialisation port spi ;
-  75                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  76                             initPortSPI:  
-  77  E030   B60C                          LD       A,$0C         ;ctrl spi
-  78  E032   B732                          LD       SPICR,A
-  79                                       
-  80  E034   B603                          LD       A,$03         ;status spi
-  81  E036   B733                          LD       SPISR,A
-  82                                       
-  83  E038   B65C                          LD       A,$5C         ;ctrl spi
-  84  E03A   B732                          LD       SPICR,A
-  85                                       
-  86                                       
-  87                                       Mor      PBOR, $04
-  87  E03C   BE04                          LD       X,$04
-  87  E03E   53                            CPL      X
-  87  E03F   BF81                          LD       var,X
-  87  E041   B605                          LD       A,PBOR
-  87  E043   B481                          AND      A,var
-  87  E045   B705                          LD       PBOR,A
-  88  E047                                                        ;LD	A,PBOR	;PB2
-  89                                                              ;OR	A,$04
-  90                                                              ;LD	A,PBOR
-  91                                       
-  92                                       Mor      PBDDR, $04
-  92  E047   BE04                          LD       X,$04
-  92  E049   53                            CPL      X
-  92  E04A   BF81                          LD       var,X
-  92  E04C   B604                          LD       A,PBDDR
-  92  E04E   B481                          AND      A,var
-  92  E050   B704                          LD       PBDDR,A
-  93  E052                                                        ;LD	A,PBDDR
-  94                                                              ;OR	A,$04
-  95                                                              ;LD	A,PBDDR
-  96                                       
-  97                                       
-  98                                       Mor      PBOR, $10
-  98  E052   BE10                          LD       X,$10
-  98  E054   53                            CPL      X
-  98  E055   BF81                          LD       var,X
-  98  E057   B605                          LD       A,PBOR
-  98  E059   B481                          AND      A,var
-  98  E05B   B705                          LD       PBOR,A
-  99  E05D                                                        ;LD	A,PBOR	;PB4
- 100                                                              ;OR	A,$10
- 101                                                              ;LD	A,PBOR
- 102                                       
- 103                                       Mor      PBDDR, $10
- 103  E05D   BE10                          LD       X,$10
- 103  E05F   53                            CPL      X
- 103  E060   BF81                          LD       var,X
- 103  E062   B604                          LD       A,PBDDR
- 103  E064   B481                          AND      A,var
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+  80                             
+  81                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  82                             ; initialisation port spi ;
+  83                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  84                             initPortSPI:  
+  85  E030   B60C                          LD       A,$0C         ;ctrl spi
+  86  E032   B732                          LD       SPICR,A
+  87                                       
+  88  E034   B603                          LD       A,$03         ;status spi
+  89  E036   B733                          LD       SPISR,A
+  90                                       
+  91  E038   B65C                          LD       A,$5C         ;ctrl spi
+  92  E03A   B732                          LD       SPICR,A
+  93                                       
+  94                                       
+  95                                       Mor      PBOR, $04
+  95  E03C   89                            PUSH     X
+  95  E03D   88                            PUSH     A
+  95  E03E   B605                          LD       A,PBOR
+  95  E040   BA04                          OR       A,$04
+  95  E042   B605                          LD       A,PBOR
+  95  E044   84                            POP      A
+  95  E045   85                            POP      X
+  96  E046                                                        ;LD	A,PBOR	;PB2
+  97                                                              ;OR	A,$04
+  98                                                              ;LD	A,PBOR
+  99                                       
+ 100                                       Mor      PBDDR, $04
+ 100  E046   89                            PUSH     X
+ 100  E047   88                            PUSH     A
+ 100  E048   B604                          LD       A,PBDDR
+ 100  E04A   BA04                          OR       A,$04
+ 100  E04C   B604                          LD       A,PBDDR
+ 100  E04E   84                            POP      A
+ 100  E04F   85                            POP      X
+ 101  E050                                                        ;LD	A,PBDDR
+ 102                                                              ;OR	A,$04
+ 103                                                              ;LD	A,PBDDR
+ 104                                       
+ 105                                       
+ 106                                       Mor      PBOR, $10
+ 106  E050   89                            PUSH     X
+ 106  E051   88                            PUSH     A
+ 106  E052   B605                          LD       A,PBOR
+ 106  E054   BA10                          OR       A,$10
+ 106  E056   B605                          LD       A,PBOR
+ 106  E058   84                            POP      A
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 7  "initPort.asm"
                                                e:\Projet\code\initport.asm
 
- 103  E066   B704                          LD       PBDDR,A
- 104  E068                                                        ;LD 	A,PBDDR
- 105                                                              ;OR	A,$10
- 106                                                              ;LD	A,PBDDR
- 107                                       
- 108                                       
- 109  E068   B605                          LD       A,PBOR        ;PB5
- 110  E06A   BA20                          OR       A,$20
- 111  E06C   B605                          LD       A,PBOR
- 112                                       
- 113  E06E   B604                          LD       A,PBDDR
- 114  E070   BA20                          OR       A,$20
- 115  E072   B604                          LD       A,PBDDR
+ 106  E059   85                            POP      X
+ 107  E05A                                                        ;LD	A,PBOR	;PB4
+ 108                                                              ;OR	A,$10
+ 109                                                              ;LD	A,PBOR
+ 110                                       
+ 111                                       Mor      PBDDR, $10
+ 111  E05A   89                            PUSH     X
+ 111  E05B   88                            PUSH     A
+ 111  E05C   B604                          LD       A,PBDDR
+ 111  E05E   BA10                          OR       A,$10
+ 111  E060   B604                          LD       A,PBDDR
+ 111  E062   84                            POP      A
+ 111  E063   85                            POP      X
+ 112  E064                                                        ;LD 	A,PBDDR
+ 113                                                              ;OR	A,$10
+ 114                                                              ;LD	A,PBDDR
+ 115                                       
  116                                       
- 117                                       
- 118                                       MandComp PBDR, $04
- 118  E074   B603                          LD       A,PBDR
- 118  E076   BA04                          OR       A,$04
- 118  E078   B603                          LD       A,PBDR
- 119  E07A                                                        ;LD	X,$04	;PB2
- 120                                                              ;CPL	X
- 121                                                              ;LD	var,X
- 122                                                              ;LD	A,PBDR
- 123                                                              ;AND	A,var
- 124                                                              ;LD	PBDR,A
- 125                                       
- 126                                       MandComp PBDR, $10
- 126  E07A   B603                          LD       A,PBDR
- 126  E07C   BA10                          OR       A,$10
- 126  E07E   B603                          LD       A,PBDR
- 127  E080                                                        ;LD	X,$10	;PB4
- 128                                                              ;CPL	X
- 129                                                              ;LD	var,X
- 130                                                              ;LD	A,PBDR
- 131                                                              ;AND	A,var
- 132                                                              ;LD	PBDR,A
- 133                                       
- 134  E080   B603                          LD       A,PBDR        ;PB5
- 135  E082   BA20                          OR       A,$20
- 136  E084   B603                          LD       A,PBDR
- 137                                       
- 138                                       
- 139  E086   B602                          LD       A,PAOR        ;PA2
- 140  E088   BA04                          OR       A,$04
- 141  E08A   B602                          LD       A,PAOR
- 142                                       
- 143  E08C   B601                          LD       A,PADDR       ;PA2
- 144  E08E   BA04                          OR       A,$04
- 145  E090   B601                          LD       A,PADDR
- 146                                       
- 147  E092   B600                          LD       A,PADR        ;PA2
- 148  E094   BA04                          OR       A,$04
- 149  E096   B600                          LD       A,PADR
- 150                                       
- 151  E098   81                            RET      
- 152                             
- 153                             ;*************************************************************
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+ 117                                       Mor      PBOR, $20
+ 117  E064   89                            PUSH     X
+ 117  E065   88                            PUSH     A
+ 117  E066   B605                          LD       A,PBOR
+ 117  E068   BA20                          OR       A,$20
+ 117  E06A   B605                          LD       A,PBOR
+ 117  E06C   84                            POP      A
+ 117  E06D   85                            POP      X
+ 118  E06E                                                        ;LD	A,PBOR	;PB5
+ 119                                                              ;OR	A,$20
+ 120                                                              ;LD	A,PBOR
+ 121                                       
+ 122                                       Mor      PBDDR, $20
+ 122  E06E   89                            PUSH     X
+ 122  E06F   88                            PUSH     A
+ 122  E070   B604                          LD       A,PBDDR
+ 122  E072   BA20                          OR       A,$20
+ 122  E074   B604                          LD       A,PBDDR
+ 122  E076   84                            POP      A
+ 122  E077   85                            POP      X
+ 123  E078                                                        ;LD	A,PBDDR
+ 124                                                              ;OR	A,$20
+ 125                                                              ;LD	A,PBDDR
+ 126                                       
+ 127                                       
+ 128                                       MandComp PBDR, $04
+ 128  E078   89                            PUSH     X
+ 128  E079   88                            PUSH     A
+ 128  E07A   BE04                          LD       X,$04
+ 128  E07C   53                            CPL      X
+ 128  E07D   BF81                          LD       var,X
+ 128  E07F   B603                          LD       A,PBDR
+ 128  E081   B481                          AND      A,var
+ 128  E083   B703                          LD       PBDR,A
+ 128  E085   84                            POP      A
+ 128  E086   85                            POP      X
+ 129  E087                                                        ;LD	X,$04	;PB2
+ 130                                                              ;CPL	X
+ 131                                                              ;LD	var,X
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 8  "initPort.asm"
                                                e:\Projet\code\initport.asm
 
-                                 ;***********
- 154                             
- 155  E099                                 END      
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+ 132                                                              ;LD	A,PBDR
+ 133                                                              ;AND	A,var
+ 134                                                              ;LD	PBDR,A
+ 135                                       
+ 136                                       MandComp PBDR, $10
+ 136  E087   89                            PUSH     X
+ 136  E088   88                            PUSH     A
+ 136  E089   BE10                          LD       X,$10
+ 136  E08B   53                            CPL      X
+ 136  E08C   BF81                          LD       var,X
+ 136  E08E   B603                          LD       A,PBDR
+ 136  E090   B481                          AND      A,var
+ 136  E092   B703                          LD       PBDR,A
+ 136  E094   84                            POP      A
+ 136  E095   85                            POP      X
+ 137  E096                                                        ;LD	X,$10	;PB4
+ 138                                                              ;CPL	X
+ 139                                                              ;LD	var,X
+ 140                                                              ;LD	A,PBDR
+ 141                                                              ;AND	A,var
+ 142                                                              ;LD	PBDR,A
+ 143                                       
+ 144                                       Mor      PBDR, $20
+ 144  E096   89                            PUSH     X
+ 144  E097   88                            PUSH     A
+ 144  E098   B603                          LD       A,PBDR
+ 144  E09A   BA20                          OR       A,$20
+ 144  E09C   B603                          LD       A,PBDR
+ 144  E09E   84                            POP      A
+ 144  E09F   85                            POP      X
+ 145  E0A0                                                        ;LD	A,PBDR	;PB5
+ 146                                                              ;OR	A,$20
+ 147                                                              ;LD	A,PBDR
+ 148                                       
+ 149                                       
+ 150                                       Mor      PAOR, $04
+ 150  E0A0   89                            PUSH     X
+ 150  E0A1   88                            PUSH     A
+ 150  E0A2   B602                          LD       A,PAOR
+ 150  E0A4   BA04                          OR       A,$04
+ 150  E0A6   B602                          LD       A,PAOR
+ 150  E0A8   84                            POP      A
+ 150  E0A9   85                            POP      X
+ 151  E0AA                                                        ;LD	A,PAOR	;PA2
+ 152                                                              ;OR	A,$04
+ 153                                                              ;LD	A,PAOR
+ 154                                       
+ 155                                       Mor      PADDR, $04
+ 155  E0AA   89                            PUSH     X
+ 155  E0AB   88                            PUSH     A
+ 155  E0AC   B601                          LD       A,PADDR
+ 155  E0AE   BA04                          OR       A,$04
+ 155  E0B0   B601                          LD       A,PADDR
+ 155  E0B2   84                            POP      A
+ 155  E0B3   85                            POP      X
+ 156  E0B4                                                        ;LD	A,PADDR	;PA2
+ 157                                                              ;OR	A,$04
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 9  "initPort.asm"
+                                               e:\Projet\code\initport.asm
+
+ 158                                                              ;LD	A,PADDR
+ 159                                       
+ 160                                       Mor      PADR, $04
+ 160  E0B4   89                            PUSH     X
+ 160  E0B5   88                            PUSH     A
+ 160  E0B6   B600                          LD       A,PADR
+ 160  E0B8   BA04                          OR       A,$04
+ 160  E0BA   B600                          LD       A,PADR
+ 160  E0BC   84                            POP      A
+ 160  E0BD   85                            POP      X
+ 161  E0BE                                                        ;LD	A,PADR	;PA2
+ 162                                                              ;OR	A,$04
+ 163                                                              ;LD	A,PADR
+ 164                                       
+ 165  E0BE   81                            RET      
+ 166                             
+ 167                             ;*************************************************************
+                                 ;***********
+ 168                             
+ 169  E0BF                                 END      
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
+Page 10  "initPort.asm"
                                                e:\Projet\code\initport.asm
 
 Symbol Name                       Value     Call       Type  Scope      Rel.  Line  Privacy  Segment   Size  Bytes File
@@ -494,8 +572,8 @@ PADR                                    00         no  BYTE  Internal   ABS     
 PADDR                                   01         no  BYTE  Internal   ABS     12  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 PAOR                                    02         no  BYTE  Internal   ABS     13  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 PBDR                                    03         no  BYTE  Internal   ABS     15  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
-Page 10  "initPort.asm"
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
+Page 11  "initPort.asm"
                                                e:\Projet\code\initport.asm
 
 PBDDR                                   04         no  BYTE  Internal   ABS     16  private  text         0     0  e:\Projet\code\ST7Lite2.INC
@@ -517,7 +595,7 @@ TRANCR                                  21         no  BYTE  Internal   ABS     
 
 WDGCR                                   2E         no  BYTE  Internal   ABS     60  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-initPortSPI                           E030         no  WORD  Internal   ABS     76  public   text       105     0  -
+initPortSPI                           E030         no  WORD  Internal   ABS     84  public   text       143     0  -
 
 var                                     81         no  BYTE  Internal   ABS     33  private  bss          1     1  -
 

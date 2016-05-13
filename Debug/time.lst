@@ -1,4 +1,4 @@
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 1  "time.ASM"
                                                e:\Projet\code\time.asm
 
@@ -59,7 +59,7 @@ Page 1  "time.ASM"
   27  0000                                 EXTERN   LTICR.b       ; Lite Timer Input Capture 
                                                                   ;register
   28                                       
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 2  "time.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -120,7 +120,7 @@ Page 2  "time.ASM"
   65                             ;*************************************************************
                                  ;*********
   66                             
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 3  "time.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -181,7 +181,7 @@ Page 3  "time.ASM"
                                  ;*********
  106                             
  107  0000                                 EXTERN   RCCR.b        ; RC oscilator control register
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 4  "time.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -243,7 +243,7 @@ Page 4  "time.ASM"
   19                             ;
   20                             ;*************************************************************
                                  ;***********
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 5  "time.ASM"
                                                e:\Projet\code\time.asm
 
@@ -304,7 +304,7 @@ Page 5  "time.ASM"
   69                             ;;;;;;;;;;;;;;;;;;;;;;;;
   70                             
   71                             wait1ms:  
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 6  "time.ASM"
                                                e:\Projet\code\time.asm
 
@@ -365,7 +365,7 @@ Page 6  "time.ASM"
  118  E021   26FA                          JRNE     boucle_250_wait500ms
  119  E023   85                            POP      X
  120  E024   81                            RET      
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 7  "time.ASM"
                                                e:\Projet\code\time.asm
 
@@ -390,7 +390,7 @@ Page 7  "time.ASM"
                                  ;***********
  139                             
  140  E030                                 END      
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 8  "time.ASM"
                                                e:\Projet\code\time.asm
 
@@ -451,7 +451,7 @@ PADR                                    00         no  BYTE  Internal   ABS     
 PADDR                                   01         no  BYTE  Internal   ABS     12  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 PAOR                                    02         no  BYTE  Internal   ABS     13  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 PBDR                                    03         no  BYTE  Internal   ABS     15  private  text         0     0  e:\Projet\code\ST7Lite2.INC
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:42 2016
 Page 9  "time.ASM"
                                                e:\Projet\code\time.asm
 

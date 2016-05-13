@@ -1,4 +1,4 @@
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:26 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 1  "SQUELET.ASM"
                                                e:\Projet\code\main.asm
 
@@ -59,7 +59,7 @@ Page 1  "SQUELET.ASM"
   27  0000                                 EXTERN   LTICR.b       ; Lite Timer Input Capture 
                                                                   ;register
   28                                       
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:26 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 2  "SQUELET.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -120,7 +120,7 @@ Page 2  "SQUELET.ASM"
   65                             ;*************************************************************
                                  ;*********
   66                             
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:26 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 3  "SQUELET.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -181,7 +181,7 @@ Page 3  "SQUELET.ASM"
                                  ;*********
  106                             
  107  0000                                 EXTERN   RCCR.b        ; RC oscilator control register
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:26 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 4  "SQUELET.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -237,176 +237,188 @@ Page 4  "SQUELET.ASM"
   14                                                              ;#include "screenLib.inc"
    0  0000                                 #include "initPort.inc"
 <END_OF_INCLUSION>
-  16                             
-  17                             
-  18                             ;*************************************************************
-                                 ;***********
-  19                             ;
-  20                             ;  ZONE DE DECLARATION DES SYMBOLES
-  21                             ;
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:26 2016
+   0  0000                                 #include "time.inc"
+   1  0000                                 EXTERN   initOsc
+   2  0000                                 EXTERN   wait1ms
+   3  0000                                 EXTERN   wait2ms
+   4  0000                                 EXTERN   wait500ms
+   5  0000                                 EXTERN   wait
+   6                             
+<END_OF_INCLUSION>
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 5  "SQUELET.ASM"
                                                e:\Projet\code\main.asm
 
-  22                             ;*************************************************************
+  17                             
+  18                             
+  19                             ;*************************************************************
                                  ;***********
-  23                             
-  24  0000                                 EXTERN   initPortSPI
-  25                             
-  26                             ;*************************************************************
+  20                             ;
+  21                             ;  ZONE DE DECLARATION DES SYMBOLES
+  22                             ;
+  23                             ;*************************************************************
                                  ;***********
-  27                             ;
-  28                             ;  FIN DE LA ZONE DE DECLARATION DES SYMBOLES
-  29                             ;
-  30                             ;*************************************************************
+  24                             
+  25  0000                                 EXTERN   initPortSPI
+  26  0000                                 EXTERN   wait2ms
+  27  0000                                 EXTERN   waitTime.B
+  28                             
+  29                             ;*************************************************************
                                  ;***********
-  31                             
-  32                                       
-  33  0000                                 BYTES    
-  34                                       
-  35                                       segment  byte 'ram0'
-  36                             
-  37                             ;*************************************************************
+  30                             ;
+  31                             ;  FIN DE LA ZONE DE DECLARATION DES SYMBOLES
+  32                             ;
+  33                             ;*************************************************************
                                  ;***********
-  38                             ;
-  39                             ;  ZONE DE DECLARATION DES VARIABLES
-  40                             ;
-  41                             ;*************************************************************
+  34                             
+  35                                       
+  36  0000                                 BYTES    
+  37                                       
+  38                                       segment  byte 'ram0'
+  39                             
+  40                             ;*************************************************************
                                  ;***********
-  42                             
-  43                             
-  44                             
+  41                             ;
+  42                             ;  ZONE DE DECLARATION DES VARIABLES
+  43                             ;
+  44                             ;*************************************************************
+                                 ;***********
   45                             
-  46                             ;*************************************************************
+  46                             
+  47                             
+  48                             
+  49                             ;*************************************************************
                                  ;***********
-  47                             ;
-  48                             ;  FIN DE LA ZONE DE DECLARATION DES VARIABLES
-  49                             ;
-  50                             ;*************************************************************
+  50                             ;
+  51                             ;  FIN DE LA ZONE DE DECLARATION DES VARIABLES
+  52                             ;
+  53                             ;*************************************************************
                                  ;***********
-  51                             
-  52                             
-  53  0000                                 WORDS    
   54                             
-  55                                       segment  byte 'rom'
-  56                             
-  57                             ;*************************************************************
+  55                             
+  56  0000                                 WORDS    
+  57                             
+  58                                       segment  byte 'rom'
+  59                             
+  60                             ;*************************************************************
                                  ;***********
-  58                             ;
-  59                             ;  ZONE DE DECLARATION DES CONSTANTES
-  60                             ;
-  61                             ;*************************************************************
-                                 ;***********
-  62                             
-  63                             
-  64                             
-  65                             
-  66                             ;*************************************************************
-                                 ;***********
-  67                             ;
-  68                             ;  FIN DE LA ZONE DE DECLARATION DES CONSTANTES
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:26 2016
+  61                             ;
+  62                             ;  ZONE DE DECLARATION DES CONSTANTES
+  63                             ;
+  64                             ;*************************************************************
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 6  "SQUELET.ASM"
                                                e:\Projet\code\main.asm
 
-  69                             ;
-  70                             ;*************************************************************
                                  ;***********
-  71                             
-  72                             ;-------------------------------------------------------------
+  65                             
+  66                             
+  67                             
+  68                             
+  69                             ;*************************************************************
+                                 ;***********
+  70                             ;
+  71                             ;  FIN DE LA ZONE DE DECLARATION DES CONSTANTES
+  72                             ;
+  73                             ;*************************************************************
+                                 ;***********
+  74                             
+  75                             ;-------------------------------------------------------------
                                  ;-----------
-  73                             
-  74                             ;*************************************************************
+  76                             
+  77                             ;*************************************************************
                                  ;***********
-  75                             ;
-  76                             ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES
-  77                             ;
-  78                             ;*************************************************************
+  78                             ;
+  79                             ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES
+  80                             ;
+  81                             ;*************************************************************
                                  ;***********
-  79                             
-  80                             
-  81                             
   82                             
   83                             
-  84                             ;*************************************************************
+  84                             
+  85                             
+  86                             
+  87                             ;*************************************************************
                                  ;***********
-  85                             ;
-  86                             ;  FIN DE LA ZONE DE DECLARATION DES SOUS-PROGRAMMES
-  87                             ;
-  88                             ;*************************************************************
-                                 ;***********
-  89                             
-  90                             
+  88                             ;
+  89                             ;  FIN DE LA ZONE DE DECLARATION DES SOUS-PROGRAMMES
+  90                             ;
   91                             ;*************************************************************
                                  ;***********
-  92                             ;
-  93                             ;  PROGRAMME PRINCIPAL
-  94                             ;
-  95                             ;*************************************************************
+  92                             
+  93                             
+  94                             ;*************************************************************
                                  ;***********
-  96                             
-  97                             main:     
-  98  E099   9C                            RSP                    ; Reset Stack Pointer
-  99  E09A   CDE030                        CALL     initPortSPI
- 100                                                              ;CALL totodknfdiobfvjfdbgjreb
- 101                                                              ;LD
- 102                             boucl     
- 103                             
- 104                                       
- 105  E09D   CCE09D                        JP       boucl
- 106                             
- 107                             
+  95                             ;
+  96                             ;  PROGRAMME PRINCIPAL
+  97                             ;
+  98                             ;*************************************************************
+                                 ;***********
+  99                             
+ 100                             main:     
+ 101  E0D1   9C                            RSP                    ; Reset Stack Pointer
+ 102  E0D2   CDE030                        CALL     initPortSPI
+ 103  E0D5   CDE010                        CALL     wait2ms
+ 104  E0D8   B680                          LD       A,waitTime
+ 105                                                              ;CALL totodknfdiobfvjfdbgjreb
+ 106                                                              ;LD
+ 107                             boucl     
  108                             
- 109                             ;*************************************************************
-                                 ;***********
- 110                             ;
- 111                             ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES D'INTERRUPTION
- 112                             ;
- 113                             ;*************************************************************
-                                 ;***********
- 114                             
- 115                             
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:26 2016
+ 109                                       
+ 110  E0DA   CCE0DA                        JP       boucl
+ 111                             
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 7  "SQUELET.ASM"
                                                e:\Projet\code\main.asm
 
- 116  E0A0   80                  dummy_rt:  IRET                   ; Procédure vide : retour au 
-                                                                  ;programme principal.
- 117                             
- 118                             
+ 112                             
+ 113                             
+ 114                             ;*************************************************************
+                                 ;***********
+ 115                             ;
+ 116                             ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES D'INTERRUPTION
+ 117                             ;
+ 118                             ;*************************************************************
+                                 ;***********
  119                             
- 120                             ;*************************************************************
+ 120                             
+ 121  E0DD   80                  dummy_rt:  IRET                   ; Procédure vide : retour au 
+                                                                  ;programme principal.
+ 122                             
+ 123                             
+ 124                             
+ 125                             ;*************************************************************
                                  ;***********
- 121                             ;
- 122                             ;  ZONE DE DECLARATION DES VECTEURS D'INTERRUPTION
- 123                             ;
- 124                             ;*************************************************************
+ 126                             ;
+ 127                             ;  ZONE DE DECLARATION DES VECTEURS D'INTERRUPTION
+ 128                             ;
+ 129                             ;*************************************************************
                                  ;***********
- 125                             
- 126                             
- 127                                       segment  'vectit'
- 128                             
- 129                             
- 130  FFE0   E0A0                          DC.W     dummy_rt      ; Adresse FFE0-FFE1h
- 131  FFE2   E0A0                SPI_it    DC.W     dummy_rt      ; Adresse FFE2-FFE3h
- 132  FFE4   E0A0                lt_RTC1_it  DC.W     dummy_rt      ; Adresse FFE4-FFE5h
- 133  FFE6   E0A0                lt_IC_it  DC.W     dummy_rt      ; Adresse FFE6-FFE7h
- 134  FFE8   E0A0                at_timerover_it  DC.W     dummy_rt      ; Adresse FFE8-FFE9h
- 135  FFEA   E0A0                at_timerOC_it  DC.W     dummy_rt      ; Adresse FFEA-FFEBh
- 136  FFEC   E0A0                AVD_it    DC.W     dummy_rt      ; Adresse FFEC-FFEDh
- 137  FFEE   E0A0                          DC.W     dummy_rt      ; Adresse FFEE-FFEFh
- 138  FFF0   E0A0                lt_RTC2_it  DC.W     dummy_rt      ; Adresse FFF0-FFF1h
- 139  FFF2   E0A0                ext3_it   DC.W     dummy_rt      ; Adresse FFF2-FFF3h
- 140  FFF4   E0A0                ext2_it   DC.W     dummy_rt      ; Adresse FFF4-FFF5h
- 141  FFF6   E0A0                ext1_it   DC.W     dummy_rt      ; Adresse FFF6-FFF7h
- 142  FFF8   E0A0                ext0_it   DC.W     dummy_rt      ; Adresse FFF8-FFF9h
- 143  FFFA   E0A0                AWU_it    DC.W     dummy_rt      ; Adresse FFFA-FFFBh
- 144  FFFC   E0A0                softit    DC.W     dummy_rt      ; Adresse FFFC-FFFDh
- 145  FFFE   E099                reset     DC.W     main          ; Adresse FFFE-FFFFh
- 146                             
- 147                             
- 148  0000                                 END      
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:26 2016
+ 130                             
+ 131                             
+ 132                                       segment  'vectit'
+ 133                             
+ 134                             
+ 135  FFE0   E0DD                          DC.W     dummy_rt      ; Adresse FFE0-FFE1h
+ 136  FFE2   E0DD                SPI_it    DC.W     dummy_rt      ; Adresse FFE2-FFE3h
+ 137  FFE4   E0DD                lt_RTC1_it  DC.W     dummy_rt      ; Adresse FFE4-FFE5h
+ 138  FFE6   E0DD                lt_IC_it  DC.W     dummy_rt      ; Adresse FFE6-FFE7h
+ 139  FFE8   E0DD                at_timerover_it  DC.W     dummy_rt      ; Adresse FFE8-FFE9h
+ 140  FFEA   E0DD                at_timerOC_it  DC.W     dummy_rt      ; Adresse FFEA-FFEBh
+ 141  FFEC   E0DD                AVD_it    DC.W     dummy_rt      ; Adresse FFEC-FFEDh
+ 142  FFEE   E0DD                          DC.W     dummy_rt      ; Adresse FFEE-FFEFh
+ 143  FFF0   E0DD                lt_RTC2_it  DC.W     dummy_rt      ; Adresse FFF0-FFF1h
+ 144  FFF2   E0DD                ext3_it   DC.W     dummy_rt      ; Adresse FFF2-FFF3h
+ 145  FFF4   E0DD                ext2_it   DC.W     dummy_rt      ; Adresse FFF4-FFF5h
+ 146  FFF6   E0DD                ext1_it   DC.W     dummy_rt      ; Adresse FFF6-FFF7h
+ 147  FFF8   E0DD                ext0_it   DC.W     dummy_rt      ; Adresse FFF8-FFF9h
+ 148  FFFA   E0DD                AWU_it    DC.W     dummy_rt      ; Adresse FFFA-FFFBh
+ 149  FFFC   E0DD                softit    DC.W     dummy_rt      ; Adresse FFFC-FFFDh
+ 150  FFFE   E0D1                reset     DC.W     main          ; Adresse FFFE-FFFFh
+ 151                             
+ 152                             
+ 153  0000                                 END      
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 8  "SQUELET.ASM"
                                                e:\Projet\code\main.asm
 
@@ -422,8 +434,8 @@ ADCDRH                                  35         no  BYTE  Internal   ABS     
 ADCDRL                                  36         no  BYTE  Internal   ABS     89  private  data         0     0  e:\Projet\code\ST7Lite2.INC
 AWUPR                                   49         no  BYTE  Internal   ABS    131  private  data         0     0  e:\Projet\code\ST7Lite2.INC
 AWUCSR                                  4A         no  BYTE  Internal   ABS    132  private  data         0     0  e:\Projet\code\ST7Lite2.INC
-AVD_it                                FFEC         no  WORD  Internal   ABS    136  private  data         4     2  -
-AWU_it                                FFFA         no  WORD  Internal   ABS    143  private  data         2     2  -
+AVD_it                                FFEC         no  WORD  Internal   ABS    141  private  data         4     2  -
+AWU_it                                FFFA         no  WORD  Internal   ABS    148  private  data         2     2  -
 
 BREAKCR                                 22         no  BYTE  Internal   ABS     54  private  data         0     0  e:\Projet\code\ST7Lite2.INC
 
@@ -467,7 +479,7 @@ MCCSR                                   38         no  BYTE  Internal   ABS    1
 
 PADR                                    00         no  BYTE  Internal   ABS     11  private  data         0     0  e:\Projet\code\ST7Lite2.INC
 PADDR                                   01         no  BYTE  Internal   ABS     12  private  data         0     0  e:\Projet\code\ST7Lite2.INC
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:26 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 9  "SQUELET.ASM"
                                                e:\Projet\code\main.asm
 
@@ -487,36 +499,43 @@ SPIDR                                   31         no  BYTE  Internal   ABS     
 SPICR                                   32         no  BYTE  Internal   ABS     80  private  data         0     0  e:\Projet\code\ST7Lite2.INC
 SPISR                                   33         no  BYTE  Internal   ABS     81  private  data         0     0  e:\Projet\code\ST7Lite2.INC
 SICSR                                   3A         no  BYTE  Internal   ABS    108  private  data         0     0  e:\Projet\code\ST7Lite2.INC
-SPI_it                                FFE2         no  WORD  Internal   ABS    131  private  data         2     2  -
+SPI_it                                FFE2         no  WORD  Internal   ABS    136  private  data         2     2  -
 
 TRANCR                                  21         no  BYTE  Internal   ABS     53  private  data         0     0  e:\Projet\code\ST7Lite2.INC
 
 WDGCR                                   2E         no  BYTE  Internal   ABS     60  private  data         0     0  e:\Projet\code\ST7Lite2.INC
 
-at_timerover_it                       FFE8         no  WORD  Internal   ABS    134  private  data         2     2  -
-at_timerOC_it                         FFEA         no  WORD  Internal   ABS    135  private  data         2     2  -
+at_timerover_it                       FFE8         no  WORD  Internal   ABS    139  private  data         2     2  -
+at_timerOC_it                         FFEA         no  WORD  Internal   ABS    140  private  data         2     2  -
 
-boucl                                 E09D         no  WORD  Internal   ABS    102  private  text         3     0  -
+boucl                                 E0DA         no  WORD  Internal   ABS    107  private  text         3     0  -
 
-dummy_rt                              E0A0         no  WORD  Internal   ABS    116  private  text         1     0  -
+dummy_rt                              E0DD         no  WORD  Internal   ABS    121  private  text         1     0  -
 
-ext3_it                               FFF2         no  WORD  Internal   ABS    139  private  data         2     2  -
-ext2_it                               FFF4         no  WORD  Internal   ABS    140  private  data         2     2  -
-ext1_it                               FFF6         no  WORD  Internal   ABS    141  private  data         2     2  -
-ext0_it                               FFF8         no  WORD  Internal   ABS    142  private  data         2     2  -
+ext3_it                               FFF2         no  WORD  Internal   ABS    144  private  data         2     2  -
+ext2_it                               FFF4         no  WORD  Internal   ABS    145  private  data         2     2  -
+ext1_it                               FFF6         no  WORD  Internal   ABS    146  private  data         2     2  -
+ext0_it                               FFF8         no  WORD  Internal   ABS    147  private  data         2     2  -
 
-initPortSPI                           E030         no  WORD  Internal   ABS     24  private  data         0     0  -
+initOsc                               E000         no  WORD  Internal   ABS      1  private  data         0     0  e:\Projet\code\time.inc
+initPortSPI                           E030         no  WORD  Internal   ABS     25  private  data         0     0  -
 
-lt_RTC1_it                            FFE4         no  WORD  Internal   ABS    132  private  data         2     2  -
-lt_IC_it                              FFE6         no  WORD  Internal   ABS    133  private  data         2     2  -
-lt_RTC2_it                            FFF0         no  WORD  Internal   ABS    138  private  data         2     2  -
+lt_RTC1_it                            FFE4         no  WORD  Internal   ABS    137  private  data         2     2  -
+lt_IC_it                              FFE6         no  WORD  Internal   ABS    138  private  data         2     2  -
+lt_RTC2_it                            FFF0         no  WORD  Internal   ABS    143  private  data         2     2  -
 
-main                                  E099         no  WORD  Internal   ABS     97  private  text         4     0  -
+main                                  E0D1         no  WORD  Internal   ABS    100  private  text         9     0  -
 
-reset                                 FFFE         no  WORD  Internal   ABS    145  private  data         2     2  -
+reset                                 FFFE         no  WORD  Internal   ABS    150  private  data         2     2  -
 
-softit                                FFFC         no  WORD  Internal   ABS    144  private  data         2     2  -
+softit                                FFFC         no  WORD  Internal   ABS    149  private  data         2     2  -
+
+wait1ms                               E006         no  WORD  Internal   ABS      2  private  data         0     0  e:\Projet\code\time.inc
+wait2ms                               E010         no  WORD  Internal   ABS      3  private  data         0     0  e:\Projet\code\time.inc
+wait500ms                             E01A         no  WORD  Internal   ABS      4  private  data         0     0  e:\Projet\code\time.inc
+wait                                  E025         no  WORD  Internal   ABS      5  private  data         0     0  e:\Projet\code\time.inc
+waitTime                                80         no  BYTE  Internal   ABS     27  private  data         0     0  -
 
 
-79 labels
+85 labels
 No errors on assembly of 'e:\Projet\code\main.asm'

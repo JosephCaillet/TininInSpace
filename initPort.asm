@@ -50,22 +50,30 @@ var DS.B 1	;fourre tout pour contrer limitation mode d'adressage
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; macro pour 'et' bit à bit et complement a un ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-Mor MACRO dest src
+MandComp MACRO dest src
+	PUSH	X
+	PUSH	A
 	LD	X,src
 	CPL	X
 	LD	var,X
 	LD	A,dest
 	AND	A,var
 	LD	dest,A
+	POP A
+	POP X
 	MEND
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; macro pour 'or' bit à bit ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-MandComp MACRO dest mask
+Mor MACRO dest mask
+	PUSH X
+	PUSH A
 	LD	A,dest
 	OR	A,mask
 	LD	A,dest
+	POP A
+	POP X
 	MEND
 	
 ;LEs fonction d'init qui ne seront apelé qu'une fois en début de prgm ne sauvent pas les registres.

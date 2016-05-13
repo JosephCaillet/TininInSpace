@@ -1,4 +1,4 @@
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 1  "screen_lib.ASM"
                                                e:\Projet\code\screenlib.asm
 
@@ -59,7 +59,7 @@ Page 1  "screen_lib.ASM"
   27  0000                                 EXTERN   LTICR.b       ; Lite Timer Input Capture 
                                                                   ;register
   28                                       
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 2  "screen_lib.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -120,7 +120,7 @@ Page 2  "screen_lib.ASM"
   65                             ;*************************************************************
                                  ;*********
   66                             
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 3  "screen_lib.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -181,7 +181,7 @@ Page 3  "screen_lib.ASM"
                                  ;*********
  106                             
  107  0000                                 EXTERN   RCCR.b        ; RC oscilator control register
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 4  "screen_lib.ASM"
                                                e:\Projet\code\ST7Lite2.INC
 
@@ -244,7 +244,7 @@ Page 4  "screen_lib.ASM"
 <END_OF_INCLUSION>
   15                             
   16                             
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 5  "screen_lib.ASM"
                                                e:\Projet\code\screenlib.asm
 
@@ -268,175 +268,230 @@ Page 5  "screen_lib.ASM"
   30  0000                                 BYTES    
   31                                       segment  byte 'ram0'
   32                             
-  33                             ;*************************************************************
-                                 ;***********
-  34                             ;
-  35                             ;  ZONE DE DECLARATION DES CONSTANTES
-  36                             ;
+  33                             ;writeSpi
+  34  0082                       dataout   DS.B     1             ;param
+  35  0083                       temp      DS.B     1
+  36                             
   37                             ;*************************************************************
                                  ;***********
-  38  0000                                 WORDS    
-  39                                       segment  byte 'rom'
-  40                             
+  38                             ;
+  39                             ;  ZONE DE DECLARATION DES CONSTANTES
+  40                             ;
   41                             ;*************************************************************
                                  ;***********
-  42                             ;
-  43                             ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES
-  44                             ;
+  42  0084                                 WORDS    
+  43                                       segment  byte 'rom'
+  44                             
   45                             ;*************************************************************
                                  ;***********
-  46                             
-  47                             initTFT:  
-  48                             
-  49                             
+  46                             ;
+  47                             ;  ZONE DE DECLARATION DES SOUS-PROGRAMMES
+  48                             ;
+  49                             ;*************************************************************
+                                 ;***********
   50                             
-  51                             cmdList:  
-  52                             
-  53                             
-  54                             
-  55                             writeCmd:  
-  56                             
-  57                             
-  58                             
-  59                             writeData:  
-  60                             
-  61                             
-  62                             
-  63                             writeSPI:  
-  64                             
-  65                             
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+  51                             
+  52                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  53                             ; macro pour 'et' bit à bit et complement a un ;
+  54                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  55  E0BF                       MandComp  MACRO    dest src
+  56                                       PUSH     X
+  57                                       PUSH     A
+  58                                       LD       X,src
+  59                                       CPL      X
+  60                                       LD       var,X
+  61                                       LD       A,dest
+  62                                       AND      A,var
+  63                                       LD       dest,A
+  64                                       POP      A
+  65                                       POP      X
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 6  "screen_lib.ASM"
                                                e:\Projet\code\screenlib.asm
 
-  66                             
-  67                             fillRectTFT:  
-  68                             
-  69                             
-  70                             
-  71                             fillScreenTFT:  
-  72                             
-  73                             
-  74                             
-  75                             setAddrWindow:  
-  76                             
-  77                             
-  78                             
-  79                             drawPixel:  
-  80                             
+  66  E0BF                                 MEND     
+  67                             
+  68                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  69                             ; macro pour 'or' bit à bit ;
+  70                             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  71  E0BF                       Mor       MACRO    dest mask
+  72                                       PUSH     X
+  73                                       PUSH     A
+  74                                       LD       A,dest
+  75                                       OR       A,mask
+  76                                       LD       A,dest
+  77                                       POP      A
+  78                                       POP      X
+  79  E0BF                                 MEND     
+  80                                       
   81                             
   82                             
-  83                             
-  84                             
-  85                             
-  86                             ;*************************************************************
-                                 ;***********
-  87                             
-  88  0000                                 END      
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
+  83                             writeSPI:  
+  84  E0BF   B682                          LD       A,dataout
+  85  E0C1   B731                          LD       SPIDR,A
+  86                             boucle_wait_spi:  
+  87  E0C3   B633                          LD       A,SPISR
+  88  E0C5   B480                          AND      A,128
+  89  E0C7   26FA                          JRNE     boucle_wait_spi
+  90  E0C9   B633                          LD       A,SPISR
+  91  E0CB   B783                          LD       temp,A
+  92  E0CD   B631                          LD       A,SPIDR
+  93  E0CF   B783                          LD       temp,A
+  94                             
+  95                             
+  96                             
+  97                             writeCmd:  
+  98                             
+  99                             
+ 100                             
+ 101                             writeData:  
+ 102                             
+ 103                             
+ 104                             
+ 105                             initTFT:  
+ 106                             
+ 107                             
+ 108                             
+ 109                             cmdList:  
+ 110                             
+ 111                             
+ 112                             
+ 113                             setAddrWindow:  
+ 114                             
+ 115                             
+ 116                             
+ 117                             fillRectTFT:  
+ 118                             
+ 119                             
+ 120                             
+ 121                             fillScreenTFT:  
+ 122                             
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
 Page 7  "screen_lib.ASM"
+                                               e:\Projet\code\screenlib.asm
+
+ 123                             
+ 124                             
+ 125                             drawPixel:  
+ 126                             
+ 127                             
+ 128                             
+ 129                             
+ 130                             
+ 131                             
+ 132                             ;*************************************************************
+                                 ;***********
+ 133                             
+ 134  E0D1                                 END      
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
+Page 8  "screen_lib.ASM"
                                                e:\Projet\code\screenlib.asm
 
 Symbol Name                       Value     Call       Type  Scope      Rel.  Line  Privacy  Segment   Size  Bytes File
 
-ATCSR                                   0D         no  BYTE  Internal   ABS     33  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-ATRH                                    10         no  BYTE  Internal   ABS     36  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-ATRL                                    11         no  BYTE  Internal   ABS     37  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-ATICRH                                  1F         no  BYTE  Internal   ABS     51  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-ATICRL                                  20         no  BYTE  Internal   ABS     52  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-ADCCSR                                  34         no  BYTE  Internal   ABS     87  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-ADCDRH                                  35         no  BYTE  Internal   ABS     88  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-ADCDRL                                  36         no  BYTE  Internal   ABS     89  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-AWUPR                                   49         no  BYTE  Internal   ABS    131  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-AWUCSR                                  4A         no  BYTE  Internal   ABS    132  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
+ATCSR                                   0D         no  BYTE  Internal   ABS     33  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+ATRH                                    10         no  BYTE  Internal   ABS     36  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+ATRL                                    11         no  BYTE  Internal   ABS     37  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+ATICRH                                  1F         no  BYTE  Internal   ABS     51  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+ATICRL                                  20         no  BYTE  Internal   ABS     52  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+ADCCSR                                  34         no  BYTE  Internal   ABS     87  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+ADCDRH                                  35         no  BYTE  Internal   ABS     88  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+ADCDRL                                  36         no  BYTE  Internal   ABS     89  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+AWUPR                                   49         no  BYTE  Internal   ABS    131  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+AWUCSR                                  4A         no  BYTE  Internal   ABS    132  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-BREAKCR                                 22         no  BYTE  Internal   ABS     54  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
+BREAKCR                                 22         no  BYTE  Internal   ABS     54  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-CNTRH                                   0E         no  BYTE  Internal   ABS     34  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-CNTRL                                   0F         no  BYTE  Internal   ABS     35  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
+CNTRH                                   0E         no  BYTE  Internal   ABS     34  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+CNTRL                                   0F         no  BYTE  Internal   ABS     35  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-DCR0H                                   17         no  BYTE  Internal   ABS     43  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DCR0L                                   18         no  BYTE  Internal   ABS     44  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DCR1H                                   19         no  BYTE  Internal   ABS     45  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DCR1L                                   1A         no  BYTE  Internal   ABS     46  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DCR2H                                   1B         no  BYTE  Internal   ABS     47  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DCR2L                                   1C         no  BYTE  Internal   ABS     48  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DCR3H                                   1D         no  BYTE  Internal   ABS     49  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DCR3L                                   1E         no  BYTE  Internal   ABS     50  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DCMCLK                                  40         no  BYTE  Internal   ABS    120  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DCMFA                                   41         no  BYTE  Internal   ABS    121  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DCMFD                                   42         no  BYTE  Internal   ABS    122  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DCMBD                                   43         no  BYTE  Internal   ABS    123  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DCMCR                                   44         no  BYTE  Internal   ABS    124  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DCMCSR                                  45         no  BYTE  Internal   ABS    125  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DMCR                                    4B         no  BYTE  Internal   ABS    138  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DMSR                                    4C         no  BYTE  Internal   ABS    139  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DMBK1H                                  4D         no  BYTE  Internal   ABS    140  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DMBK1L                                  4E         no  BYTE  Internal   ABS    141  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DMBK2H                                  4F         no  BYTE  Internal   ABS    142  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-DMBK2L                                  50         no  BYTE  Internal   ABS    143  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
+DCR0H                                   17         no  BYTE  Internal   ABS     43  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DCR0L                                   18         no  BYTE  Internal   ABS     44  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DCR1H                                   19         no  BYTE  Internal   ABS     45  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DCR1L                                   1A         no  BYTE  Internal   ABS     46  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DCR2H                                   1B         no  BYTE  Internal   ABS     47  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DCR2L                                   1C         no  BYTE  Internal   ABS     48  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DCR3H                                   1D         no  BYTE  Internal   ABS     49  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DCR3L                                   1E         no  BYTE  Internal   ABS     50  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DCMCLK                                  40         no  BYTE  Internal   ABS    120  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DCMFA                                   41         no  BYTE  Internal   ABS    121  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DCMFD                                   42         no  BYTE  Internal   ABS    122  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DCMBD                                   43         no  BYTE  Internal   ABS    123  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DCMCR                                   44         no  BYTE  Internal   ABS    124  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DCMCSR                                  45         no  BYTE  Internal   ABS    125  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DMCR                                    4B         no  BYTE  Internal   ABS    138  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DMSR                                    4C         no  BYTE  Internal   ABS    139  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DMBK1H                                  4D         no  BYTE  Internal   ABS    140  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DMBK1L                                  4E         no  BYTE  Internal   ABS    141  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DMBK2H                                  4F         no  BYTE  Internal   ABS    142  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+DMBK2L                                  50         no  BYTE  Internal   ABS    143  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-EECSR                                   30         no  BYTE  Internal   ABS     73  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-EICR                                    37         no  BYTE  Internal   ABS     95  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-EISR                                    3C         no  BYTE  Internal   ABS    114  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
+EECSR                                   30         no  BYTE  Internal   ABS     73  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+EICR                                    37         no  BYTE  Internal   ABS     95  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+EISR                                    3C         no  BYTE  Internal   ABS    114  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-FCSR                                    2F         no  BYTE  Internal   ABS     67  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
+FCSR                                    2F         no  BYTE  Internal   ABS     67  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-LTCSR2                                  08         no  BYTE  Internal   ABS     23  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-LTCARR                                  09         no  BYTE  Internal   ABS     24  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-LTCNTR                                  0A         no  BYTE  Internal   ABS     25  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-LTCSR1                                  0B         no  BYTE  Internal   ABS     26  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-LTICR                                   0C         no  BYTE  Internal   ABS     27  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
+LTCSR2                                  08         no  BYTE  Internal   ABS     23  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+LTCARR                                  09         no  BYTE  Internal   ABS     24  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+LTCNTR                                  0A         no  BYTE  Internal   ABS     25  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+LTCSR1                                  0B         no  BYTE  Internal   ABS     26  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+LTICR                                   0C         no  BYTE  Internal   ABS     27  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-MCCSR                                   38         no  BYTE  Internal   ABS    101  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
+MCCSR                                   38         no  BYTE  Internal   ABS    101  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-PADR                                    00         no  BYTE  Internal   ABS     11  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-PADDR                                   01         no  BYTE  Internal   ABS     12  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-PAOR                                    02         no  BYTE  Internal   ABS     13  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-PBDR                                    03         no  BYTE  Internal   ABS     15  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-STMicroelectronics assembler v4.49   (C)1987-2016   Thu May 12 18:47:25 2016
-Page 8  "screen_lib.ASM"
+PADR                                    00         no  BYTE  Internal   ABS     11  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+PADDR                                   01         no  BYTE  Internal   ABS     12  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+PAOR                                    02         no  BYTE  Internal   ABS     13  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+PBDR                                    03         no  BYTE  Internal   ABS     15  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+STMicroelectronics assembler v4.49   (C)1987-2016   Fri May 13 08:55:43 2016
+Page 9  "screen_lib.ASM"
                                                e:\Projet\code\screenlib.asm
 
-PBDDR                                   04         no  BYTE  Internal   ABS     16  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-PBOR                                    05         no  BYTE  Internal   ABS     17  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-PWMCR                                   12         no  BYTE  Internal   ABS     38  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-PWM0CSR                                 13         no  BYTE  Internal   ABS     39  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-PWM1CSR                                 14         no  BYTE  Internal   ABS     40  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-PWM2CSR                                 15         no  BYTE  Internal   ABS     41  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-PWM3CSR                                 16         no  BYTE  Internal   ABS     42  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
+PBDDR                                   04         no  BYTE  Internal   ABS     16  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+PBOR                                    05         no  BYTE  Internal   ABS     17  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+PWMCR                                   12         no  BYTE  Internal   ABS     38  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+PWM0CSR                                 13         no  BYTE  Internal   ABS     39  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+PWM1CSR                                 14         no  BYTE  Internal   ABS     40  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+PWM2CSR                                 15         no  BYTE  Internal   ABS     41  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+PWM3CSR                                 16         no  BYTE  Internal   ABS     42  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-RCCR                                    39         no  BYTE  Internal   ABS    107  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
+RCCR                                    39         no  BYTE  Internal   ABS    107  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-SPIDR                                   31         no  BYTE  Internal   ABS     79  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-SPICR                                   32         no  BYTE  Internal   ABS     80  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-SPISR                                   33         no  BYTE  Internal   ABS     81  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
-SICSR                                   3A         no  BYTE  Internal   ABS    108  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
+SPIDR                                   31         no  BYTE  Internal   ABS     79  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+SPICR                                   32         no  BYTE  Internal   ABS     80  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+SPISR                                   33         no  BYTE  Internal   ABS     81  private  text         0     0  e:\Projet\code\ST7Lite2.INC
+SICSR                                   3A         no  BYTE  Internal   ABS    108  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-TRANCR                                  21         no  BYTE  Internal   ABS     53  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
+TRANCR                                  21         no  BYTE  Internal   ABS     53  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-WDGCR                                   2E         no  BYTE  Internal   ABS     60  private  undef        0     0  e:\Projet\code\ST7Lite2.INC
+WDGCR                                   2E         no  BYTE  Internal   ABS     60  private  text         0     0  e:\Projet\code\ST7Lite2.INC
 
-cmdList                               0000         no  WORD  Internal   ABS     51  private  undef        0     0  -
+boucle_wait_spi                       E0C3         no  WORD  Internal   ABS     86  private  text        14     0  -
 
-drawPixel                             0000         no  WORD  Internal   ABS     79  private  undef        0     0  -
+cmdList                               E0D1         no  WORD  Internal   ABS    109  private  text         0     0  -
 
-fillRectTFT                           0000         no  WORD  Internal   ABS     67  private  undef        0     0  -
-fillScreenTFT                         0000         no  WORD  Internal   ABS     71  private  undef        0     0  -
+dataout                                 82         no  BYTE  Internal   ABS     34  private  bss          1     1  -
+drawPixel                             E0D1         no  WORD  Internal   ABS    125  private  text         0     0  -
 
-initOsc                               E000         no  WORD  Internal   ABS      1  private  undef        0     0  e:\Projet\code\time.INC
-initTFT                               0000         no  WORD  Internal   ABS     47  private  undef        0     0  -
+fillRectTFT                           E0D1         no  WORD  Internal   ABS    117  private  text         0     0  -
+fillScreenTFT                         E0D1         no  WORD  Internal   ABS    121  private  text         0     0  -
 
-setAddrWindow                         0000         no  WORD  Internal   ABS     75  private  undef        0     0  -
+initOsc                               E000         no  WORD  Internal   ABS      1  private  text         0     0  e:\Projet\code\time.INC
+initTFT                               E0D1         no  WORD  Internal   ABS    105  private  text         0     0  -
 
-wait1ms                               E006         no  WORD  Internal   ABS      2  private  undef        0     0  e:\Projet\code\time.INC
-wait2ms                               E010         no  WORD  Internal   ABS      3  private  undef        0     0  e:\Projet\code\time.INC
-wait500ms                             E01A         no  WORD  Internal   ABS      4  private  undef        0     0  e:\Projet\code\time.INC
-wait                                  E025         no  WORD  Internal   ABS      5  private  undef        0     0  e:\Projet\code\time.INC
-writeCmd                              0000         no  WORD  Internal   ABS     55  private  undef        0     0  -
-writeData                             0000         no  WORD  Internal   ABS     59  private  undef        0     0  -
-writeSPI                              0000         no  WORD  Internal   ABS     63  private  undef        0     0  -
+setAddrWindow                         E0D1         no  WORD  Internal   ABS    113  private  text         0     0  -
+
+temp                                    83         no  BYTE  Internal   ABS     35  private  bss          1     1  -
+
+wait1ms                               E006         no  WORD  Internal   ABS      2  private  text         0     0  e:\Projet\code\time.INC
+wait2ms                               E010         no  WORD  Internal   ABS      3  private  text         0     0  e:\Projet\code\time.INC
+wait500ms                             E01A         no  WORD  Internal   ABS      4  private  text         0     0  e:\Projet\code\time.INC
+wait                                  E025         no  WORD  Internal   ABS      5  private  text         0     0  e:\Projet\code\time.INC
+writeSPI                              E0BF         no  WORD  Internal   ABS     83  private  text         4     0  -
+writeCmd                              E0D1         no  WORD  Internal   ABS     97  private  text         0     0  -
+writeData                             E0D1         no  WORD  Internal   ABS    101  private  text         0     0  -
 
 
-75 labels
+78 labels
 No errors on assembly of 'e:\Projet\code\screenlib.asm'
