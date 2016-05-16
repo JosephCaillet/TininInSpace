@@ -51,30 +51,45 @@ var DS.B 1	;fourre tout pour contrer limitation mode d'adressage
 ; macro pour 'et' bit à bit et complement a un ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 MandComp MACRO dest mask
-	PUSH	X
-	PUSH	A
+	;PUSH	X
+	;PUSH	A
 	LD	X,mask
 	CPL	X
 	LD	var,X
 	LD	A,dest
 	AND	A,var
 	LD	dest,A
-	POP A
-	POP X
+	;POP A
+	;POP X
 	MEND
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; macro pour 'or' bit à bit ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Mor MACRO dest src
-	PUSH X
-	PUSH A
+	;PUSH X
+	;PUSH A
 	LD	A,dest
 	OR	A,src
-	LD	A,dest
-	POP A
-	POP X
+	LD	dest,A
+	;POP A
+	;POP X
 	MEND
+	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; macro pour 'and' bit à bit ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Mand MACRO dest src
+	;PUSH X
+	;PUSH A
+	LD	A,dest
+	AND	A,src
+	LD	dest,A
+	;POP A
+	;POP X
+	MEND
+
+
 	
 ;LEs fonction d'init qui ne seront apelé qu'une fois en début de prgm ne sauvent pas les registres.
 
@@ -82,49 +97,50 @@ Mor MACRO dest src
 ; initialisation port spi ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 initPortSPI:
-	LD	A,$0C	;ctrl spi
+	LD	A,#$0C	;ctrl spi
 	LD	SPICR,A
 	
-	LD	A,$03	;status spi
+	LD	A,#$03	;status spi
 	LD	SPISR,A	
-	LD	A,$5C	;ctrl spi
+	LD	A,#$5C	;ctrl spi
 	LD	SPICR,A
 	
 	
-	Mor PBOR, $04
+	Mor PBOR, #$04
 	;LD	A,PBOR	;PB2
 	;OR	A,$04
 	;LD	A,PBOR
 	
-	Mor PBDDR, $04
+	Mor PBDDR, #$04
 	;LD	A,PBDDR
 	;OR	A,$04
 	;LD	A,PBDDR
 	
 	
-	Mor PBOR, $10
+	Mor PBOR, #$10
 	;LD	A,PBOR	;PB4
 	;OR	A,$10
 	;LD	A,PBOR
 	
-	Mor PBDDR, $10
+	Mor PBDDR, #$10
 	;LD 	A,PBDDR
 	;OR	A,$10
 	;LD	A,PBDDR
 	
 	
-	Mor PBOR, $20
+	Mor PBOR, #$20
 	;LD	A,PBOR	;PB5
 	;OR	A,$20
 	;LD	A,PBOR
 	
-	Mor PBDDR, $20
+	Mor PBDDR, #$20
 	;LD	A,PBDDR
 	;OR	A,$20
 	;LD	A,PBDDR
 	
 	
-	MandComp PBDR, $04
+	;MandComp PBDR, $04
+	Mand PBDR, #$FB
 	;LD	X,$04	;PB2
 	;CPL	X
 	;LD	var,X
@@ -132,7 +148,8 @@ initPortSPI:
 	;AND	A,var
 	;LD	PBDR,A
 	
-	MandComp PBDR, $10
+	;MandComp PBDR, $10
+	Mand PBDR, #$EF
 	;LD	X,$10	;PB4
 	;CPL	X
 	;LD	var,X
@@ -140,23 +157,23 @@ initPortSPI:
 	;AND	A,var
 	;LD	PBDR,A
 	
-	Mor PBDR, $20
+	Mor PBDR, #$20
 	;LD	A,PBDR	;PB5
 	;OR	A,$20
 	;LD	A,PBDR
 	
 	
-	Mor PAOR, $04
+	Mor PAOR, #$04
 	;LD	A,PAOR	;PA2
 	;OR	A,$04
 	;LD	A,PAOR
 	
-	Mor PADDR, $04
+	Mor PADDR, #$04
 	;LD	A,PADDR	;PA2
 	;OR	A,$04
 	;LD	A,PADDR
 	
-	Mor PADR, $04
+	Mor PADR, #$04
 	;LD	A,PADR	;PA2
 	;OR	A,$04
 	;LD	A,PADR

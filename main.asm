@@ -11,7 +11,7 @@ ST7/
 	MOTOROLA
 	
 	#include "ST7Lite2.INC"
-	;#include "screenLib.inc"
+	#include "screenLib.inc"
 	#include "initPort.inc"
 	#include "time.inc"
 
@@ -25,6 +25,10 @@ ST7/
 	EXTERN	initPortSPI
 	;EXTERN	wait2ms
 	EXTERN	waitTime.B
+	;EXTERN	initOsc
+	
+	
+	EXTERN initTFT
 
 ;************************************************************************
 ;
@@ -37,7 +41,7 @@ ST7/
 	
 	segment byte 'ram0'
 
-
+test DS.B 1
 ;************************************************************************
 ;
 ;  ZONE DE DECLARATION DES VARIABLES
@@ -101,10 +105,8 @@ ST7/
 main:
 	RSP			; Reset Stack Pointer
 	CALL	initPortSPI
-	CALL	wait2ms
-	LD	A,waitTime
-	;CALL totodknfdiobfvjfdbgjreb
-	;LD
+	CALL	initOsc
+	CALL	initTFT
 boucl
 
 	
