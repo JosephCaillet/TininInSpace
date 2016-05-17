@@ -371,7 +371,7 @@ while_num_cmd:
 	LD	numArg,A
 	
 	;LD A,numArg	;ms =
-	ADD	A,#DELAY
+	AND	A,#DELAY
 	LD	ms,A
 	
 	;MandComp numArg, #DELAY	;numArg&=
@@ -449,37 +449,13 @@ initTFT:
 	CALL	writeData
 	
 	;test
-	LD	A,#$CF
+	LD	A,#$AF
 	LD	colorMSB,A
-	LD	A,#$AD
+	LD	A,#$FB
 	LD	colorLSB,A
-	;CALL	fillScreenTFT
+	CALL	fillScreenTFT
 	
-	LD	A,#$45
-	LD	colorMSB,A
-	LD	A,#$FF
-	LD	colorLSB,A
-	LD	A,#30
-	LD	x0win,A
-	LD	A,#30
-	LD	y0win,A
-	LD	A,#30
-	LD	width,A
-	LD	A,#50
-	LD	height,A
-	;CALL	fillRectTFT
-	
-	LD	A,#$DD
-	LD	colorMSB,A
-	LD	A,#$BB
-	LD	colorLSB,A
-	LD	A,#30
-	LD	x0win,A
-	LD	A,#30
-	LD	y0win,A
-	CALL	drawPixel
-	
-	LD	A,#$CC
+	LD	A,#$AC
 	LD	colorMSB,A
 	LD	A,#$DB
 	LD	colorLSB,A
@@ -488,6 +464,109 @@ initTFT:
 	LD	A,#70
 	LD	y0win,A
 	CALL	drawPixel
+	
+	LD	A,#$AC
+	LD	colorMSB,A
+	LD	A,#$FF
+	LD	colorLSB,A
+	LD	A,#30
+	LD	x0win,A
+	LD	A,#30
+	LD	y0win,A
+	CALL	drawPixel
+	
+	LD	A,#$FF
+	LD	colorMSB,A
+	LD	A,#$45
+	LD	colorLSB,A
+	LD	A,#3
+	LD	x0win,A
+	LD	A,#3
+	LD	y0win,A
+	LD	A,#80
+	LD	width,A
+	LD	A,#10
+	LD	height,A
+	CALL	fillRectTFT
+	
+	LD	A,#$FF
+	LD	colorMSB,A
+	LD	A,#$FF
+	LD	colorLSB,A
+	LD	A,#30
+	LD	x0win,A
+	LD	A,#30
+	LD	y0win,A
+	LD	A,#80
+	LD	width,A
+	LD	A,#30
+	LD	height,A
+	CALL	fillRectTFT
+	
+	LD	A,#$AA
+	LD	colorMSB,A
+	LD	A,#$BB
+	LD	colorLSB,A
+	LD	A,#1
+	LD	x0win,A
+	LD	A,#1
+	LD	y0win,A
+	LD	A,#8
+	LD	width,A
+	LD	A,#150
+	LD	height,A
+	CALL	fillRectTFT
+	
+	LD	A,#$AC
+	LD	colorMSB,A
+	LD	A,#$DB
+	LD	colorLSB,A
+	LD	A,#80
+	LD	x0win,A
+	LD	A,#70
+	LD	y0win,A
+	CALL	drawPixel
+	
+	LD	A,#$FF
+	LD	colorMSB,A
+	LD	A,#$FF
+	LD	colorLSB,A
+	LD	A,#35
+	LD	x0win,A
+	LD	A,#35
+	LD	y0win,A
+	CALL	drawPixel
+	
+	LD	A,#$FF
+	LD	colorMSB,A
+	LD	A,#$FF
+	LD	colorLSB,A
+	LD	A,#90
+	LD	x0win,A
+	LD	A,#140
+	LD	y0win,A
+	CALL	drawPixel
+	
+	LD	A,#$FF
+	LD	colorMSB,A
+	LD	A,#$FF
+	LD	colorLSB,A
+	LD	A,#40
+	LD	x0win,A
+	LD	A,#110
+	LD	y0win,A
+	CALL	drawPixel
+	
+	LD	A,#$FF
+	LD	colorMSB,A
+	LD	A,#$FF
+	LD	colorLSB,A
+	LD	A,#60
+	LD	x0win,A
+	LD	A,#80
+	LD	y0win,A
+	CALL	drawPixel
+	
 	;end test
 	
 	POP A
@@ -583,13 +662,15 @@ fillRectTFT:
 	Mor	PBDR, #$04
 	Mand	PBDR, #$DF
 
-fill_rect_for_y:
 	LD	Y,height
+	
+fill_rect_for_y:
 	CP	Y,#0
 	JRULE	end_fill_rect_for_y
 
-fill_rect_for_x:
 	LD	X,width
+	
+fill_rect_for_x:
 	CP	X,#0
 	JRULE	end_fill_rect_for_x
 	
