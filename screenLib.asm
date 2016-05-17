@@ -449,9 +449,9 @@ initTFT:
 	CALL	writeData
 	
 	;test
-	LD	A,#$AF
+	LD	A,#$5A
 	LD	colorMSB,A
-	LD	A,#$FB
+	LD	A,#$A5
 	LD	colorLSB,A
 	CALL	fillScreenTFT
 	
