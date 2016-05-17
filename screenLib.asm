@@ -432,7 +432,7 @@ initTFT:
 	
 	CALL cmdList3
 	
-	LD	A,ST7735_MADCTL
+	LD	A,#ST7735_MADCTL
 	LD	dataout,A
 	CALL	writeCmd
 	
@@ -445,7 +445,7 @@ initTFT:
 	LD	colorMSB,A
 	LD	A,#$AD
 	LD	colorLSB,A
-	CALL	fillScreenTFT
+	;CALL	fillScreenTFT
 	
 	LD	A,#$45
 	LD	colorMSB,A
@@ -459,7 +459,7 @@ initTFT:
 	LD	width,A
 	LD	A,#50
 	LD	height,A
-	CALL	fillRectTFT
+	;CALL	fillRectTFT
 	
 	LD	A,#$DD
 	LD	colorMSB,A
@@ -494,7 +494,7 @@ initTFT:
 ;y1win	DS.B	1;p
 setAddrWindow:
 	PUSH	A
-	LD A,ST7735_CASET
+	LD A,#ST7735_CASET
 	LD dataout,A
 	CALL writeCmd
 	
@@ -515,7 +515,7 @@ setAddrWindow:
 	CALL writeData
 	
 	
-	LD A,ST7735_RASET
+	LD A,#ST7735_RASET
 	LD dataout,A
 	CALL writeCmd
 	
@@ -536,7 +536,7 @@ setAddrWindow:
 	CALL writeData
 	
 	
-	LD A,ST7735_RAMWR
+	LD A,#ST7735_RAMWR
 	LD dataout,A
 	CALL writeCmd
 	
