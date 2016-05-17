@@ -270,8 +270,8 @@ boucle_wait_spi:
 ;p: dataout
 writeCmd:
 	PUSH	A 
-	MandComp PBDR, #$04
-	MandComp PBDR, #$20
+	Mand PBDR, #$FB
+	Mand PBDR, #$DF
 	CALL writeSPI
 	Mor PBDR, #$20
 	POP A
@@ -286,7 +286,7 @@ writeCmd:
 writeData:
 	PUSH	A 
 	Mor PBDR, #$04
-	MandComp PBDR, #$20
+	Mand PBDR, #$DF
 	CALL writeSPI
 	Mor PBDR, #$20
 	POP A
@@ -372,7 +372,8 @@ while_num_cmd:
 	ADD	A,#DELAY
 	LD	ms,A
 	
-	MandComp numArg, #DELAY	;numArg&=
+	;MandComp numArg, #DELAY	;numArg&=
+	Mand numArg, #$7F	;numArg&= DELAY EQU $80
 	
 while_num_arg:
 	DEC	numArg
@@ -398,8 +399,8 @@ end_while_num_arg:
 	JP while_num_cmd
 	
 skip_ms_eq_255:
-	LD	ms,A
-	LD	A,waitTime
+	LD	A,ms
+	LD	waitTime,A
 	CALL	wait
 	JP while_num_cmd
 	
@@ -439,7 +440,7 @@ initTFT:
 	LD	dataout,A
 	CALL	writeCmd
 	
-	LD	A,$C0
+	LD	A,#$C0
 	LD	dataout,A
 	CALL	writeData
 	
@@ -448,7 +449,7 @@ initTFT:
 	LD	colorMSB,A
 	LD	A,#$AD
 	LD	colorLSB,A
-	;CALL	fillScreenTFT
+	CALL	fillScreenTFT
 	
 	LD	A,#$45
 	LD	colorMSB,A
@@ -462,7 +463,7 @@ initTFT:
 	LD	width,A
 	LD	A,#50
 	LD	height,A
-	;CALL	fillRectTFT
+	CALL	fillRectTFT
 	
 	LD	A,#$DD
 	LD	colorMSB,A
