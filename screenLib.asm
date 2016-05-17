@@ -358,8 +358,10 @@ cmdList3:
 
 while_num_cmd:
 	;for each cmd
-	DEC	numCmd
+	LD	A,numCmd
+	CP	A,#0
 	JREQ end_while_num_cmd
+	DEC	numCmd
 	
 	CALL read_src	;write cmd
 	LD	dataout,A
@@ -376,8 +378,10 @@ while_num_cmd:
 	Mand numArg, #$7F	;numArg&= DELAY EQU $80
 	
 while_num_arg:
-	DEC	numArg
+	LD	A,numArg
+	CP	A,#0
 	JREQ	end_while_num_arg
+	DEC	numArg
 	
 	CALL read_src	;write cmd
 	LD	dataout,A
@@ -449,7 +453,7 @@ initTFT:
 	LD	colorMSB,A
 	LD	A,#$AD
 	LD	colorLSB,A
-	CALL	fillScreenTFT
+	;CALL	fillScreenTFT
 	
 	LD	A,#$45
 	LD	colorMSB,A
@@ -463,7 +467,7 @@ initTFT:
 	LD	width,A
 	LD	A,#50
 	LD	height,A
-	CALL	fillRectTFT
+	;CALL	fillRectTFT
 	
 	LD	A,#$DD
 	LD	colorMSB,A

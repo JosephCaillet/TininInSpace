@@ -4,7 +4,7 @@ McuOption=64751
 CommunicationParameters=
 [DebugState_v1-Debug.DebugContext]
 DumpRWOnFly=0
-WatchVariables1=SPISR!0;width!0;
+WatchVariables1=SPISR!0;width!0;numCmd!0;dataout!0;numArg!0;ms!0;waitTime!0;
 FormatWatch1=0
 FormatViewType1=1
 FormatViewAddress1=1
