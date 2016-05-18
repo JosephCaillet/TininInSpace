@@ -10,32 +10,45 @@ import java.io.IOException;
  */
 public class Compressor
 {
-	public static String compressTitleImage(String imgPath, Color c1, Color c2, Color c3, Color c4)
-	{
-		if(imgPath.startsWith("/home/joseph/file:"))
-		{
-			imgPath = imgPath.substring("/home/joseph/file:".length());
-		}
+	private static int imageSize = 0;
 
+	public static int getImageSize()
+	{
+		return imageSize;
+	}
+
+	public static String compressTitleImage(String imgPath, Color c1, Color c2, Color c3, Color c4, boolean dispSize)
+	{
+		imageSize = 0;
 		BufferedImage img;
+
 		try
 		{
+			if(imgPath.startsWith("/home/joseph/file:"))
+			{
+				imgPath = imgPath.substring("/home/joseph/file:".length());
+			}
 			img = ImageIO.read(new File(imgPath));
 		}
-		catch (IOException e)
+		catch(IOException e)
 		{
-			return  e.getMessage() + "Error loading : " + imgPath;
+			return  e.getMessage() + "\nError loading : " + imgPath;
 		}
-		catch (Exception e)
+		catch(Exception e)
 		{
 			return "Error loading : " + imgPath;
 		}
 
 		String result = "";
 
+		if(dispSize)
+		{
+			result += result += "\tDC.B\t" + img.getWidth() + ", " + img.getHeight() + "\n";
+		}
+
 		for(int y = 0; y < img.getHeight(); y++)
 		{
-			System.out.println("\nLine : " + y);
+			//System.out.println("\nLine : " + y);
 			Color lastColor = new Color(img.getRGB(0, y));
 			int repetition = 0;
 
@@ -68,24 +81,25 @@ public class Compressor
 
 	private static int addColorBit(Color current, Color c1, Color c2, Color c3, Color c4)
 	{
+		imageSize++;
 		if(current.equals(c1))
 		{
-			System.out.println("Noir");
+			//System.out.println("Noir");
 			return Integer.parseInt("00000000",2);
 		}
 		else if(current.equals(c2))
 		{
-			System.out.println("Gris");
+			//System.out.println("Gris");
 			return Integer.parseInt("01000000",2);
 		}
 		else if(current.equals(c3))
 		{
-			System.out.println("Blanc");
+			//System.out.println("Blanc");
 			return Integer.parseInt("10000000",2);
 		}
 		else if(current.equals(c4))
 		{
-			System.out.println("Rouge");
+			//System.out.println("Rouge");
 			return Integer.parseInt("11000000",2);
 		}
 		return -255;
