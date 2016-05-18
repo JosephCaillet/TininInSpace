@@ -21,9 +21,9 @@ public class MainWindow extends JFrame implements ActionListener
 	private ColorPanel spriteColor1;
 	private ColorPanel spriteColor2;
 
-	private JButton fileBtn = new JButton("Choose File");
-	private JButton compressBtn = new JButton("Compress");
-	private JButton copyBtn = new JButton("Copy to clipboard");
+	private JButton fileBtn = new JButton("Choose File", new ImageIcon("rsc/file_src.png"));
+	private JButton compressBtn = new JButton("Compress", new ImageIcon("rsc/compress.png"));
+	private JButton copyBtn = new JButton("Copy to clipboard", new ImageIcon("rsc/copy.png"));
 
 	String filePath;
 

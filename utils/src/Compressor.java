@@ -33,14 +33,12 @@ public class Compressor
 
 		String result = "";
 
-		result += "\tDC.B\t" + img.getWidth() + ", " + img.getHeight();
-
 		for(int y = 0; y < img.getHeight(); y++)
 		{
 			Color lastColor = new Color(img.getRGB(0, y));
 			int repetition = 0;
 
-			result += "\n\tDC.B ";
+			result += "\tDC.B\t";
 
 			for(int x = 1; x < img.getWidth(); x++)
 			{
@@ -58,6 +56,8 @@ public class Compressor
 					lastColor = newColor;
 				}
 			}
+
+			result += repetition + "\n";
 		}
 
 		return result;
