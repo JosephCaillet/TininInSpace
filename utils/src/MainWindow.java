@@ -93,11 +93,15 @@ public class MainWindow extends JFrame implements ActionListener
 		btnPanel.setMaximumSize(new Dimension(100000,150));
 
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+		add(Box.createRigidArea(new Dimension(10, 10)));
 		add(tabbedPane);
+		add(Box.createRigidArea(new Dimension(10, 5)));
 		add(sizeBox);
+		add(Box.createRigidArea(new Dimension(10, 5)));
 		add(btnPanel);
-		add(new JScrollPane(output, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED));
 		add(imageSize);
+		add(Box.createRigidArea(new Dimension(10, 5)));
+		add(new JScrollPane(output, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED));
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
@@ -105,6 +109,7 @@ public class MainWindow extends JFrame implements ActionListener
 		setPreferredSize(new Dimension(getWidth() + 200, getHeight() + 500));
 		//setLocationRelativeTo(null);
 		setVisible(true);
+		requestFocusInWindow();
 	}
 
 	@Override
