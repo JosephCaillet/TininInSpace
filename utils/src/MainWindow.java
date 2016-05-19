@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 public class MainWindow extends JFrame implements ActionListener
 {
 	private JTextArea output = new JTextArea("");
-	private JLabel imageSize = new JLabel("Image size: 0 byte(s)");
+	private JLabel imageSize = new JLabel("Image size: NA - Compression ratio: NA");
 	private JTabbedPane tabbedPane = new JTabbedPane();
 
 	private ColorPanel titleColor1;
@@ -19,7 +19,7 @@ public class MainWindow extends JFrame implements ActionListener
 	private ColorPanel titleColor3;
 	private ColorPanel titleColor4;
 
-	private JCheckBox sizeBox = new JCheckBox("Include width and height");
+	private JCheckBox sizeBox = new JCheckBox("Include size (width and height)");
 
 	//private ColorPanel spriteColor1;
 	//private ColorPanel spriteColor2;
@@ -104,6 +104,7 @@ public class MainWindow extends JFrame implements ActionListener
 		add(new JScrollPane(output, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED));
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setIconImage(new ImageIcon("rsc/compress.png").getImage());
 		pack();
 		setMinimumSize(new Dimension(getWidth() + 100, getHeight() + 100));
 		setPreferredSize(new Dimension(getWidth() + 200, getHeight() + 500));
@@ -132,8 +133,8 @@ public class MainWindow extends JFrame implements ActionListener
 			String result = Compressor.compressTitleImage(filePath, titleColor1.getColor(), titleColor2.getColor(), titleColor3.getColor(), titleColor4.getColor(), sizeBox.isSelected());
 			output.setText(result);
 			output.setCaretPosition(0);
-			imageSize.setText("Image size: " + Compressor.getImageSize() + " byte(s)");
-			pack();
+			imageSize.setText("Image size: " + Compressor.getImageSize() + " byte(s) - Compression ratio: " + Compressor.getCompressionRatio() + "%");
+			//pack();
 		}
 		else if(e.getSource() == copyBtn)
 		{

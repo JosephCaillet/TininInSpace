@@ -1,7 +1,6 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 
@@ -11,10 +10,16 @@ import java.io.IOException;
 public class Compressor
 {
 	private static int imageSize = 0;
+	private static float compressionRatio = 0;
 
 	public static int getImageSize()
 	{
 		return imageSize;
+	}
+
+	public static float getCompressionRatio()
+	{
+		return compressionRatio;
 	}
 
 	public static String compressTitleImage(String imgPath, Color c1, Color c2, Color c3, Color c4, boolean dispSize)
@@ -76,6 +81,8 @@ public class Compressor
 			result += repetition + "\n";
 		}
 
+		System.out.println(imageSize + "\n" + img.getHeight() + "\n" + img.getWidth());
+		compressionRatio = (float)imageSize / (float)(img.getHeight()*img.getWidth()) * 100.0f;
 		return result;
 	}
 
