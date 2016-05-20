@@ -487,9 +487,9 @@ initTFT:
 	LD	y0win,A
 	;CALL	drawPixel
 	
-	LD	A,#$FF
+	LD	A,#$CC
 	LD	colorMSB,A
-	LD	A,#$45
+	LD	A,#$CC
 	LD	colorLSB,A
 	LD	A,#3
 	LD	x0win,A
@@ -601,7 +601,25 @@ initTFT:
 	CALL	setSprite
 	LD	A,#2
 	LD	dspCoef,A
-	LD	A,#20
+	LD	A,#40
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#24
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#2
+	LD	dspCoef,A
+	LD	A,#80
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#26
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#2
+	LD	dspCoef,A
+	LD	A,#120
 	LD	dsp0Y,A
 	CALL	dspSprite
 	
@@ -878,7 +896,7 @@ boucl_dsp_title
 		cp a,temp
 		jrult dsp_trait_rect
 
-			ld a,dspOX
+			ld a,dsp0X
 			ld x0win,a 			;: x0win = dspOX
 			ld a,y0win
 			add a,dspCoef
