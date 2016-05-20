@@ -589,10 +589,19 @@ initTFT:
 	LD	A,#20
 	LD	numSprite,A
 	CALL	setSprite
-	LD	A,#1
+	LD	A,#2
 	LD	dspCoef,A
 	LD	A,#0
 	LD	dsp0X,A
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#22
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#2
+	LD	dspCoef,A
+	LD	A,#20
 	LD	dsp0Y,A
 	CALL	dspSprite
 	
