@@ -6049,3 +6049,322 @@ No errors on assembly of 'E:\Projet\code\st7lite2.asm'
 No errors on assembly of 'E:\Projet\code\initport.asm'
 No errors on assembly of 'E:\Projet\code\screenlib.asm'
 No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(39): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(39): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(50): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(50): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(51): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(51): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(55): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(55): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(76): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(76): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(161): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(161): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+e:\Projet\code\sprites.asm(310): as1 : Error 54: Can't match Addressing mode '	LD A,'
+1 error on assembly of 'e:\Projet\code\sprites.asm'
+e:\Projet\code\sprites.asm(310): as1 : Error 54: Can't match Addressing mode '	LD A,'
+1 error on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+e:\Projet\code\sprites.asm(310): as1 : Error 67: Improper Character(s) '+1,#5'
+1 error on assembly of 'e:\Projet\code\sprites.asm'
+e:\Projet\code\sprites.asm(310): as1 : Error 67: Improper Character(s) '+1,#5'
+1 error on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+e:\Projet\code\sprites.asm(310): as1 : Error 54: Can't match Addressing mode '	LD var,#5'
+1 error on assembly of 'e:\Projet\code\sprites.asm'
+e:\Projet\code\sprites.asm(310): as1 : Error 54: Can't match Addressing mode '	LD var,#5'
+1 error on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+e:\Projet\code\sprites.asm(312): as1 : Error 67: Improper Character(s) '+1,A'
+1 error on assembly of 'e:\Projet\code\sprites.asm'
+e:\Projet\code\sprites.asm(312): as1 : Error 67: Improper Character(s) '+1,A'
+1 error on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+e:\Projet\code\sprites.asm(312): as1 : Error 67: Improper Character(s) '+#1,A'
+1 error on assembly of 'e:\Projet\code\sprites.asm'
+e:\Projet\code\sprites.asm(312): as1 : Error 67: Improper Character(s) '+#1,A'
+1 error on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+e:\Projet\code\sprites.asm(311): as1 : Error 54: Can't match Addressing mode '	LD	var,(tabSprite,X)'
+e:\Projet\code\sprites.asm(314): as1 : Error 54: Can't match Addressing mode '	LD	var,(tabSprite,X)'
+2 errors on assembly of 'e:\Projet\code\sprites.asm'
+e:\Projet\code\sprites.asm(311): as1 : Error 54: Can't match Addressing mode '	LD	var,(tabSprite,X)'
+e:\Projet\code\sprites.asm(314): as1 : Error 54: Can't match Addressing mode '	LD	var,(tabSprite,X)'
+2 errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(50): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(50): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(52): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(52): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(56): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(56): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(58): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(58): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(60): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(60): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(82): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(82): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(84): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(84): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(86): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(86): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(88): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(88): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(90): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(90): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(135): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(135): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+
+e:\Projet\code\sprites.asm(173): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+e:\Projet\code\sprites.asm(173): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+e:\Projet\code\sprites.asm(323): as1 : Error 54: Can't match Addressing mode '	LD A,'
+1 error on assembly of 'e:\Projet\code\sprites.asm'
+e:\Projet\code\sprites.asm(323): as1 : Error 54: Can't match Addressing mode '	LD A,'
+1 error on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+e:\Projet\code\screenlib.asm(775): as1 : Error 67: Improper Character(s) '+1,#5'
+1 error on assembly of 'e:\Projet\code\screenlib.asm'
+e:\Projet\code\screenlib.asm(775): as1 : Error 67: Improper Character(s) '+1,#5'
+1 error on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+e:\Projet\code\screenlib.asm(775): as1 : Error 67: Improper Character(s) '+1,#5'
+1 error on assembly of 'e:\Projet\code\screenlib.asm'
+e:\Projet\code\screenlib.asm(775): as1 : Error 67: Improper Character(s) '+1,#5'
+e:\Projet\code\screenlib.asm(775): as2 : Error 46: Illegal undefined label 'sprite#+1,#5'
+2 errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+e:\Projet\code\screenlib.asm(775): as1 : Error 67: Improper Character(s) '+#1,#5'
+1 error on assembly of 'e:\Projet\code\screenlib.asm'
+e:\Projet\code\screenlib.asm(775): as1 : Error 67: Improper Character(s) '+#1,#5'
+1 error on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+e:\Projet\code\screenlib.asm(775): as1 : Error 54: Can't match Addressing mode '	LD	A,(tabSprite)'
+1 error on assembly of 'e:\Projet\code\screenlib.asm'
+e:\Projet\code\screenlib.asm(775): as1 : Error 54: Can't match Addressing mode '	LD	A,(tabSprite)'
+1 error on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\mapping.asm'
+No errors on assembly of 'e:\Projet\code\sprites.asm'
+No errors on assembly of 'e:\Projet\code\time.asm'
+No errors on assembly of 'e:\Projet\code\st7lite2.asm'
+No errors on assembly of 'e:\Projet\code\initport.asm'
+No errors on assembly of 'e:\Projet\code\screenlib.asm'
+No errors on assembly of 'e:\Projet\code\main.asm'

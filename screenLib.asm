@@ -88,6 +88,8 @@ ST7735_GMCTRN1 EQU  $E1
 	;EXTERN wait
 
 	EXTERN waitTime.B
+	EXTERN tabSprite.W
+	
 ;************************************************************************
 ;
 ;  ZONE DE DECLARATION DES VARIABLES
@@ -118,6 +120,10 @@ colorMSB	DS.B	1;p
 colorLSB	DS.B	1;p
 width	DS.B 1;p
 height	DS.B 1;p
+
+;setSprite
+numSprite	DS.B	1
+sprite	DS.B	1
 
 ;************************************************************************
 ;
@@ -760,7 +766,33 @@ drawPixel:
 	RET
 
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; choose sprite to be displayed ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;numSprite;p
+;sprite;u
+setSprite:
+	PUSH	A
+	PUSH	X
+	PUSH	Y
+	
+	LD	X,numSprite
+	LD	A,(tabSprite,X)
+	
+	LD	Y,#0
+	LD	(sprite,X),A
+	
+	INC	X
+	LD	A,(tabSprite,X)
+	
+	INC	Y
+	LD	(sprite,X),A
+	
+	POP	Y
+	POP	X
+	POP	A
+	RET
+	
 ;************************************************************************
 
 	END
