@@ -761,6 +761,130 @@ drawPixel:
 
 
 
+;-----------------------------------------------------------------------;
+;-----------------------------------------------------------------------;
+;---                  Fonctions personnelles                         ---;
+;-----------------------------------------------------------------------;
+;-----------------------------------------------------------------------;
+
+;----------------------------------------------------;
+;-            decompress a picture                  -;
+;----------------------------------------------------;
+; p: sprite
+; p: dspCoef
+; p: dspOX
+; p: dspOY
+
+;add var sprite, dspX, dspY, dspOX, dspOY, dspCoef
+
+dsp_sprite:
+	push a
+	push x
+	push y
+
+	clr x0win
+	clr y0win
+	ld y,2
+
+boucl_dsp_title
+	;:: while(y0win - dspOY < sprite[1] * dspCoef) do
+	ld  x,#1
+	ld x,(sprite,x)
+	ld a,dspCoef
+	mul x,a
+	ld a,y0win
+	sub a,dsp0Y
+	cp a,x
+	jrge end_boucl_dsp_title
+
+		;:: if(x0win - dspOX >= sprite[0] * dspCoef) then
+		ld x,sprite
+		ld a,dspCoef
+		mul x,a
+		ld a,x0win
+		sub a,dspOX
+		cp a,x
+		jrlt dsp_trait_rect
+
+			clr x0win 			;: x0win = 0
+			ld a,y0win
+			add a,dspCoef
+			ld y0win,a 			;: y0win += dspCoef
+
+		;:: end if
+dsp_trait_rect
+
+
+	;--- gestion de la couleur du rectangle
+		;:: switch(sprite[y] & %11000000)
+		ld a,(sprite,y)
+		and a,#%11000000
+			;:: case 0:
+				cp a,#0
+				jrne dsp_sprite_col2
+				ld a,#$0
+				ld colorMSB,a 		;: colorMSB = 0x00
+				ld colorLSB,a 		;: colorLSB = 0x00
+				jp end_dsp_sprite_col	;: break
+dsp_sprite_col2
+			;:: case: 64
+				cp a,#64
+				jrne dsp_sprite_col3
+				ld a,#$84
+				ld colorMSB,a 		;: colorMSB = 0x84
+				ld a,#$10
+				ld colorLSB,a 		;: colorLSB = 0x10
+				jp end_dsp_sprite_col 	;: break
+dsp_sprite_col3
+			;:: case: 128
+				cp a,#128
+				jrne dsp_sprite_col4
+				ld a,#$ff
+				ld colorMSB,a 		;: colorMSB = 0xff
+				ld colorLSB,a 		;: colorLSB = 0xff
+				jp end_dsp_sprite_col 	;: break
+dsp_sprite_col4
+			;:: default:
+				ld a,#$f8
+				ld colorMSB,a 		;: colorMSB = 0xf8
+				ld a,#$00
+				ld colorLSB,a 		;: colorLSB = 0x00
+		;:: end switch
+end_dsp_sprite_col
+
+		
+		;--- gestion de la largeur et de la hauteur du rectangle
+		ld a,dspCoef
+		ld height,a 				;: height = dspCoef
+		ld a,(sprite,y)
+		and a,#%00111111
+		inc a
+		ld x,dspCoef
+		mul a,x
+		ld width,a 					;: width = ((sprite[y] & %00111111) + 1) * dspCoef
+
+
+		;--- dessin du rectangle
+		call fillRectTFT
+
+		ld a,x0win
+		add a,width
+		ld x0win,a 					;: x0win += width
+
+		inc y 						;: y++
+
+		;--- retour à la condition de la boucle
+		jp boucl_dsp_title
+	;:: end while
+end_boucl_dsp_title
+
+	pop y
+	pop x
+	pop a
+	ret
+
+
+
 ;************************************************************************
 
 	END
