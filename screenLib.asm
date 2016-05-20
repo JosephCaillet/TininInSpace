@@ -848,8 +848,10 @@ dspSprite:
 	push x
 	push y
 
-	clr x0win
-	clr y0win
+	ld a,dsp0X
+	ld x0win,a
+	ld a,dsp0Y
+	ld y0win,a
 	ld y,#2
 
 boucl_dsp_title
@@ -876,7 +878,8 @@ boucl_dsp_title
 		cp a,temp
 		jrult dsp_trait_rect
 
-			clr x0win 			;: x0win = 0
+			ld a,dspOX
+			ld x0win,a 			;: x0win = dspOX
 			ld a,y0win
 			add a,dspCoef
 			ld y0win,a 			;: y0win += dspCoef
