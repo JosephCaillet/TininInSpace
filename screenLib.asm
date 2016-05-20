@@ -125,6 +125,12 @@ height	DS.B 1;p
 numSprite	DS.B	1
 sprite	DS.B	1
 
+;displaySrite
+dspCoef DS.B 1
+dsp0X DS.B 1
+dsp0Y DS.B 1
+
+
 ;************************************************************************
 ;
 ;  ZONE DE DECLARATION DES CONSTANTES
@@ -828,17 +834,19 @@ boucl_dsp_title
 	mul x,a
 	ld a,y0win
 	sub a,dsp0Y
-	cp a,x
-	jrge end_boucl_dsp_title
+	ld temp,x
+	cp a,temp
+	jruge end_boucl_dsp_title
 
 		;:: if(x0win - dspOX >= sprite[0] * dspCoef) then
 		ld x,sprite
 		ld a,dspCoef
 		mul x,a
 		ld a,x0win
-		sub a,dspOX
-		cp a,x
-		jrlt dsp_trait_rect
+		sub a,dsp0X
+		ld temp,x
+		cp a,temp
+		jrult dsp_trait_rect
 
 			clr x0win 			;: x0win = 0
 			ld a,y0win
@@ -893,9 +901,10 @@ end_dsp_sprite_col
 		ld a,(sprite,y)
 		and a,#%00111111
 		inc a
-		ld x,dspCoef
-		mul a,x
-		ld width,a 					;: width = ((sprite[y] & %00111111) + 1) * dspCoef
+		ld x,a
+		ld a,dspCoef
+		mul x,a
+		ld width,x 					;: width = ((sprite[y] & %00111111) + 1) * dspCoef
 
 
 		;--- dessin du rectangle
