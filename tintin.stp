@@ -234,6 +234,11 @@ String.6.0=2016,5,12,10,44,14
 [Root.Source Files.mapping.asm]
 ElemType=File
 PathName=mapping.asm
+Next=Root.Source Files.sprites.asm
+
+[Root.Source Files.sprites.asm]
+ElemType=File
+PathName=sprites.asm
 Next=Root.Source Files.time.asm
 
 [Root.Source Files.time.asm]

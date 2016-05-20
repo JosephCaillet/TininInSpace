@@ -123,7 +123,7 @@ height	DS.B 1;p
 
 ;setSprite
 numSprite	DS.B	1
-sprite	DS.B	1
+sprite	DS.W	1
 
 ;displaySrite
 dspCoef DS.B 1
@@ -465,7 +465,7 @@ initTFT:
 	LD	colorMSB,A
 	LD	A,#$A5
 	LD	colorLSB,A
-	CALL	fillScreenTFT
+	;CALL	fillScreenTFT
 	
 	LD	A,#$AC
 	LD	colorMSB,A
@@ -475,7 +475,7 @@ initTFT:
 	LD	x0win,A
 	LD	A,#70
 	LD	y0win,A
-	CALL	drawPixel
+	;CALL	drawPixel
 	
 	LD	A,#$AC
 	LD	colorMSB,A
@@ -485,7 +485,7 @@ initTFT:
 	LD	x0win,A
 	LD	A,#30
 	LD	y0win,A
-	CALL	drawPixel
+	;CALL	drawPixel
 	
 	LD	A,#$FF
 	LD	colorMSB,A
@@ -499,7 +499,7 @@ initTFT:
 	LD	width,A
 	LD	A,#10
 	LD	height,A
-	CALL	fillRectTFT
+	;CALL	fillRectTFT
 	
 	LD	A,#$FF
 	LD	colorMSB,A
@@ -513,7 +513,7 @@ initTFT:
 	LD	width,A
 	LD	A,#30
 	LD	height,A
-	CALL	fillRectTFT
+	;CALL	fillRectTFT
 	
 	LD	A,#$AA
 	LD	colorMSB,A
@@ -527,7 +527,7 @@ initTFT:
 	LD	width,A
 	LD	A,#150
 	LD	height,A
-	CALL	fillRectTFT
+	;CALL	fillRectTFT
 	
 	LD	A,#$AC
 	LD	colorMSB,A
@@ -537,7 +537,7 @@ initTFT:
 	LD	x0win,A
 	LD	A,#70
 	LD	y0win,A
-	CALL	drawPixel
+	;CALL	drawPixel
 	
 	LD	A,#$FF
 	LD	colorMSB,A
@@ -547,7 +547,7 @@ initTFT:
 	LD	x0win,A
 	LD	A,#35
 	LD	y0win,A
-	CALL	drawPixel
+	;CALL	drawPixel
 	
 	LD	A,#$FF
 	LD	colorMSB,A
@@ -557,7 +557,7 @@ initTFT:
 	LD	x0win,A
 	LD	A,#140
 	LD	y0win,A
-	CALL	drawPixel
+	;CALL	drawPixel
 	
 	LD	A,#$FF
 	LD	colorMSB,A
@@ -567,7 +567,7 @@ initTFT:
 	LD	x0win,A
 	LD	A,#110
 	LD	y0win,A
-	CALL	drawPixel
+	;CALL	drawPixel
 	
 	LD	A,#$FF
 	LD	colorMSB,A
@@ -577,9 +577,26 @@ initTFT:
 	LD	x0win,A
 	LD	A,#80
 	LD	y0win,A
-	CALL	drawPixel
+	;CALL	drawPixel
 	
 	;end test
+	
+	;begin test img
+	; p: sprite
+	; p: dspCoef
+	; p: dspOX
+	; p: dspOY
+	LD	A,#20
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#1
+	LD	dspCoef,A
+	LD	A,#0
+	LD	dsp0X,A
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	;end test img
 	
 	POP A
 	RET
@@ -786,13 +803,13 @@ setSprite:
 	LD	A,(tabSprite,X)
 	
 	LD	Y,#0
-	LD	(sprite,X),A
+	LD	(sprite,Y),A
 	
 	INC	X
 	LD	A,(tabSprite,X)
 	
 	INC	Y
-	LD	(sprite,X),A
+	LD	(sprite,Y),A
 	
 	POP	Y
 	POP	X
@@ -817,21 +834,22 @@ setSprite:
 
 ;add var sprite, dspX, dspY, dspOX, dspOY, dspCoef
 
-dsp_sprite:
+dspSprite:
 	push a
 	push x
 	push y
 
 	clr x0win
 	clr y0win
-	ld y,2
+	ld y,#2
 
 boucl_dsp_title
 	;:: while(y0win - dspOY < sprite[1] * dspCoef) do
 	ld  x,#1
-	ld x,(sprite,x)
+	ld x,([sprite.w],x)
 	ld a,dspCoef
 	mul x,a
+	ld x,a
 	ld a,y0win
 	sub a,dsp0Y
 	ld temp,x
@@ -839,9 +857,10 @@ boucl_dsp_title
 	jruge end_boucl_dsp_title
 
 		;:: if(x0win - dspOX >= sprite[0] * dspCoef) then
-		ld x,sprite
+		ld x,[sprite.w]
 		ld a,dspCoef
 		mul x,a
+		ld x,a
 		ld a,x0win
 		sub a,dsp0X
 		ld temp,x
@@ -859,7 +878,7 @@ dsp_trait_rect
 
 	;--- gestion de la couleur du rectangle
 		;:: switch(sprite[y] & %11000000)
-		ld a,(sprite,y)
+		ld a,([sprite.w],y)
 		and a,#%11000000
 			;:: case 0:
 				cp a,#0
@@ -898,13 +917,13 @@ end_dsp_sprite_col
 		;--- gestion de la largeur et de la hauteur du rectangle
 		ld a,dspCoef
 		ld height,a 				;: height = dspCoef
-		ld a,(sprite,y)
+		ld a,([sprite.w],y)
 		and a,#%00111111
 		inc a
 		ld x,a
 		ld a,dspCoef
 		mul x,a
-		ld width,x 					;: width = ((sprite[y] & %00111111) + 1) * dspCoef
+		ld width,a 					;: width = ((sprite[y] & %00111111) + 1) * dspCoef
 
 
 		;--- dessin du rectangle
