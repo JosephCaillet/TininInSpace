@@ -489,6 +489,8 @@ initTFT:
 	LD	dataout,A
 	CALL	writeData
 	
+	CALL	test_aff
+	
 	POP A
 	RET
 	
@@ -842,9 +844,9 @@ end_boucl_dsp_title
 	ret
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;
 ; display a number ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;
 ;numSprite;u
 ;scoreD;p
 ;scoreU;p
@@ -856,22 +858,6 @@ end_boucl_dsp_title
 dspNum:
 	PUSH	A
 	PUSH	X
-	
-	;4 146 ; 13 146
-	;;;;
-	LD	A,#0
-	LD	scoreD,A
-	LD	A,#8
-	LD	scoreU,A
-	
-	LD	A,#1
-	LD	dspCoef,A
-	
-	LD	A,4
-	LD	dsp0X,A
-	LD	A,146
-	LD	dsp0X,A
-	;;;;
 	
 	;dizaine
 	LD	A,scoreD
@@ -1232,7 +1218,21 @@ test_aff:
 	LD	dsp0Y,A
 	CALL	dspSprite
 	;end test img
-
+	
+	
+	LD	A,#0
+	LD	scoreD,A
+	LD	A,#8
+	LD	scoreU,A
+	
+	LD	A,#1
+	LD	dspCoef,A
+	
+	LD	A,4
+	LD	dsp0X,A
+	LD	A,100
+	LD	dsp0Y,A
+	CALL	dspNum
 
 	pop a
 	ret
