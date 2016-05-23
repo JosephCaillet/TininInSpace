@@ -1158,24 +1158,25 @@ end_boucl_dsp_title
 ;numY;p
 ;dsp0X;u
 ;dsp0Y;u
-
-;;;;;
-	LD	A,#20
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#2
-	LD	dspCoef,A
-	LD	A,#0
-	LD	dsp0X,A
-	LD	dsp0Y,A
-	CALL	dspSprite
-;;;;;
-
 dspNum:
 	PUSH	A
 	PUSH	X
 	
 	;4 146 ; 13 146
+	;;;;
+	LD	A,#0
+	LD	scoreD,A
+	LD	A,#8
+	LD	scoreU,A
+	
+	LD	A,#1
+	LD	dspCoef,A
+	
+	LD	A,4
+	LD	dsp0X,A
+	LD	A,146
+	LD	dsp0X,A
+	;;;;
 	
 	;dizaine
 	LD	A,scoreD
