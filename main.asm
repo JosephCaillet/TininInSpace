@@ -27,6 +27,7 @@ ST7/
 	EXTERN	waitTime.B
 	;EXTERN	initOsc
 	
+	EXTERN	temp
 	
 	EXTERN initTFT
 	

@@ -45,7 +45,7 @@ ST7/
 	PUBLIC	dspCoef
 	PUBLIC	dsp0X
 	PUBLIC	dsp0Y
-	
+	PUBLIC	temp
 	
 DELAY EQU $80
 
@@ -154,6 +154,11 @@ dspCoef DS.B 1
 dsp0X DS.B 1
 dsp0Y DS.B 1
 
+;dspNum
+scoreD	DS.B	1
+scoreU	DS.B	1
+numX DS.B 1
+numY DS.B 1
 
 ;************************************************************************
 ;
@@ -979,6 +984,14 @@ drawPixel:
 	RET
 
 
+
+
+;-----------------------------------------------------------------------;
+;-----------------------------------------------------------------------;
+;---                  Fonctions personnelles                         ---;
+;-----------------------------------------------------------------------;
+;-----------------------------------------------------------------------;
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; choose sprite to be displayed ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1005,14 +1018,6 @@ setSprite:
 	POP	X
 	POP	A
 	RET
-
-
-
-;-----------------------------------------------------------------------;
-;-----------------------------------------------------------------------;
-;---                  Fonctions personnelles                         ---;
-;-----------------------------------------------------------------------;
-;-----------------------------------------------------------------------;
 
 ;----------------------------------------------------;
 ;-            decompress a picture                  -;
@@ -1140,7 +1145,83 @@ end_boucl_dsp_title
 	pop a
 	ret
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; display a number ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;numSprite;u
+;scoreD;p
+;scoreU;p
+;dspCoef DS.B;p
+;numX;p
+;numY;p
+;dsp0X;u
+;dsp0Y;u
+
+;;;;;
+	LD	A,#20
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#2
+	LD	dspCoef,A
+	LD	A,#0
+	LD	dsp0X,A
+	LD	dsp0Y,A
+	CALL	dspSprite
+;;;;;
+
+dspNum:
+	PUSH	A
+	PUSH	X
 	
+	;4 146 ; 13 146
+	
+	;dizaine
+	LD	A,scoreD
+	LD	X,#2
+	MUL	X,A
+	LD	A,numSprite
+	CALL setSprite
+	
+	LD	A,numX
+	LD	dsp0X,A
+	LD	A,numY
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	;unitee
+	LD	A,scoreU
+	LD	X,#2
+	MUL	X,A
+	LD	A,numSprite
+	CALL setSprite
+	
+	LD	A,dspCoef
+	LD	X,#4
+	MUL	X,A
+	PUSH	A
+	
+	LD	A,dspCoef
+	LD	X,#5
+	MUL	X,A
+	PUSH	A
+	
+	LD	A,numX
+	POP	X
+	ADD	A,(X)
+	POP	X
+	ADD	A,(X)
+	
+	LD	dsp0X,A
+	LD	X,numY
+	LD	dsp0Y,X
+	CALL	dspSprite
+	
+	
+	POP	X
+	POP	A
+	RET
 	
 ;************************************************************************
 
