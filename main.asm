@@ -74,7 +74,10 @@ test DS.B 1
 ;
 ;************************************************************************
 
-ship_state DS.B 1
+shipState DS.B 1
+shipY DS.B 1
+shipYPrev DS.B 1
+shipMooveStep DS.B 1
 
 
 ;************************************************************************
@@ -121,7 +124,7 @@ init:
 	CALL	initTFT
 
 	call init_masks
-	call init_game
+	rim
 
 	ret
 
@@ -163,11 +166,8 @@ init_masks:
 ;-                    init game                     -;
 ;----------------------------------------------------;
 init_game:
-	push a
-
 	LD	A,#$00
 	LD	colorMSB,A
-	LD	A,#$00
 	LD	colorLSB,A
 	LD	A,#0
 	LD	x0win,A
@@ -178,14 +178,19 @@ init_game:
 	LD	height,A
 	CALL	fillRectTFT
 
-	pop a
+	ld a,#140
+	ld shipY,a
+	ld shipYPrev,a
+	ld a,#1
+	ld shipMooveStep,a
+
 	ret
 
 
 ;----------------------------------------------------;
 ;-               display title screen               -;
 ;----------------------------------------------------;
-display_title_screen:
+dsp_title_screen:
 	push a
 
 	LD	A,#20
@@ -228,6 +233,89 @@ display_title_screen:
 	pop a
 	ret
 
+;----------------------------------------------------;
+;-                   display ship                   -;
+;----------------------------------------------------;
+dsp_ship:
+
+	ld a,shipY
+	ld dsp0Y,a
+	ld a,#59
+	ld dsp0X,a
+	ld a,#1
+	ld dspCoef,a
+	ld a,#28
+	ld numSprite,a
+	call dspSprite
+
+	ld a,shipY
+	cp a,shipYPrev
+	jrugt dsp_ship_cp_x_axe
+		add a,#18
+		ld y0win,a
+		jp dsp_ship_cp_x_axe_end
+dsp_ship_cp_x_axe
+	dec a
+	ld y0win,a
+dsp_ship_cp_x_axe_end		
+	LD	A,#$00
+	LD	colorMSB,A
+	LD	colorLSB,A
+	ld a,dsp0X
+	ld x0win,a
+	ld a,#1
+	ld height,a
+	ld a,#11
+	ld width,a
+	call fillRectTFT
+
+	ret
+
+
+;----------------------------------------------------;
+;-                    moove ship                    -;
+;----------------------------------------------------;
+moove_ship:
+	
+	ld a,shipState
+	cp a,#0
+	jreq moove_ship_nothing
+	ld a,shipY
+	ld shipYPrev,a
+	cp a,#1
+	jrne moove_ship_backward
+		ld a,shipY
+		sub a,shipMooveStep
+		cp a,#0
+		jrule moove_ship_forward
+			ld a,#140
+			ld shipY,a
+
+			LD	A,#$00
+			LD	colorMSB,A
+			LD	colorLSB,A
+			LD	A,dsp0X
+			LD	x0win,A
+			ld a,#0
+			LD	y0win,A
+			LD	A,#11
+			LD	width,A
+			LD	A,#18
+			LD	height,A
+			CALL	fillRectTFT
+			call dsp_ship
+moove_ship_forward
+			ld shipY,a
+			jp moove_ship_nothing
+moove_ship_backward
+		ld a,shipY
+		add a,shipMooveStep
+		cp a,#160
+		jruge moove_ship_nothing
+			ld shipY,a
+moove_ship_nothing
+	
+	ret
 
 
 ;************************************************************************
@@ -246,10 +334,16 @@ display_title_screen:
 main:
 	call init
 
-	call display_title_screen
+	call dsp_title_screen
+wait_game_start
+	ld a,shipState
+	cp a,#0
+	jreq wait_game_start
 
+	call init_game
 boucl
-
+	
+	call dsp_ship
 	
 	JP	boucl
 
@@ -264,22 +358,22 @@ boucl
 
 dummy_rt:	IRET	; Procédure vide : retour au programme principal.
 
-ship_forward:
+i_ship_forward:
 	BTJT	PBDR,#0,pb0_push
-	clr ship_state
+	clr shipState
 	iret
 pb0_push
 	ld a,#1
-	ld ship_state,a
+	ld shipState,a
 	iret
 
-ship_backward:
+i_ship_backward:
 	BTJT	PADR,#3,pa3_push
-	clr ship_state
+	clr shipState
 	iret
 pa3_push
 	ld a,#2
-	ld ship_state,a
+	ld shipState,a
 	iret
 
 
@@ -302,10 +396,10 @@ at_timerOC_it	DC.W	dummy_rt	; Adresse FFEA-FFEBh
 AVD_it		DC.W	dummy_rt	; Adresse FFEC-FFEDh
 		DC.W	dummy_rt	; Adresse FFEE-FFEFh
 lt_RTC2_it	DC.W	dummy_rt	; Adresse FFF0-FFF1h
-ext3_it		DC.W	ship_forward	; Adresse FFF2-FFF3h
+ext3_it		DC.W	i_ship_forward	; Adresse FFF2-FFF3h
 ext2_it		DC.W	dummy_rt	; Adresse FFF4-FFF5h
 ext1_it		DC.W	dummy_rt	; Adresse FFF6-FFF7h
-ext0_it		DC.W	ship_backward	; Adresse FFF8-FFF9h
+ext0_it		DC.W	i_ship_backward	; Adresse FFF8-FFF9h
 AWU_it		DC.W	dummy_rt	; Adresse FFFA-FFFBh
 softit		DC.W	dummy_rt	; Adresse FFFC-FFFDh
 reset		DC.W	main		; Adresse FFFE-FFFFh
