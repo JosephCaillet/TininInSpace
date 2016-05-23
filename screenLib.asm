@@ -489,310 +489,6 @@ initTFT:
 	LD	dataout,A
 	CALL	writeData
 	
-	;test
-	LD	A,#$5A
-	LD	colorMSB,A
-	LD	A,#$A5
-	LD	colorLSB,A
-	;CALL	fillScreenTFT
-	
-	LD	A,#$AC
-	LD	colorMSB,A
-	LD	A,#$DB
-	LD	colorLSB,A
-	LD	A,#80
-	LD	x0win,A
-	LD	A,#70
-	LD	y0win,A
-	;CALL	drawPixel
-	
-	LD	A,#$AC
-	LD	colorMSB,A
-	LD	A,#$FF
-	LD	colorLSB,A
-	LD	A,#30
-	LD	x0win,A
-	LD	A,#30
-	LD	y0win,A
-	;CALL	drawPixel
-	
-	LD	A,#$CC
-	LD	colorMSB,A
-	LD	A,#$CC
-	LD	colorLSB,A
-	LD	A,#3
-	LD	x0win,A
-	LD	A,#3
-	LD	y0win,A
-	LD	A,#80
-	LD	width,A
-	LD	A,#10
-	LD	height,A
-	;CALL	fillRectTFT
-	
-	LD	A,#$FF
-	LD	colorMSB,A
-	LD	A,#$FF
-	LD	colorLSB,A
-	LD	A,#30
-	LD	x0win,A
-	LD	A,#30
-	LD	y0win,A
-	LD	A,#80
-	LD	width,A
-	LD	A,#30
-	LD	height,A
-	;CALL	fillRectTFT
-	
-	LD	A,#$AA
-	LD	colorMSB,A
-	LD	A,#$BB
-	LD	colorLSB,A
-	LD	A,#1
-	LD	x0win,A
-	LD	A,#1
-	LD	y0win,A
-	LD	A,#8
-	LD	width,A
-	LD	A,#150
-	LD	height,A
-	;CALL	fillRectTFT
-	
-	LD	A,#$AC
-	LD	colorMSB,A
-	LD	A,#$DB
-	LD	colorLSB,A
-	LD	A,#80
-	LD	x0win,A
-	LD	A,#70
-	LD	y0win,A
-	;CALL	drawPixel
-	
-	LD	A,#$FF
-	LD	colorMSB,A
-	LD	A,#$FF
-	LD	colorLSB,A
-	LD	A,#35
-	LD	x0win,A
-	LD	A,#35
-	LD	y0win,A
-	;CALL	drawPixel
-	
-	LD	A,#$FF
-	LD	colorMSB,A
-	LD	A,#$FF
-	LD	colorLSB,A
-	LD	A,#90
-	LD	x0win,A
-	LD	A,#140
-	LD	y0win,A
-	;CALL	drawPixel
-	
-	LD	A,#$FF
-	LD	colorMSB,A
-	LD	A,#$FF
-	LD	colorLSB,A
-	LD	A,#40
-	LD	x0win,A
-	LD	A,#110
-	LD	y0win,A
-	;CALL	drawPixel
-	
-	LD	A,#$FF
-	LD	colorMSB,A
-	LD	A,#$FF
-	LD	colorLSB,A
-	LD	A,#60
-	LD	x0win,A
-	LD	A,#80
-	LD	y0win,A
-	;CALL	drawPixel
-	
-	;end test
-	
-	;begin test img
-	; p: sprite
-	; p: dspCoef
-	; p: dspOX
-	; p: dspOY
-	LD	A,#20
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#2
-	LD	dspCoef,A
-	LD	A,#0
-	LD	dsp0X,A
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#22
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#2
-	LD	dspCoef,A
-	LD	A,#40
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#24
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#2
-	LD	dspCoef,A
-	LD	A,#80
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#26
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#2
-	LD	dspCoef,A
-	LD	A,#120
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	
-	LD	A,#$AC
-	LD	colorMSB,A
-	LD	A,#$42
-	LD	colorLSB,A
-	CALL	fillScreenTFT
-	
-	
-	LD	A,#28
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#1
-	LD	dspCoef,A
-	LD	A,#96
-	LD	dsp0X,A
-	LD	A,#134
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#30
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#2
-	LD	dspCoef,A
-	LD	A,#35
-	LD	dsp0X,A
-	LD	A,#18
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#32
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#36
-	LD	dsp0X,A
-	LD	A,#57
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#0
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#103
-	LD	dsp0X,A
-	LD	A,#109
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#2
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#1
-	LD	dspCoef,A
-	LD	A,#22
-	LD	dsp0X,A
-	LD	A,#109
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#4
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#31
-	LD	dsp0X,A
-	LD	A,#109
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#6
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#40
-	LD	dsp0X,A
-	LD	A,#109
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#8
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#49
-	LD	dsp0X,A
-	LD	A,#109
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#10
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#58
-	LD	dsp0X,A
-	LD	A,#109
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#12
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#67
-	LD	dsp0X,A
-	LD	A,#109
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#14
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#76
-	LD	dsp0X,A
-	LD	A,#109
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#16
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#85
-	LD	dsp0X,A
-	LD	A,#109
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#18
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#5
-	LD	dsp0X,A
-	LD	A,#5
-	LD	dsp0Y,A
-	CALL	dspSprite
-	
-	LD	A,#0
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#10
-	LD	dsp0X,A
-	LD	A,#10
-	LD	dsp0Y,A
-	CALL	dspSprite
-	;end test img
-	
 	POP A
 	RET
 	
@@ -1145,6 +841,7 @@ end_boucl_dsp_title
 	pop a
 	ret
 
+<<<<<<< HEAD
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1223,6 +920,324 @@ dspNum:
 	POP	X
 	POP	A
 	RET
+=======
+;----------------------------------------------------;
+;-                  display test                    -;
+;----------------------------------------------------;
+
+test_aff:
+	push a
+
+
+	;test
+	LD	A,#$5A
+	LD	colorMSB,A
+	LD	A,#$A5
+	LD	colorLSB,A
+	;CALL	fillScreenTFT
+	
+	LD	A,#$AC
+	LD	colorMSB,A
+	LD	A,#$DB
+	LD	colorLSB,A
+	LD	A,#80
+	LD	x0win,A
+	LD	A,#70
+	LD	y0win,A
+	;CALL	drawPixel
+	
+	LD	A,#$AC
+	LD	colorMSB,A
+	LD	A,#$FF
+	LD	colorLSB,A
+	LD	A,#30
+	LD	x0win,A
+	LD	A,#30
+	LD	y0win,A
+	;CALL	drawPixel
+	
+	LD	A,#$CC
+	LD	colorMSB,A
+	LD	A,#$CC
+	LD	colorLSB,A
+	LD	A,#3
+	LD	x0win,A
+	LD	A,#3
+	LD	y0win,A
+	LD	A,#80
+	LD	width,A
+	LD	A,#10
+	LD	height,A
+	;CALL	fillRectTFT
+	
+	LD	A,#$FF
+	LD	colorMSB,A
+	LD	A,#$FF
+	LD	colorLSB,A
+	LD	A,#30
+	LD	x0win,A
+	LD	A,#30
+	LD	y0win,A
+	LD	A,#80
+	LD	width,A
+	LD	A,#30
+	LD	height,A
+	;CALL	fillRectTFT
+	
+	LD	A,#$AA
+	LD	colorMSB,A
+	LD	A,#$BB
+	LD	colorLSB,A
+	LD	A,#1
+	LD	x0win,A
+	LD	A,#1
+	LD	y0win,A
+	LD	A,#8
+	LD	width,A
+	LD	A,#150
+	LD	height,A
+	;CALL	fillRectTFT
+	
+	LD	A,#$AC
+	LD	colorMSB,A
+	LD	A,#$DB
+	LD	colorLSB,A
+	LD	A,#80
+	LD	x0win,A
+	LD	A,#70
+	LD	y0win,A
+	;CALL	drawPixel
+	
+	LD	A,#$FF
+	LD	colorMSB,A
+	LD	A,#$FF
+	LD	colorLSB,A
+	LD	A,#35
+	LD	x0win,A
+	LD	A,#35
+	LD	y0win,A
+	;CALL	drawPixel
+	
+	LD	A,#$FF
+	LD	colorMSB,A
+	LD	A,#$FF
+	LD	colorLSB,A
+	LD	A,#90
+	LD	x0win,A
+	LD	A,#140
+	LD	y0win,A
+	;CALL	drawPixel
+	
+	LD	A,#$FF
+	LD	colorMSB,A
+	LD	A,#$FF
+	LD	colorLSB,A
+	LD	A,#40
+	LD	x0win,A
+	LD	A,#110
+	LD	y0win,A
+	;CALL	drawPixel
+	
+	LD	A,#$FF
+	LD	colorMSB,A
+	LD	A,#$FF
+	LD	colorLSB,A
+	LD	A,#60
+	LD	x0win,A
+	LD	A,#80
+	LD	y0win,A
+	;CALL	drawPixel
+	
+	;end test
+	
+	;begin test img
+	; p: sprite
+	; p: dspCoef
+	; p: dspOX
+	; p: dspOY
+	LD	A,#20
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#2
+	LD	dspCoef,A
+	LD	A,#0
+	LD	dsp0X,A
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#22
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#2
+	LD	dspCoef,A
+	LD	A,#40
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#24
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#2
+	LD	dspCoef,A
+	LD	A,#80
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#26
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#2
+	LD	dspCoef,A
+	LD	A,#120
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	
+	LD	A,#$00
+	LD	colorMSB,A
+	LD	A,#$00
+	LD	colorLSB,A
+	CALL	fillScreenTFT
+	
+	
+	LD	A,#28
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#1
+	LD	dspCoef,A
+	LD	A,#96
+	LD	dsp0X,A
+	LD	A,#134
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#30
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#2
+	LD	dspCoef,A
+	LD	A,#35
+	LD	dsp0X,A
+	LD	A,#18
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#32
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#36
+	LD	dsp0X,A
+	LD	A,#57
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#0
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#103
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#2
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#1
+	LD	dspCoef,A
+	LD	A,#22
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#4
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#31
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#6
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#40
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#8
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#49
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#10
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#58
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#12
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#67
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#14
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#76
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#16
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#85
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#18
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#5
+	LD	dsp0X,A
+	LD	A,#5
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#0
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#10
+	LD	dsp0X,A
+	LD	A,#10
+	LD	dsp0Y,A
+	CALL	dspSprite
+	;end test img
+
+
+	pop a
+	ret
+
+>>>>>>> 9658d62f43a15ba1fca0593e90e4a2199acfd509
 	
 ;************************************************************************
 
