@@ -1025,14 +1025,13 @@ boucl_dsp_title
 	cp a,temp
 	jruge end_boucl_dsp_title
 
-		;:: if(x0win - dspOX + 1 >= sprite[0] * dspCoef) then
+		;:: if(x0win - dspOX >= sprite[0] * dspCoef) then
 		ld x,[sprite.w]
 		ld a,dspCoef
 		mul x,a
 		ld x,a
 		ld a,x0win
 		sub a,dsp0X
-		inc a
 		ld temp,x
 		cp a,temp
 		jrult dsp_trait_rect
