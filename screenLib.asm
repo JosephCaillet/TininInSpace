@@ -624,9 +624,9 @@ initTFT:
 	CALL	dspSprite
 	
 	
-	LD	A,#$00
+	LD	A,#$AC
 	LD	colorMSB,A
-	LD	A,#$00
+	LD	A,#$42
 	LD	colorLSB,A
 	CALL	fillScreenTFT
 	
