@@ -1042,6 +1042,7 @@ boucl_dsp_title
 			ld a,y0win
 			add a,dspCoef
 			ld y0win,a 			;: y0win += dspCoef
+			jp boucl_dsp_title 	;: goto boucl_dsp_title
 
 		;:: end if
 dsp_trait_rect
