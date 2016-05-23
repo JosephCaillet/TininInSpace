@@ -29,6 +29,32 @@ ST7/
 	
 	
 	EXTERN initTFT
+	
+	EXTERN	fillRectTFT
+	EXTERN	fillScreenTFT
+	EXTERN	drawPixel
+	EXTERN	setSprite
+	EXTERN	dspSprite
+;drawpixel & fillrect
+	EXTERN	x0win.B
+	EXTERN	y0win.B
+	EXTERN	x1win.B
+	EXTERN	y1win.B
+
+;drawrect
+	EXTERN	colorMSB.B
+	EXTERN	colorLSB.B
+	EXTERN	width.B
+	EXTERN	height.B
+
+;setSprite
+	EXTERN	numSprite.B
+
+;displaySrite
+	EXTERN	dspCoef.B
+	EXTERN	dsp0X.B
+	EXTERN	dsp0Y.B
+
 
 ;************************************************************************
 ;
