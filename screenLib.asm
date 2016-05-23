@@ -1024,28 +1024,6 @@ boucl_dsp_title
 	cp a,temp
 	jruge end_boucl_dsp_title
 
-		;:: if(x0win - dspOX >= sprite[0] * dspCoef) then
-		ld x,[sprite.w]
-		ld a,dspCoef
-		mul x,a
-		ld x,a
-		ld a,x0win
-		sub a,dsp0X
-		ld temp,x
-		cp a,temp
-		jrult dsp_trait_rect
-
-			ld a,dsp0X
-			ld x0win,a 			;: x0win = dspOX
-			ld a,y0win
-			add a,dspCoef
-			ld y0win,a 			;: y0win += dspCoef
-			jp boucl_dsp_title 	;: goto boucl_dsp_title
-
-		;:: end if
-dsp_trait_rect
-
-
 	;--- gestion de la couleur du rectangle
 		;:: switch(sprite[y] & %11000000)
 		ld a,([sprite.w],y)
@@ -1104,6 +1082,29 @@ end_dsp_sprite_col
 		ld x0win,a 					;: x0win += width
 
 		inc y 						;: y++
+
+		;:: if(x0win - dspOX >= sprite[0] * dspCoef) then
+		ld x,[sprite.w]
+		ld a,dspCoef
+		mul x,a
+		ld x,a
+		ld a,x0win
+		sub a,dsp0X
+		ld temp,x
+		cp a,temp
+		jrult boucl_dsp_title
+		;jrult dsp_end_test_line
+
+			ld a,dsp0X
+			ld x0win,a 			;: x0win = dspOX
+			ld a,y0win
+			add a,dspCoef
+			ld y0win,a 			;: y0win += dspCoef
+			;jp boucl_dsp_title	;: goto boucl_dsp_title
+
+		;:: end if
+;dsp_end_test_line
+
 
 		;--- retour à la condition de la boucle
 		jp boucl_dsp_title
