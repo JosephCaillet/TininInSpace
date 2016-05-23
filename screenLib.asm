@@ -21,6 +21,30 @@ ST7/
 ;************************************************************************
 	PUBLIC	initTFT
 	
+	PUBLIC	fillRectTFT
+	PUBLIC	fillScreenTFT
+	PUBLIC	drawPixel
+	PUBLIC	setSprite
+	PUBLIC	dspSprite
+;drawpixel & fillrect
+	PUBLIC	x0win
+	PUBLIC	y0win
+	PUBLIC	x1win
+	PUBLIC	y1win
+
+;drawrect
+	PUBLIC	colorMSB
+	PUBLIC	colorLSB
+	PUBLIC	width
+	PUBLIC	height
+
+;setSprite
+	PUBLIC	numSprite
+
+;displaySrite
+	PUBLIC	dspCoef
+	PUBLIC	dsp0X
+	PUBLIC	dsp0Y
 	
 	
 DELAY EQU $80
