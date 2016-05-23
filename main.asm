@@ -133,31 +133,31 @@ init:
 ;-                    init masks                    -;
 ;----------------------------------------------------;
 init_masks:
-	ld a,paddr
+	ld a,PADDR
 	and a,#%11110111
-	ld paddr,a
+	ld PADDR,a
 
-	ld a,paor
+	ld a,PAOR
 	or a,#%00001000
-	ld paor,a
+	ld PAOR,a
 
-	ld a,pbddr
+	ld a,PBDDR
 	and a,#%11111110
-	ld pbddr,a
+	ld PBDDR,a
 
-	ld a,pbor
+	ld a,PBOR
 	or a,#%00000001
-	ld pbor,a
+	ld PBOR,a
 
-	ld a,eicr
+	ld a,EICR
 	;and a,#%10111110
 	or a,#%11000011
-	ld eicr,a
+	ld EICR,a
 
-	ld a,eisr
+	ld a,EISR
 	and a,#%11111100
 	or a,#%11000000
-	ld eisr,a
+	ld EISR,a
 
 	ret
 
