@@ -345,6 +345,7 @@ wait_game_start
 boucl
 	
 	call dsp_ship
+	call moove_ship
 	
 	JP	boucl
 
