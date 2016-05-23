@@ -1020,7 +1020,6 @@ boucl_dsp_title
 	ld x,a
 	ld a,y0win
 	sub a,dsp0Y
-	inc a
 	ld temp,x
 	cp a,temp
 	jruge end_boucl_dsp_title
