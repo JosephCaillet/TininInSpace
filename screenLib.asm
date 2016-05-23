@@ -1012,7 +1012,7 @@ dspSprite:
 	ld y,#2
 
 boucl_dsp_title
-	;:: while(y0win - dspOY < sprite[1] * dspCoef) do
+	;:: while(y0win - dspOY + 1 < sprite[1] * dspCoef) do
 	ld  x,#1
 	ld x,([sprite.w],x)
 	ld a,dspCoef
@@ -1020,6 +1020,7 @@ boucl_dsp_title
 	ld x,a
 	ld a,y0win
 	sub a,dsp0Y
+	inc a
 	ld temp,x
 	cp a,temp
 	jruge end_boucl_dsp_title
