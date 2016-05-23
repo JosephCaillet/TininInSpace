@@ -891,9 +891,9 @@ dspNum:
 	
 	LD	A,numX
 	POP	X
-	ADD	A,(X)
+	ADD	A,X
 	POP	X
-	ADD	A,(X)
+	ADD	A,X
 	
 	LD	dsp0X,A
 	LD	X,numY
@@ -1228,10 +1228,10 @@ test_aff:
 	LD	A,#1
 	LD	dspCoef,A
 	
-	LD	A,4
-	LD	dsp0X,A
-	LD	A,100
-	LD	dsp0Y,A
+	LD	A,#4
+	LD	numX,A
+	LD	A,#90
+	LD	numY,A
 	CALL	dspNum
 
 	pop a
