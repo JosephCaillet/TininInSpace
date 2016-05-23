@@ -623,6 +623,145 @@ initTFT:
 	LD	dsp0Y,A
 	CALL	dspSprite
 	
+	
+	LD	A,#$00
+	LD	colorMSB,A
+	LD	A,#$00
+	LD	colorLSB,A
+	CALL	fillScreenTFT
+	
+	
+	LD	A,#28
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#1
+	LD	dspCoef,A
+	LD	A,#96
+	LD	dsp0X,A
+	LD	A,#134
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#30
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#2
+	LD	dspCoef,A
+	LD	A,#35
+	LD	dsp0X,A
+	LD	A,#18
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#32
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#36
+	LD	dsp0X,A
+	LD	A,#57
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#0
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#103
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#2
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#1
+	LD	dspCoef,A
+	LD	A,#22
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#4
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#31
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#6
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#40
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#8
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#49
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#10
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#58
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#12
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#67
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#14
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#76
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#16
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#85
+	LD	dsp0X,A
+	LD	A,#109
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#18
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#5
+	LD	dsp0X,A
+	LD	A,#5
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#0
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#10
+	LD	dsp0X,A
+	LD	A,#10
+	LD	dsp0Y,A
+	CALL	dspSprite
 	;end test img
 	
 	POP A
