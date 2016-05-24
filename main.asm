@@ -126,7 +126,6 @@ shipMooveStep DS.B 1
 ;-                       init                       -;
 ;----------------------------------------------------;
 init:
-	RSP			; Reset Stack Pointer
 	CALL	initPortSPI
 	CALL	initOsc
 	CALL	initTFT
@@ -347,6 +346,7 @@ moove_ship_nothing
 ;************************************************************************
 
 main:
+	RSP
 	call init
 
 	call dsp_title_screen
