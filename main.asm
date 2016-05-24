@@ -254,6 +254,7 @@ dsp_ship:
 	ld dspCoef,a
 	ld a,#28
 	ld numSprite,a
+	call setSprite
 	call dspSprite
 
 	ld a,shipY
@@ -368,7 +369,7 @@ boucl
 dummy_rt:	IRET	; Procédure vide : retour au programme principal.
 
 i_ship_forward:
-	BTJT	PBDR,#0,pb0_push
+	BTJF	PBDR,#0,pb0_push
 	clr shipState
 	iret
 pb0_push
@@ -377,7 +378,7 @@ pb0_push
 	iret
 
 i_ship_backward:
-	BTJT	PADR,#3,pa3_push
+	BTJF	PADR,#3,pa3_push
 	clr shipState
 	iret
 pa3_push
