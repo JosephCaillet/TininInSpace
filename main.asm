@@ -282,7 +282,7 @@ dsp_ship:
 		ld y0win,a
 		jp dsp_ship_cp_x_axe_end
 dsp_ship_cp_x_axe
-	dec a
+	sub a,shipMooveStep
 	ld y0win,a
 dsp_ship_cp_x_axe_end		
 	LD	A,#$00
@@ -332,7 +332,8 @@ moove_ship:
 				LD	y0win,A
 				LD	A,#11
 				LD	width,A
-				LD	A,#19
+				LD	A,#18
+				add a,shipMooveStep
 				LD	height,A
 				CALL	fillRectTFT
 				call dsp_ship
