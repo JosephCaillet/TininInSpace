@@ -193,7 +193,7 @@ init_game:
 	ld a,#140
 	ld shipY,a
 	ld shipYPrev,a
-	ld a,#2
+	ld a,#5
 	ld shipMooveStep,a
 	ld a,#0
 	ld shipState,a
