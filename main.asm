@@ -131,7 +131,10 @@ init:
 	CALL	initPortSPI
 	CALL	initOsc
 	CALL	initTFT
-
+	
+	LD	A,#0;YOLO ! MAXIMUM OSC SPEED !!!!!!!
+	ld	RCCR,A
+	
 	call init_masks
 	rim
 
