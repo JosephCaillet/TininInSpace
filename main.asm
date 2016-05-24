@@ -289,13 +289,13 @@ dsp_ship_cp_x_axe_end
 ;-                    moove ship                    -;
 ;----------------------------------------------------;
 moove_ship:
+	ld a,shipY
+	ld shipYPrev,a 	;: shipYPrev = shipY
 	
 	;:: if(shipState != 0) then
 	ld a,shipState
 	cp a,#0
 	jreq moove_ship_nothing
-		ld a,shipY
-		ld shipYPrev,a 	;: shipYPrev = shipY
 		;:: if(shipState = 1) then
 		ld a,shipState
 		cp a,#1
@@ -307,6 +307,7 @@ moove_ship:
 			jrugt moove_ship_forward
 				ld a,#140
 				ld shipY,a ;: shipY = 140
+				ld shipYPrev,a
 
 				LD	A,#$00
 				LD	colorMSB,A
@@ -331,7 +332,7 @@ moove_ship_backward
 		ld a,shipY
 		add a,shipMooveStep
 		cp a,#140
-		jruge moove_ship_nothing 
+		jrult moove_ship_nothing 
 			ld shipY,a 				;: shipY += shipMooveStep
 		;:: end if
 moove_ship_nothing
