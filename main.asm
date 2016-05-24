@@ -87,7 +87,7 @@ shipY DS.B 1
 shipYPrev DS.B 1
 shipMooveStep DS.B 1
 
-scoreCarry BS.B 1
+scoreCarry DS.B 1
 
 
 ;************************************************************************
