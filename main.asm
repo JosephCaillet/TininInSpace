@@ -134,6 +134,9 @@ init:
 	call init_masks
 	rim
 
+	ld a,#0
+	ld shipState,a
+
 	ret
 
 
@@ -186,7 +189,7 @@ init_game:
 	LD	height,A
 	CALL	fillRectTFT
 
-	ld a,#140
+	ld a,#70
 	ld shipY,a
 	ld shipYPrev,a
 	ld a,#1
@@ -293,6 +296,7 @@ moove_ship:
 	jreq moove_ship_nothing
 	ld a,shipY
 	ld shipYPrev,a
+	ld a,shipState
 	cp a,#1
 	jrne moove_ship_backward
 		ld a,shipY
