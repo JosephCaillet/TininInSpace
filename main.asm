@@ -190,6 +190,8 @@ init_game:
 	ld shipYPrev,a
 	ld a,#1
 	ld shipMooveStep,a
+	ld a,#0
+	ld shipState,a
 
 	ret
 
