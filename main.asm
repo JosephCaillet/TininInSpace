@@ -290,43 +290,50 @@ dsp_ship_cp_x_axe_end
 ;----------------------------------------------------;
 moove_ship:
 	
+	;:: if(shipState != 0) then
 	ld a,shipState
 	cp a,#0
 	jreq moove_ship_nothing
-	ld a,shipY
-	ld shipYPrev,a
-	ld a,shipState
-	cp a,#1
-	jrne moove_ship_backward
 		ld a,shipY
-		sub a,shipMooveStep
-		cp a,#0
-		jrule moove_ship_forward
-			ld a,#140
-			ld shipY,a
+		ld shipYPrev,a 	;: shipYPrev = shipY
+		;:: if(shipState = 1) then
+		ld a,shipState
+		cp a,#1
+		jrne moove_ship_backward
+			;:: if(shipY - shipMooveStep <= 0) then
+			ld a,shipY
+			sub a,shipMooveStep
+			cp a,#0
+			jrugt moove_ship_forward
+				ld a,#140
+				ld shipY,a ;: shipY = 140
 
-			LD	A,#$00
-			LD	colorMSB,A
-			LD	colorLSB,A
-			LD	A,dsp0X
-			LD	x0win,A
-			ld a,#0
-			LD	y0win,A
-			LD	A,#11
-			LD	width,A
-			LD	A,#18
-			LD	height,A
-			CALL	fillRectTFT
-			call dsp_ship
+				LD	A,#$00
+				LD	colorMSB,A
+				LD	colorLSB,A
+				LD	A,dsp0X
+				LD	x0win,A
+				ld a,#0
+				LD	y0win,A
+				LD	A,#11
+				LD	width,A
+				LD	A,#18
+				LD	height,A
+				CALL	fillRectTFT
+				call dsp_ship
+			;:: end if
 moove_ship_forward
-			ld shipY,a
+			ld shipY,a 				;: shipY -= shipMooveStep
 			jp moove_ship_nothing
+		;:: end if
 moove_ship_backward
+		;:: if(shipY + shipMooveStep < 140) then
 		ld a,shipY
 		add a,shipMooveStep
-		cp a,#160
-		jruge moove_ship_nothing
-			ld shipY,a
+		cp a,#140
+		jruge moove_ship_nothing 
+			ld shipY,a 				;: shipY += shipMooveStep
+		;:: end if
 moove_ship_nothing
 	
 	ret
