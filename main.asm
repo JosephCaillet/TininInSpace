@@ -205,6 +205,8 @@ init_game:
 	ld numY,a
 	ld a,#5
 	ld numX,a
+	ld a,#1
+	ld dspCoef,a
 
 	call dspNum
 
@@ -288,7 +290,7 @@ dsp_ship_cp_x_axe_end
 	LD	colorLSB,A
 	ld a,dsp0X
 	ld x0win,a
-	ld a,#1
+	ld a,shipMooveStep
 	ld height,a
 	ld a,#11
 	ld width,a
