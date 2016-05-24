@@ -36,6 +36,7 @@ ST7/
 	EXTERN	drawPixel
 	EXTERN	setSprite
 	EXTERN	dspSprite
+	EXTERN	dspNum
 ;drawpixel & fillrect
 	EXTERN	x0win.B
 	EXTERN	y0win.B
@@ -55,6 +56,12 @@ ST7/
 	EXTERN	dspCoef.B
 	EXTERN	dsp0X.B
 	EXTERN	dsp0Y.B
+
+;dspNum
+	EXTERN	scoreD.B
+	EXTERN	scoreU.B
+	EXTERN	numX.B
+	EXTERN	numY.B
 
 
 ;************************************************************************

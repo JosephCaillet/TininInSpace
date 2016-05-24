@@ -26,6 +26,7 @@ ST7/
 	PUBLIC	drawPixel
 	PUBLIC	setSprite
 	PUBLIC	dspSprite
+	PUBLIC	dspNum
 ;drawpixel & fillrect
 	PUBLIC	x0win
 	PUBLIC	y0win
@@ -46,6 +47,12 @@ ST7/
 	PUBLIC	dsp0X
 	PUBLIC	dsp0Y
 	PUBLIC	temp
+
+;dspNum
+	PUBLIC	scoreD
+	PUBLIC	scoreU
+	PUBLIC	numX
+	PUBLIC	numY
 	
 DELAY EQU $80
 
@@ -489,7 +496,7 @@ initTFT:
 	LD	dataout,A
 	CALL	writeData
 	
-	CALL	test_aff
+	;CALL	test_aff
 	
 	POP A
 	RET
@@ -863,7 +870,7 @@ dspNum:
 	LD	A,scoreD
 	LD	X,#2
 	MUL	X,A
-	LD	A,numSprite
+	LD	numSprite,A
 	CALL setSprite
 	
 	LD	A,numX
@@ -876,7 +883,7 @@ dspNum:
 	LD	A,scoreU
 	LD	X,#2
 	MUL	X,A
-	LD	A,numSprite
+	LD	numSprite,A
 	CALL setSprite
 	
 	LD	A,dspCoef
@@ -891,9 +898,11 @@ dspNum:
 	
 	LD	A,numX
 	POP	X
-	ADD	A,X
+	LD	temp,X
+	ADD	A,temp
 	POP	X
-	ADD	A,X
+	LD	temp,X
+	ADD	A,temp
 	
 	LD	dsp0X,A
 	LD	X,numY
@@ -1220,12 +1229,12 @@ test_aff:
 	;end test img
 	
 	
-	LD	A,#0
+	LD	A,#4
 	LD	scoreD,A
-	LD	A,#8
+	LD	A,#2
 	LD	scoreU,A
 	
-	LD	A,#1
+	LD	A,#2
 	LD	dspCoef,A
 	
 	LD	A,#4
