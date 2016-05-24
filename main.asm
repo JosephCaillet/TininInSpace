@@ -87,6 +87,8 @@ shipY DS.B 1
 shipYPrev DS.B 1
 shipMooveStep DS.B 1
 
+scoreCarry BS.B 1
+
 
 ;************************************************************************
 ;
@@ -188,13 +190,23 @@ init_game:
 	LD	height,A
 	CALL	fillRectTFT
 
-	ld a,#70
+	ld a,#140
 	ld shipY,a
 	ld shipYPrev,a
-	ld a,#1
+	ld a,#2
 	ld shipMooveStep,a
 	ld a,#0
 	ld shipState,a
+
+	clr scoreD
+	clr scoreU
+	clr scoreCarry
+	ld a,#145
+	ld numY,a
+	ld a,#5
+	ld numX,a
+
+	call dspNum
 
 	ret
 
@@ -322,6 +334,8 @@ moove_ship:
 				LD	height,A
 				CALL	fillRectTFT
 				call dsp_ship
+				call inc_score
+				call dspNum
 				ret
 			;:: end if
 moove_ship_forward
@@ -340,6 +354,54 @@ moove_ship_nothing
 	
 	ret
 
+
+;----------------------------------------------------;
+;-                 Increment score                  -;
+;----------------------------------------------------;
+inc_score:
+	
+	ld a,scoreU
+	;--- if(a == 9) ---
+	cp a,#9
+	jrne inc_score_inc_u
+	;--- then{ ---
+	clr scoreU
+	ld x,scoreCarry
+	inc x
+	ld scoreCarry, x
+	jp inc_score_n_inc_u
+	;--- }end_then ---
+	;--- else{ ---
+inc_score_inc_u
+	inc a
+	ld scoreU, a
+	;--- }end_else ---
+	
+inc_score_n_inc_u
+	ld x,scoreCarry
+	;--- if(x != 0) ---
+	cp x,#0
+	jreq inc_score_n_inc_d
+	;--- then{ ---
+	ld a,scoreD
+		;--- if(a == 9) ---
+	cp a,#9
+	jrne inc_score_inc_d
+		;--- then{ ---
+	clr scoreD
+	clr scoreCarry
+	jp inc_score_n_inc_d
+		;--- }end_then ---
+		;--- else{ ---
+inc_score_inc_d
+	add a,scoreCarry
+	ld scoreD, a
+		;--- }end_else ---
+	clr scoreCarry
+	;-- }end_then ---
+inc_score_n_inc_d
+
+	ret
 
 ;************************************************************************
 ;
