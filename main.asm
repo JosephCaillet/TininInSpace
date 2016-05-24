@@ -165,8 +165,8 @@ init_masks:
 	ld EICR,a
 
 	ld a,EISR
-	and a,#%11111100
-	or a,#%11000000
+	and a,#%00111111
+	or a,#%00000011
 	ld EISR,a
 
 	ret
@@ -318,10 +318,11 @@ moove_ship:
 				LD	y0win,A
 				LD	A,#11
 				LD	width,A
-				LD	A,#18
+				LD	A,#19
 				LD	height,A
 				CALL	fillRectTFT
 				call dsp_ship
+				ret
 			;:: end if
 moove_ship_forward
 			ld shipY,a 				;: shipY -= shipMooveStep
@@ -332,7 +333,7 @@ moove_ship_backward
 		ld a,shipY
 		add a,shipMooveStep
 		cp a,#140
-		jrult moove_ship_nothing 
+		jruge moove_ship_nothing 
 			ld shipY,a 				;: shipY += shipMooveStep
 		;:: end if
 moove_ship_nothing
