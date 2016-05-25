@@ -634,6 +634,7 @@ boucl
 	
 	call dsp_ship
 	call moove_ship
+	call dspObs
 	CALL	updateTimer
 	
 	JP	boucl
