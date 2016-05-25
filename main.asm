@@ -190,15 +190,9 @@ init_masks:
 init_game:
 	LD	A,#$00
 	LD	colorMSB,A
+	LD	A,#$00
 	LD	colorLSB,A
-	LD	A,#0
-	LD	x0win,A
-	LD	y0win,A
-	LD	A,#128
-	LD	width,A
-	LD	A,#160
-	LD	height,A
-	CALL	fillRectTFT
+	CALL	fillScreenTFT
 
 	ld a,#140
 	ld shipY,a
@@ -474,7 +468,7 @@ updateTimer:
 	PUSH	A
 	
 	LD	A,subTimer
-	CP	A,#10
+	CP	A,#1
 	JRNE	inc_subTimer
 	
 	LD	A,#$00
@@ -510,6 +504,20 @@ end_if_upd_timer:
 gameOver:
 	PUSH	A
 
+	LD	A,#$00
+	LD	colorMSB,A
+	LD	A,#$00
+	LD	colorLSB,A
+	LD	A,#5
+	LD	x0win,A
+	LD	A,#145
+	LD	y0win,A
+	LD	A,#14
+	LD	width,A
+	LD	A,#10
+	LD	height,A
+	CALL	fillRectTFT
+	
 	LD	A,#30
 	LD	numSprite,A
 	CALL	setSprite
@@ -530,6 +538,14 @@ gameOver:
 	LD	dsp0Y,A
 	CALL	dspSprite
 	
+	LD	a,#96
+	LD	numY,a
+	LD	a,#49
+	LD	numX,a
+	LD	a,#2
+	LD	dspCoef,a
+	call	dspNum
+	
 	POP	A
 	RET
 	
@@ -538,9 +554,21 @@ gameOver:
 ;-                 fct 3                  -;
 ;----------------------------------------------------;
 lvlUp:
+	PUSH	A
+	
 	call	inc_score
+	
+	LD	a,#145
+	LD	numY,a
+	LD	a,#5
+	LD	numX,a
+	LD	a,#1
+	LD	dspCoef,a
 	call	dspNum
+	
 	CALL	initTimer
+	
+	POP	A
 	ret
 
 ;----------------------------------------------------;
@@ -666,6 +694,14 @@ boucl
 	call moove_ship
 	call dspObs
 	CALL	updateTimer
+	
+	LD	A,timer
+	CP	A,#160
+	JRNE	skip_game_over
+	CALL	gameOver
+	JP	wait_game_start
+	
+skip_game_over
 	
 	JP	boucl
 
