@@ -445,10 +445,51 @@ initTimer:
 	
 	POP	A
 	RET
+
+
+
 ;----------------------------------------------------;
 ;-                 update timer                  -;
 ;----------------------------------------------------;
+;if sub == 255
+;		efacer barre timer
+;		sub = 0
+;		timer--
+;else
+;		sub++
+;end
 updateTimer:
+	PUSH	A
+	
+	LD	A,subTimer
+	CP	A,#10
+	JRNE	inc_subTimer
+	
+	LD	A,#$00
+	LD	colorMSB,A
+	LD	A,#$00
+	LD	colorLSB,A
+	LD	A,#122
+	LD	x0win,A
+	LD	A,timer
+	LD	y0win,A
+	LD	A,#6
+	LD	width,A
+	LD	A,#1
+	LD	height,A
+	CALL	fillRectTFT
+	
+	CLR	subTimer
+	INC	timer
+	JP	end_if_upd_timer
+	
+inc_subTimer:
+	INC	subTimer
+	
+end_if_upd_timer:
+	POP	A
+	RET
+	
 	
 	
 ;----------------------------------------------------;
@@ -497,6 +538,7 @@ boucl
 	
 	call dsp_ship
 	call moove_ship
+	CALL	updateTimer
 	
 	JP	boucl
 
