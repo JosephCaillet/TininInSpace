@@ -489,7 +489,37 @@ inc_subTimer:
 end_if_upd_timer:
 	POP	A
 	RET
+
+
+
+;----------------------------------------------------;
+;-                 game over                  -;
+;----------------------------------------------------;
+gameOver:
+	PUSH	A
+
+	LD	A,#30
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#2
+	LD	dspCoef,A
+	LD	A,#35
+	LD	dsp0X,A
+	LD	A,#18
+	LD	dsp0Y,A
+	CALL	dspSprite
 	
+	LD	A,#32
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#36
+	LD	dsp0X,A
+	LD	A,#57
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	POP	A
+	RET
 	
 	
 ;----------------------------------------------------;
