@@ -185,6 +185,39 @@ init_masks:
 
 
 ;----------------------------------------------------;
+;-                    init obsTab                   -;
+;----------------------------------------------------;
+initObsTab:
+	
+	clr y
+	ld a,#$ff
+
+initObsTabEndWhile
+	;:: while (y <= 27)
+	cp y,#27
+	jruge initObsTabEndWhile
+
+		ld (obsTab,y),a
+
+	inc y
+	jp initObsTabEndWhile
+initObsTabEndWhile
+	;:: end while
+
+	ld y,#4
+	ld a,#%00110000
+	ld (obsTab,y),a
+	ld y,#10
+	ld a,#%10111001
+	ld (obsTab,y),a
+	ld y,#20
+	ld a,#%00000100
+	ld (obsTab,y),a
+
+	ret
+
+
+;----------------------------------------------------;
 ;-                    init game                     -;
 ;----------------------------------------------------;
 init_game:
@@ -225,15 +258,8 @@ init_game:
 	;tc
 	ld a,#1
 	ld obsMoveStep,a
-	ld y,#4
-	ld a,#%00110000
-	ld (obsTab,y),a
-	ld y,#10
-	ld a,#%10111001
-	ld (obsTab,y),a
-	ld y,#20
-	ld a,#%00000100
-	ld (obsTab,y),a
+
+	call initObsTab
 	
 	ret
 
