@@ -95,6 +95,7 @@ subTimer	DS.B	1
 
 ;------ tc -------;
 obsTab DS.B 27
+obsMoveStep DS.B 1
 
 ;************************************************************************
 ;
@@ -222,6 +223,17 @@ init_game:
 	;timer init
 	
 	;tc
+	ld a,#1
+	ld obsMoveStep,a
+	ld y,#4
+	ld a,#%00110000
+	ld (obsTab,y),a
+	ld y,#10
+	ld a,#%10111001
+	ld (obsTab,y),a
+	ld y,#20
+	ld a,#%00000100
+	ld (obsTab,y),a
 	
 	ret
 
@@ -439,9 +451,93 @@ lvlUp:
 ;-                 fct 4                  -;
 ;----------------------------------------------------;
 dspObs:
-	
+	clr y
+	;LD	colorMSB,A
+	;LD	colorLSB,A
+	ld a,#2
+	ld width,a
+	ld a,#1
+	ld height,a
+	;LD	x0win,A
+	;LD	y0win,A
+	;CALL	fillRectTFT
 
-	
+dspObsWhile
+	;:: while(y <= 27)
+	cp y,#27
+	jrugt dspObsEndWhile
+
+		;:: if(obsTab[y] != oxff) then
+		ld a,(obsTab,y)
+		cp a,#$ff
+		jreq dspObsEndIf1
+
+			ld a,y
+			ld x,#5
+			mul x,a
+			add a,#2
+			ld y0win,a 		;: y0win = (y*5)+2
+
+			;:: if(obsTab[y] & %10000000 == 0)
+			and a,#%10000000
+			cp a,#0
+			jrne dspObsElseIf2
+
+				ld a,#$00
+				ld colorMSB,a
+				ld colorLSB,a
+				ld a,(obsTab,y)
+				and a,#%01111111
+				sub a,obsMoveStep
+				ld x0win,a
+				call fillRectTFT
+
+				ld a,#$ff
+				ld colorMSB,a
+				ld colorLSB,a
+				ld a,(obsTab,y)
+				and a,#%01111111
+				ld x0win,a
+				call fillRectTFT
+
+			jp dspObsEndIf2
+dspObsElseIf2
+			;:: else
+
+				ld a,(obsTab,y)
+				and a,#%01111111
+				add a,obsMoveStep
+
+				;:: if( (obsTab[y] & %01111111) + obsMoveStep <= 120 )
+				cp a,#120
+				jrugt dspObsEndIf3
+					ld x0win,a
+					ld a,#$00
+					ld colorMSB,a
+					ld colorLSB,a
+					call fillRectTFT
+dspObsEndIf3
+				;:: end if
+
+				ld a,#$ff
+				ld colorMSB,a
+				ld colorLSB,a
+				ld a,(obsTab,y)
+				and a,#%01111111
+				ld x0win,a
+				call fillRectTFT
+
+dspObsEndIf2
+			;:: end if
+
+dspObsEndIf1
+		;:: end if
+
+	inc y
+	jp dspObsWhile
+dspObsEndWhile
+	;:: end while
+
 	ret
 
 ;************************************************************************
