@@ -89,7 +89,7 @@ shipMooveStep DS.B 1
 
 scoreCarry DS.B 1
 
-;------ jc -------;
+;------ timer -------;
 timer	DS.B	1
 subTimer	DS.B	1
 
@@ -220,7 +220,7 @@ init_game:
 	call dspNum
 	
 	;timer init
-	
+	CALL initTimer
 	;tc
 	
 	ret
@@ -419,20 +419,45 @@ inc_score_n_inc_d
 	ret
 
 ;----------------------------------------------------;
-;-                 update timer                     -;
+;-                 init timer                     -;
+;----------------------------------------------------;
+initTimer:
+	PUSH	A
+	
+	LD	A,#0 ; 0->159
+	LD	timer,A
+	LD	A,#0 ; 0->255
+	LD	subTimer,A
+	
+	LD	A,#$F8
+	LD	colorMSB,A
+	LD	A,#$00
+	LD	colorLSB,A
+	LD	A,#122
+	LD	x0win,A
+	LD	A,#0
+	LD	y0win,A
+	LD	A,#6
+	LD	width,A
+	LD	A,#160
+	LD	height,A
+	CALL	fillRectTFT
+	
+	POP	A
+	RET
+;----------------------------------------------------;
+;-                 update timer                  -;
 ;----------------------------------------------------;
 updateTimer:
 	
-;----------------------------------------------------;
-;-                 fct 2                  -;
-;----------------------------------------------------;
-
+	
 ;----------------------------------------------------;
 ;-                 fct 3                  -;
 ;----------------------------------------------------;
 lvlUp:
-	call inc_score
-	call dspNum
+	call	inc_score
+	call	dspNum
+	CALL	initTimer
 	ret
 
 ;----------------------------------------------------;
