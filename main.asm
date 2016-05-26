@@ -93,7 +93,7 @@ scoreCarry DS.B 1
 timer	DS.B	1
 subTimer	DS.B	1
 
-;------ tc -------;
+;------ obstacle -------;
 obsTab DS.B 27
 obsMoveStep DS.B 1
 
@@ -192,7 +192,7 @@ initObsTab:
 	clr y
 	ld a,#$ff
 
-initObsTabEndWhile
+initObsTabWhile
 	;:: while (y <= 27)
 	cp y,#27
 	jruge initObsTabEndWhile
@@ -200,7 +200,7 @@ initObsTabEndWhile
 		ld (obsTab,y),a
 
 	inc y
-	jp initObsTabEndWhile
+	jp initObsTabWhile
 initObsTabEndWhile
 	;:: end while
 
@@ -577,7 +577,7 @@ gameOver:
 	
 	
 ;----------------------------------------------------;
-;-                 fct 3                  -;
+;-                 next level                 -;
 ;----------------------------------------------------;
 lvlUp:
 	PUSH	A
@@ -598,7 +598,7 @@ lvlUp:
 	ret
 
 ;----------------------------------------------------;
-;-                 fct 4                  -;
+;-                 display obstacle                 -;
 ;----------------------------------------------------;
 dspObs:
 	clr y
@@ -615,7 +615,7 @@ dspObs:
 dspObsWhile
 	;:: while(y <= 27)
 	cp y,#27
-	jrugt dspObsEndWhile
+	jruge dspObsEndWhile
 
 		;:: if(obsTab[y] != oxff) then
 		ld a,(obsTab,y)
