@@ -762,11 +762,11 @@ end_for_move_obs
 
 
 erase_obs:
-	ld a,(obsTab,y)
+	ld a,(obsTab,x)
 	ld x0win,a
-	ld a,y
-	ld x,#5
-	mul x,a
+	ld a,x
+	ld y,#5
+	mul y,a
 	add a,#2
 	ld y0win,a 		;: y0win = (y*5)+2
 	ld a,#1
