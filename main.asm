@@ -763,6 +763,7 @@ end_for_move_obs
 
 erase_obs:
 	ld a,(obsTab,x)
+	and a,#%01111111
 	ld x0win,a
 	ld a,x
 	ld y,#5
