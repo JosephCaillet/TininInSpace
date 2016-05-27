@@ -721,6 +721,8 @@ for_move_obs
 				CP	A,#117
 				JRNE	else_va_gauche
 					;effacer ennemie
+					call erase_obs
+
 					LD	A,#0
 					LD	(obsTab,X),A;obsTab[i] = 0 ;positionner ennemi tout à gauche
 					JP	end_if_ennemi_actif
@@ -737,6 +739,7 @@ ennemi_va_gauche
 				CP	A,#%10000000
 				JRNE	else_va_droite
 					;effacer ennemies
+					call erase_obs
 					LD	A,#245;117+128
 					LD	(obsTab,X),A;obsTab[i] = 127-6-2-2 // positionner ennemie tout à droite
 					JP	end_if_ennemi_actif
@@ -756,7 +759,25 @@ end_for_move_obs
 	POP	X
 	POP	A
 	RET
-	
+
+
+erase_obs:
+	ld a,(obsTab,y)
+	ld x0win,a
+	ld a,y
+	ld x,#5
+	mul x,a
+	add a,#2
+	ld y0win,a 		;: y0win = (y*5)+2
+	ld a,#1
+	ld height,a
+	ld a,#2
+	ld width,a
+	ld a,#$00
+	ld colorMSB,a
+	ld colorLSB,a
+	call fillRectTFT
+	ret
 	
 	
 ;************************************************************************
