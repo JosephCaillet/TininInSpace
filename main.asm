@@ -662,6 +662,7 @@ dspObsElseIf2
 				cp a,#120
 				jrugt dspObsEndIf3
 					ld a,(obsTab,y)
+					and a,#%01111111
 					add a,obsMoveStep
 					ld x0win,a
 					ld a,#$00
