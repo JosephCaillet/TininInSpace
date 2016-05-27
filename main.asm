@@ -629,6 +629,7 @@ dspObsWhile
 			ld y0win,a 		;: y0win = (y*5)+2
 
 			;:: if(obsTab[y] & %10000000 == 0)
+			ld a,(obsTab,y)
 			and a,#%10000000
 			cp a,#0
 			jrne dspObsElseIf2
