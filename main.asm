@@ -689,7 +689,72 @@ dspObsEndWhile
 	;:: end while
 
 	ret
-
+	
+	
+;----------------------------------------------------;
+;-                 move obstacle                 -;
+;----------------------------------------------------;
+moveObs:
+	PUSH	A
+	PUSH	X
+	
+	CLR	X
+	;for i=0, i<27, i++
+for_move_obs
+	CP	X,#27
+	JRUGE	end_for_move_obs
+		
+		;if obsTab[i] != FF //si ennemi actif
+		LD	A,(obsTab,X)
+		CP	A,#$FF
+		JREQ	end_if_ennemi_actif
+			;if obsTab[i] >> 7 == 0 //si ennemi va a droite
+			AND	a,#%10000000
+			CP	A,#0
+			JRNE	ennemi_va_gauche
+				;if obsTab[i] == 127-6-2-2 // si ennemi à etremité droite
+				LD	A,(obsTab,X)
+				CP	A,#117
+				JRNE	else_va_gauche
+					;effacer ennemie
+					LD	A,#0
+					LD	(obsTab,X),A;obsTab[i] = 0 ;positionner ennemi tout à gauche
+					JP	end_if_ennemi_actif
+				;else
+else_va_gauche
+					ADD	A,obsMoveStep;obsTab[i]+=step
+					LD	(obsTab,X),A
+					JP	end_if_ennemi_actif
+				;end
+			;else //si ennemi va à gauche
+ennemi_va_gauche
+				;if obsTab[i] == 0 //si ennemie à extremité gauche
+				LD	A,(obsTab,X)
+				CP	A,#%10000000
+				JRNE	else_va_droite
+					;effacer ennemies
+					LD	A,#117
+					LD	(obsTab,X),A;obsTab[i] = 127-6-2-2 // positionner ennemie tout à droite
+					JP	end_if_ennemi_actif
+				;else
+else_va_droite
+					SUB	A,obsMoveStep;if obsTab[i] -=step
+					LD	(obsTab,X),A
+					JP	end_if_ennemi_actif
+				;end
+			;end
+		;end
+end_if_ennemi_actif
+	INC X
+	JP	for_move_obs
+	;end
+end_for_move_obs
+	POP	X
+	POP	A
+	RET
+	
+	
+	
 ;************************************************************************
 ;
 ;  FIN DE LA ZONE DE DECLARATION DES SOUS-PROGRAMMES
@@ -719,6 +784,7 @@ boucl
 	call dsp_ship
 	call moove_ship
 	call dspObs
+	CALL	moveObs
 	CALL	updateTimer
 	
 	LD	A,timer
