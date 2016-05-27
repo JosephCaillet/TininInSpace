@@ -661,6 +661,8 @@ dspObsElseIf2
 				;:: if( (obsTab[y] & %01111111) + obsMoveStep <= 120 )
 				cp a,#120
 				jrugt dspObsEndIf3
+					ld a,(obsTab,y)
+					add a,obsMoveStep
 					ld x0win,a
 					ld a,#$00
 					ld colorMSB,a
