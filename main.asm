@@ -733,7 +733,7 @@ ennemi_va_gauche
 				CP	A,#%10000000
 				JRNE	else_va_droite
 					;effacer ennemies
-					LD	A,#117
+					LD	A,#245;117+128
 					LD	(obsTab,X),A;obsTab[i] = 127-6-2-2 // positionner ennemie tout à droite
 					JP	end_if_ennemi_actif
 				;else
