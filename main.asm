@@ -647,28 +647,35 @@ incObs:
 	ld a,obsNb
 	;:: if(obsNb < OBS_MAX) then
 	cp a,OBS_MAX
-	jruge lvlUpEndIf1
+	jruge incObsEndIf1
 		inc obsNb
 		ld y,LTCNTR
 		cpl y
-lvlUpWhile1
+incObsWhile1
 		;:: while( y != $ff ) do
 		cp y,#$ff
-		jreq lvlUpEndWhile1
+		jreq incObsEndWhile1
 			inc y
-			jp lvlUpWhile1
-lvlUpEndWhile1
+			;:: if(y >= 27) then
+				cp y,#27
+				jrult incObsEndIf3
+					clr y
+			;:: end if
+incObsEndIf3
+			jp incObsWhile1
+incObsEndWhile1
 		ld a,#0
 		add a,obsMoveStep
 			;:: if(obsDir != 0) then
 			ld x,obsDir
 			cp x,#0
-			jreq lvlUpEndIf2
-				or a,#%10000000
-lvlUpEndIf2
+			jreq incObsEndIf2
+				;or a,#%10000000
+				add a,#128
+incObsEndIf2
 			;:: end if
 		ld (obsTab,y),a
-lvlUpEndIf1
+incObsEndIf1
 	;:: end if
 
 	ret
