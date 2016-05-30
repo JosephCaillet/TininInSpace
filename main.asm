@@ -634,6 +634,8 @@ lvlUp:
 	call	dspNum
 	
 	CALL	initTimer
+
+	call incObs
 	
 	POP	A
 	ret
