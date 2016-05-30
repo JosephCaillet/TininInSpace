@@ -81,6 +81,7 @@ test DS.B 1
 ;  ZONE DE DECLARATION DES VARIABLES
 ;
 ;************************************************************************
+shipX EQU 59
 
 shipState DS.B 1
 shipY DS.B 1
@@ -97,11 +98,11 @@ subTimer	DS.B	1
 obsTab DS.B 27
 obsMoveStep DS.B 1
 
-xObs	DS	1
-yObs	DS	1
-x1Ship	DS	1
-x2Ship	DS	1
-yShip	DS	1
+xObsHB	DS	1;HB = hitbox
+yObsHB	DS	1
+x1ShipHB	DS	1
+x2ShipHB	DS	1
+yShipHB	DS	1
 
 
 
@@ -319,7 +320,7 @@ dsp_ship:
 
 	ld a,shipY
 	ld dsp0Y,a
-	ld a,#59
+	ld a,#shipX
 	ld dsp0X,a
 	ld a,#1
 	ld dspCoef,a
@@ -814,45 +815,49 @@ for_collision
 			LD	Y,#5
 			MUL	Y,A
 			ADD	A,#2
-			LD	yObs,A
+			LD	yObsHB,A
 			
-			;yShip = dsp0y + 4
-			LD	A,dsp0Y
+			;yShip = shipY + 4
+			LD	A,shipY
 			ADD	A,#4
-			LD	yShip,A
+			LD	yShipHB, A
 			
 			;if(yShip > yObs)
-			CP A,yObs
+			CP A,yObsHB
 				;continue
 				JRUGT	end_if_collision_ennemi_actif
 			;end
 			
 			;yShip += 11
-			LD	A,yShip
+			LD	A,yShipHB
 			ADD	A,#11
-			LD	yShip,A
+			LD	yShipHB,A
 			
 			;if(yShip < yObs)
-				CP A,yObs
+			CP A,yObsHB
 				;continue
 				JRULT	end_if_collision_ennemi_actif
 			;end
 			
 			;x1Ship = dsp0x + 3 -1 //-1 car obstacle de largeur de 2 px
-			LD	A,dsp0x
+			LD	A,#shipX
 			ADD	A,#2
 			;xObs = obsTab[i] & 01111111 //ellimination msb
-			LD	A,(tabObs,X)
+			LD	A,(obsTab,X)
 			AND	A,#%01111111
-			LD	xObs,A
+			LD	xObsHB,A
 			
 			;if(xObs < x1Ship)
-				;continue
+			CP	A,x1ShipHB
+				JRULT	end_if_collision_ennemi_actif
 			;end
+			
 			;x2Ship = dsp0x + 7
+			LD	A,#shipX
+			ADD	A,#7
+			
 			;if(xObs < x2Ship)
-					;//collision
-					;return
+					;continue
 				;end
 		;end
 end_if_collision_ennemi_actif
