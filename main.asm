@@ -654,8 +654,9 @@ incObs:
 		ld y,LTCNTR
 		cpl y
 incObsWhile1
-		;:: while( y != $ff ) do
-		cp y,#$ff
+		;:: while( obsTab[y] != $ff ) do
+		ld a,(obsTab,y)
+		cp a,#$ff
 		jreq incObsEndWhile1
 			inc y
 			;:: if(y >= 27) then
