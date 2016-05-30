@@ -81,6 +81,7 @@ test DS.B 1
 ;  ZONE DE DECLARATION DES VARIABLES
 ;
 ;************************************************************************
+shipX EQU 59
 
 shipState DS.B 1
 shipY DS.B 1
@@ -96,6 +97,14 @@ subTimer	DS.B	1
 ;------ obstacle -------;
 obsTab DS.B 27
 obsMoveStep DS.B 1
+
+xObsHB	DS	1;HB = hitbox
+yObsHB	DS	1
+x1ShipHB	DS	1
+x2ShipHB	DS	1
+yShipHB	DS	1
+
+
 
 ;************************************************************************
 ;
@@ -311,7 +320,7 @@ dsp_ship:
 
 	ld a,shipY
 	ld dsp0Y,a
-	ld a,#59
+	ld a,#shipX
 	ld dsp0X,a
 	ld a,#1
 	ld dspCoef,a
@@ -785,6 +794,88 @@ erase_obs:
 	ret
 	
 	
+	
+;----------------------------------------------------;
+;-            test collision obstacle               -;
+;----------------------------------------------------;
+collisionObs:
+	PUSH	X
+	PUSH	Y
+	PUSH	A
+	
+	CLR	X
+	;for(i=0, i<27, i++)
+for_collision
+		CP	X,#27
+		JRUGE	end_for_collision
+		
+		;if obsTab[i] != FF //si ennemi actif
+		LD	A,(obsTab,X)
+		CP	A,#$FF
+		JREQ	end_if_collision_ennemi_actif
+			
+			;yObs = i*5 + 2
+			LD	A,X
+			LD	Y,#5
+			MUL	Y,A
+			ADD	A,#2
+			LD	yObsHB,A
+			
+			;yShip = shipY + 4
+			LD	A,shipY
+			ADD	A,#4
+			LD	yShipHB, A
+			
+			;if(yShip > yObs)
+			CP A,yObsHB
+				;continue
+				JRUGT	end_if_collision_ennemi_actif
+			;end
+			
+			;yShip += 11
+			LD	A,yShipHB
+			ADD	A,#11
+			LD	yShipHB,A
+			
+			;if(yShip < yObs)
+			CP A,yObsHB
+				;continue
+				JRULT	end_if_collision_ennemi_actif
+			;end
+			
+			;x1Ship = dsp0x + 3 -1 //-1 car obstacle de largeur de 2 px
+			LD	A,#shipX
+			ADD	A,#2
+			;xObs = obsTab[i] & 01111111 //ellimination msb
+			LD	A,(obsTab,X)
+			AND	A,#%01111111
+			LD	xObsHB,A
+			
+			;if(xObs < x1Ship)
+			CP	A,x1ShipHB
+				JRULT	end_if_collision_ennemi_actif
+			;end
+			
+			;x2Ship = dsp0x + 7
+			LD	A,#shipX
+			ADD	A,#7
+			
+			;if(xObs < x2Ship)
+					;continue
+				;end
+		;end
+end_if_collision_ennemi_actif
+	INC	X
+	JP	for_collision
+	;end
+end_for_collision
+	POP	A
+	POP	Y
+	POP	X
+	RET
+
+
+
 ;************************************************************************
 ;
 ;  FIN DE LA ZONE DE DECLARATION DES SOUS-PROGRAMMES
