@@ -63,9 +63,6 @@ ST7/
 	EXTERN	numX.B
 	EXTERN	numY.B
 
-;obstacles
-
-	OBS_MAX   EQU  10
 
 
 ;************************************************************************
@@ -86,6 +83,9 @@ test DS.B 1
 ;
 ;************************************************************************
 shipX EQU 59
+;obstacles
+OBS_MAX   EQU  10
+
 
 lvl DS.B 1
 
@@ -212,7 +212,7 @@ init_st7_timer:
 	AND A,#%00001000
 	LD	LTCSR1,A
 
-	ld a,#e5
+	ld a,#$e5
 	ld LTCARR,a
 
 	ret
