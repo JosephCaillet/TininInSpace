@@ -97,6 +97,14 @@ subTimer	DS.B	1
 obsTab DS.B 27
 obsMoveStep DS.B 1
 
+xObs	DS	1
+yObs	DS	1
+x1Ship	DS	1
+x2Ship	DS	1
+yShip	DS	1
+
+
+
 ;************************************************************************
 ;
 ;  FIN DE LA ZONE DE DECLARATION DES VARIABLES
@@ -781,6 +789,84 @@ erase_obs:
 	ret
 	
 	
+	
+;----------------------------------------------------;
+;-            test collision obstacle               -;
+;----------------------------------------------------;
+collisionObs:
+	PUSH	X
+	PUSH	Y
+	PUSH	A
+	
+	CLR	X
+	;for(i=0, i<27, i++)
+for_collision
+		CP	X,#27
+		JRUGE	end_for_collision
+		
+		;if obsTab[i] != FF //si ennemi actif
+		LD	A,(obsTab,X)
+		CP	A,#$FF
+		JREQ	end_if_collision_ennemi_actif
+			
+			;yObs = i*5 + 2
+			LD	A,X
+			LD	Y,#5
+			MUL	Y,A
+			ADD	A,#2
+			LD	yObs,A
+			
+			;yShip = dsp0y + 4
+			LD	A,dsp0Y
+			ADD	A,#4
+			LD	yShip,A
+			
+			;if(yShip > yObs)
+			CP A,yObs
+				;continue
+				JRUGT	end_if_collision_ennemi_actif
+			;end
+			
+			;yShip += 11
+			LD	A,yShip
+			ADD	A,#11
+			LD	yShip,A
+			
+			;if(yShip < yObs)
+				CP A,yObs
+				;continue
+				JRULT	end_if_collision_ennemi_actif
+			;end
+			
+			;x1Ship = dsp0x + 3 -1 //-1 car obstacle de largeur de 2 px
+			LD	A,dsp0x
+			ADD	A,#2
+			;xObs = obsTab[i] & 01111111 //ellimination msb
+			LD	A,(tabObs,X)
+			AND	A,#%01111111
+			LD	xObs,A
+			
+			;if(xObs < x1Ship)
+				;continue
+			;end
+			;x2Ship = dsp0x + 7
+			;if(xObs < x2Ship)
+					;//collision
+					;return
+				;end
+		;end
+end_if_collision_ennemi_actif
+	INC	X
+	JP	for_collision
+	;end
+end_for_collision
+	POP	A
+	POP	Y
+	POP	X
+	RET
+
+
+
 ;************************************************************************
 ;
 ;  FIN DE LA ZONE DE DECLARATION DES SOUS-PROGRAMMES
