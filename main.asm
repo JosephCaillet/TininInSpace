@@ -210,6 +210,7 @@ init_masks:
 init_st7_timer:
 	LD	A,LTCSR2
 	AND A,#%00001000
+	or a,#%00010000
 	LD	LTCSR2,A
 
 	ld a,#$e5
@@ -1051,8 +1052,8 @@ pa3_push
 	iret
 
 i_obs_dir:
-	ld a,LTCLR2
 	cpl obsDir
+	ld a,LTCSR2
 	iret
 
 
