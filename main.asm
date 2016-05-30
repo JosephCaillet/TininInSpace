@@ -1051,6 +1051,7 @@ pa3_push
 	iret
 
 i_obs_dir:
+	ld a,LTCLR2
 	cpl obsDir
 	iret
 
