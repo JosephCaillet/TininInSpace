@@ -634,14 +634,30 @@ lvlUp:
 	call	dspNum
 	
 	CALL	initTimer
+	
+	POP	A
+	ret
 
+
+;----------------------------------------------------;
+;-                   inc obstacle                   -;
+;----------------------------------------------------;
+incObs:
+	
 	ld a,obsNb
-	;:: if(obsNb < 10) then
+	;:: if(obsNb < OBS_MAX) then
 	cp a,OBS_MAX
 	jruge lvlUpEndIf1
 		inc obsNb
 		ld y,LTCNTR
 		cpl y
+lvlUpWhile1
+		;:: while( y != $ff ) do
+		cp y,#$ff
+		jreq lvlUpEndWhile1
+			inc y
+			jp lvlUpWhile1
+lvlUpEndWhile1
 		ld a,#0
 		add a,obsMoveStep
 			;:: if(obsDir != 0) then
@@ -655,8 +671,6 @@ lvlUpEndIf2
 lvlUpEndIf1
 	;:: end if
 
-	
-	POP	A
 	ret
 
 ;----------------------------------------------------;
