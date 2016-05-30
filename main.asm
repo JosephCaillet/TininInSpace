@@ -63,6 +63,10 @@ ST7/
 	EXTERN	numX.B
 	EXTERN	numY.B
 
+;obstacles
+
+	OBS_MAX   EQU  10
+
 
 ;************************************************************************
 ;
@@ -83,6 +87,8 @@ test DS.B 1
 ;************************************************************************
 shipX EQU 59
 
+lvl DS.B 1
+
 shipState DS.B 1
 shipY DS.B 1
 shipYPrev DS.B 1
@@ -97,6 +103,8 @@ subTimer	DS.B	1
 ;------ obstacle -------;
 obsTab DS.B 27
 obsMoveStep DS.B 1
+obsDir DS.B 1
+obsNb DS.B 1
 
 xObsHB	DS	1;HB = hitbox
 yObsHB	DS	1
@@ -154,6 +162,8 @@ init:
 	call init_masks
 	rim
 
+	call init_st7_timer
+
 	ld a,#0
 	ld shipState,a
 
@@ -189,6 +199,21 @@ init_masks:
 	and a,#%00111111
 	or a,#%00000011
 	ld EISR,a
+
+	ret
+
+
+;----------------------------------------------------;
+;-                  init st7 timer                  -;
+;----------------------------------------------------;
+
+init_st7_timer:
+	LD	A,LTCSR1
+	AND A,#%00001000
+	LD	LTCSR1,A
+
+	ld a,#e5
+	ld LTCARR,a
 
 	ret
 
@@ -244,6 +269,8 @@ init_game:
 	ld a,#0
 	ld shipState,a
 
+	clr lvl
+
 	clr scoreD
 	clr scoreU
 	clr scoreCarry
@@ -261,6 +288,10 @@ init_game:
 	;tc
 	ld a,#1
 	ld obsMoveStep,a
+	ld a,#3
+	ld obsNb,a
+
+	clr obsDir
 
 	call initObsTab
 	
@@ -586,11 +617,12 @@ gameOver:
 	
 	
 ;----------------------------------------------------;
-;-                 next level                 -;
+;-                    next level                    -;
 ;----------------------------------------------------;
 lvlUp:
 	PUSH	A
 	
+	inc lvl
 	call	inc_score
 	
 	LD	a,#145
@@ -602,6 +634,27 @@ lvlUp:
 	call	dspNum
 	
 	CALL	initTimer
+
+	ld a,obsNb
+	;:: if(obsNb < 10) then
+	cp a,OBS_MAX
+	jruge lvlUpEndIf1
+		inc obsNb
+		ld y,LTCNTR
+		cpl y
+		ld a,#0
+		add a,obsMoveStep
+			;:: if(obsDir != 0) then
+			ld x,obsDir
+			cp x,#0
+			jreq lvlUpEndIf2
+				or a,#%10000000
+lvlUpEndIf2
+			;:: end if
+		ld (obsTab,y),a
+lvlUpEndIf1
+	;:: end if
+
 	
 	POP	A
 	ret
@@ -947,6 +1000,10 @@ pa3_push
 	ld shipState,a
 	iret
 
+i_obs_dir:
+	cpl obsDir
+	iret
+
 
 ;************************************************************************
 ;
@@ -966,7 +1023,7 @@ at_timerover_it	DC.W	dummy_rt	; Adresse FFE8-FFE9h
 at_timerOC_it	DC.W	dummy_rt	; Adresse FFEA-FFEBh
 AVD_it		DC.W	dummy_rt	; Adresse FFEC-FFEDh
 		DC.W	dummy_rt	; Adresse FFEE-FFEFh
-lt_RTC2_it	DC.W	dummy_rt	; Adresse FFF0-FFF1h
+lt_RTC2_it	DC.W	i_obs_dir	; Adresse FFF0-FFF1h
 ext3_it		DC.W	i_ship_forward	; Adresse FFF2-FFF3h
 ext2_it		DC.W	dummy_rt	; Adresse FFF4-FFF5h
 ext1_it		DC.W	dummy_rt	; Adresse FFF6-FFF7h
