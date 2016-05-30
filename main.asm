@@ -208,7 +208,7 @@ init_masks:
 ;----------------------------------------------------;
 
 init_st7_timer:
-	LD	A,LTCSR1
+	LD	A,LTCSR2
 	AND A,#%00001000
 	LD	LTCSR1,A
 
