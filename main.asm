@@ -839,9 +839,11 @@ for_collision
 				JRULT	end_if_collision_ennemi_actif
 			;end
 			
-			;x1Ship = dsp0x + 3 -1 //-1 car obstacle de largeur de 2 px
+			;x1Ship = shipX + 3 -1 //-1 car obstacle de largeur de 2 px
 			LD	A,#shipX
 			ADD	A,#2
+			LD	x1ShipHB,A
+			
 			;xObs = obsTab[i] & 01111111 //ellimination msb
 			LD	A,(obsTab,X)
 			AND	A,#%01111111
@@ -852,13 +854,37 @@ for_collision
 				JRULT	end_if_collision_ennemi_actif
 			;end
 			
-			;x2Ship = dsp0x + 7
+			;x2Ship = shipX + 7
+			PUSH	A
 			LD	A,#shipX
 			ADD	A,#7
+			LD	x2ShipHB,A
+			POP	A
 			
-			;if(xObs < x2Ship)
-					;continue
-				;end
+			;if(xObs > x2Ship)
+			CP A,x2ShipHB
+				;continue
+				JRUGT	end_if_collision_ennemi_actif
+			;end
+			
+			LD	A,#$00
+			LD	colorMSB,A
+			LD	A,#$00
+			LD	colorLSB,A
+			LD	A,#shipX
+			LD	x0win,A
+			LD	A,shipY
+			LD	y0win,A
+			LD	A,#11
+			LD	width,A
+			LD	A,#18
+			LD	height,A
+			CALL	fillRectTFT
+			
+			LD	A,#140
+			LD	shipY,A
+			
+			JP	end_for_collision
 		;end
 end_if_collision_ennemi_actif
 	INC	X
@@ -902,6 +928,7 @@ boucl
 	call moove_ship
 	call dspObs
 	CALL	moveObs
+	CALL	collisionObs
 	CALL	updateTimer
 	
 	LD	A,timer
