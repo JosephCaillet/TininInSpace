@@ -86,7 +86,7 @@ shipX EQU 59
 shipState DS.B 1
 shipY DS.B 1
 shipYPrev DS.B 1
-shipMooveStep DS.B 1
+shipMoveStep DS.B 1
 
 scoreCarry DS.B 1
 
@@ -240,7 +240,7 @@ init_game:
 	ld shipY,a
 	ld shipYPrev,a
 	ld a,#5
-	ld shipMooveStep,a
+	ld shipMoveStep,a
 	ld a,#0
 	ld shipState,a
 
@@ -336,7 +336,7 @@ dsp_ship:
 		ld y0win,a
 		jp dsp_ship_cp_x_axe_end
 dsp_ship_cp_x_axe
-	sub a,shipMooveStep
+	sub a,shipMoveStep
 	ld y0win,a
 dsp_ship_cp_x_axe_end		
 	LD	A,#$00
@@ -344,7 +344,7 @@ dsp_ship_cp_x_axe_end
 	LD	colorLSB,A
 	ld a,dsp0X
 	ld x0win,a
-	ld a,shipMooveStep
+	ld a,shipMoveStep
 	ld height,a
 	ld a,#11
 	ld width,a
@@ -368,9 +368,9 @@ moove_ship:
 		ld a,shipState
 		cp a,#1
 		jrne moove_ship_backward
-			;:: if(shipY - shipMooveStep <= 0) then
+			;:: if(shipY - shipMoveStep <= 0) then
 			ld a,shipY
-			sub a,shipMooveStep
+			sub a,shipMoveStep
 			cp a,#0
 			jrugt moove_ship_forward
 				ld a,#140
@@ -387,7 +387,7 @@ moove_ship:
 				LD	A,#11
 				LD	width,A
 				LD	A,#18
-				add a,shipMooveStep
+				add a,shipMoveStep
 				LD	height,A
 				CALL	fillRectTFT
 				call dsp_ship
@@ -395,16 +395,16 @@ moove_ship:
 				ret
 			;:: end if
 moove_ship_forward
-			ld shipY,a 				;: shipY -= shipMooveStep
+			ld shipY,a 				;: shipY -= shipMoveStep
 			jp moove_ship_nothing
 		;:: end if
 moove_ship_backward
-		;:: if(shipY + shipMooveStep < 140) then
+		;:: if(shipY + shipMoveStep < 140) then
 		ld a,shipY
-		add a,shipMooveStep
+		add a,shipMoveStep
 		cp a,#140
 		jruge moove_ship_nothing 
-			ld shipY,a 				;: shipY += shipMooveStep
+			ld shipY,a 				;: shipY += shipMoveStep
 		;:: end if
 moove_ship_nothing
 	
@@ -705,7 +705,7 @@ dspObsEndWhile
 	
 	
 ;----------------------------------------------------;
-;-                 move obstacle                    -;
+;-                 move obstacle                 -;
 ;----------------------------------------------------;
 moveObs:
 	PUSH	A
@@ -769,10 +769,6 @@ end_for_move_obs
 	POP	A
 	RET
 
-
-;----------------------------------------------------;
-;-                 erase obstacle                   -;
-;----------------------------------------------------;
 
 erase_obs:
 	ld a,(obsTab,x)
@@ -878,10 +874,13 @@ for_collision
 			LD	A,#shipX
 			LD	x0win,A
 			LD	A,shipY
+			SUB	A,shipMoveStep
 			LD	y0win,A
 			LD	A,#11
 			LD	width,A
 			LD	A,#18
+			ADD	A,shipMoveStep
+			ADD	A,shipMoveStep
 			LD	height,A
 			CALL	fillRectTFT
 			
