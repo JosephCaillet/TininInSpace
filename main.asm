@@ -209,8 +209,8 @@ init_masks:
 
 init_st7_timer:
 	LD	A,LTCSR2
-	;AND A,#%00001000
-	or a,#%00000010
+	;or a,#%00000010
+	or a,#%00000000
 	LD	LTCSR2,A
 
 	ld a,#$e5
