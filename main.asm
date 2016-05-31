@@ -402,8 +402,7 @@ moove_ship:
 		jrne moove_ship_backward
 			;:: if(shipY - shipMoveStep <= 0) then
 			ld a,shipY
-			sub a,shipMoveStep
-			cp a,#0
+			cp a,shipMoveStep
 			jrugt moove_ship_forward
 				ld a,#140
 				ld shipY,a ;: shipY = 140
