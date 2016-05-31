@@ -647,8 +647,8 @@ lvlUp:
 ;----------------------------------------------------;
 incObs:
 	
-	ld a,obsNb
 	;:: if(obsNb < OBS_MAX) then
+	ld a,obsNb
 	cp a,OBS_MAX
 	jruge incObsEndIf1
 		inc obsNb
