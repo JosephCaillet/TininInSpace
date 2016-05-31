@@ -209,8 +209,7 @@ init_masks:
 
 init_st7_timer:
 	LD	A,LTCSR2
-	;or a,#%00000010
-	or a,#%00000000
+	or a,#%00000010
 	LD	LTCSR2,A
 
 	ld a,#$e5
@@ -553,6 +552,7 @@ updateTimer:
 	CALL	fillRectTFT
 	
 	CLR	subTimer
+	INC	timer
 	INC	timer
 	JP	end_if_upd_timer
 	
