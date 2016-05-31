@@ -84,7 +84,7 @@ test DS.B 1
 ;************************************************************************
 shipX EQU 59
 ;obstacles
-OBS_MAX   EQU  10
+OBS_MAX   EQU  15
 
 
 lvl DS.B 1
