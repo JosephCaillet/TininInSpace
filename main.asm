@@ -403,7 +403,7 @@ moove_ship:
 			;:: if(shipY - shipMoveStep <= 0) then
 			ld a,shipY
 			cp a,shipMoveStep
-			jrugt moove_ship_forward
+			jrule moove_ship_forward
 				ld a,#140
 				ld shipY,a ;: shipY = 140
 				ld shipYPrev,a
