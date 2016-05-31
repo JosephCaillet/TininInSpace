@@ -1,0 +1,28 @@
+--
+--
+--
+--
+-- PB0/ADC
+PA0 <<<<<< C
+PA1 <<<<<< C
+PB4/AIN4
+PB5/AIN5 <<<<<< S
+--
+--
+PB6 <<<<<< S
+-- PA3
+PA4
+--
+--
+PA7
+PA3/RX
+PA4/TSTRT
+PA5/TCLK/TX
+PA7/INT
+PC4/TX
+--
+--
+-
+--
+
+Utilisés par btn : PA3 PB0
