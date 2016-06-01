@@ -86,6 +86,10 @@ shipX EQU 59
 ;obstacles
 OBS_MAX   EQU  27
 
+;timer
+SUB_TIMER_INIT EQU 2
+SUB_TIMER_DIF_2 EQU 1
+SUB_TIMER_DIF_3 EQU 0
 
 lvl DS.B 1
 
@@ -99,6 +103,7 @@ scoreCarry DS.B 1
 ;------ timer -------;
 timer	DS.B	1
 subTimer	DS.B	1
+timerLvl DS.B 1
 
 ;------ obstacle -------;
 obsTab DS.B 27
@@ -284,6 +289,8 @@ init_game:
 	call dspNum
 	
 	;timer init
+	ld a,#SUB_TIMER_INIT
+	ld timerLvl,a
 	CALL initTimer
 	;tc
 	ld a,#1
@@ -534,7 +541,7 @@ updateTimer:
 	PUSH	A
 	
 	LD	A,subTimer
-	CP	A,#1
+	CP	A,timerLvl
 	JRNE	inc_subTimer
 	
 	LD	A,#$00
@@ -847,7 +854,7 @@ end_for_move_obs
 	POP	A
 	RET
 
-
+;-- extension of move obs fct --;
 erase_obs:
 	ld a,(obsTab,x)
 	and a,#%01111111
