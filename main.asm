@@ -641,6 +641,18 @@ lvlUp:
 	LD	dspCoef,a
 	call	dspNum
 	
+	ld a,lvl
+	cp a,#5
+	jrne lvlUp_skip_5
+		ld a,#SUB_TIMER_DIF_2
+		ld timerLvl,a
+lvlUp_skip_5
+	cp a,#15
+	jrne lvlUp_skip_5
+		ld a,#SUB_TIMER_DIF_3
+		ld timerLvl,a
+lvlUp_skip_5
+
 	CALL	initTimer
 
 	call incObs
