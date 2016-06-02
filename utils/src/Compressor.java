@@ -81,7 +81,7 @@ public class Compressor
 			result += repetition + "\n";
 		}
 
-		System.out.println(imageSize + "\n" + img.getHeight() + "\n" + img.getWidth());
+		//System.out.println(imageSize + "\n" + img.getHeight() + "\n" + img.getWidth());
 		compressionRatio = (float)imageSize / (float)(img.getHeight()*img.getWidth()) * 100.0f;
 		return result;
 	}

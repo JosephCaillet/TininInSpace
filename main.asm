@@ -179,31 +179,50 @@ init:
 ;-                    init masks                    -;
 ;----------------------------------------------------;
 init_masks:
-	ld a,PADDR
-	and a,#%11110111
-	ld PADDR,a
+	ld	a,PADDR
+	and	a,#%11110111
+	ld	PADDR,a
 
-	ld a,PAOR
-	or a,#%00001000
-	ld PAOR,a
+	ld	a,PAOR
+	or	a,#%00001000
+	ld	PAOR,a
 
-	ld a,PBDDR
-	and a,#%11111110
-	ld PBDDR,a
+	ld	a,PBDDR
+	and	a,#%11111110
+	ld	PBDDR,a
 
-	ld a,PBOR
-	or a,#%00000001
-	ld PBOR,a
+	ld	a,PBOR
+	or	a,#%00000001
+	ld	PBOR,a
 
-	ld a,EICR
+	ld	a,EICR
 	;and a,#%10111110
-	or a,#%11000011
-	ld EICR,a
+	or	a,#%11000011
+	ld	EICR,a
 
-	ld a,EISR
-	and a,#%00111111
-	or a,#%00000011
-	ld EISR,a
+	ld	a,EISR
+	and	a,#%00111111
+	or	a,#%00000011
+	ld	EISR,a
+	
+	;liaison série PA7 reception, PA4 emmission
+	LD	A,PADDR
+	AND	A,#%01111111
+	OR	A,#%00010000
+	LD	PADDR,A
+
+	LD	A,PAOR
+	OR	A,#%10010000
+	LD	PAOR,A
+	
+	LD	A,EICR
+	AND	A,#%11111011
+	OR	A,#%00001000
+	LD	EICR,A
+
+	LD	A,EISR
+	OR	A,#%00001100
+	ld	EISR,a
 
 	ret
 
@@ -669,10 +688,10 @@ lvlUp:
 		ld timerLvl,a
 lvlUp_skip_5
 	cp a,#15
-	jrne lvlUp_skip_5
+	jrne lvlUp_skip_15
 		ld a,#SUB_TIMER_DIF_3
 		ld timerLvl,a
-lvlUp_skip_5
+lvlUp_skip_15
 
 	CALL	initTimer
 
