@@ -53,6 +53,10 @@ ST7/
 	PUBLIC	scoreU
 	PUBLIC	numX
 	PUBLIC	numY
+
+;setPalet
+	PUBLIC	setPalet1
+	PUBLIC	setPalet2
 	
 DELAY EQU $80
 
@@ -160,6 +164,14 @@ sprite	DS.W	1
 dspCoef DS.B 1
 dsp0X DS.B 1
 dsp0Y DS.B 1
+color1MSB	DS.B	1
+color1LSB	DS.B	1
+color2MSB	DS.B	1
+color2LSB	DS.B	1
+color3MSB	DS.B	1
+color3LSB	DS.B	1
+color4MSB	DS.B	1
+color4LSB	DS.B	1
 
 ;dspNum
 scoreD	DS.B	1
@@ -725,6 +737,49 @@ setSprite:
 	RET
 
 ;----------------------------------------------------;
+;-                setPalete1                      -;
+;----------------------------------------------------;
+setPalet1:
+	;black
+	ld a,#$0
+	ld color1MSB,a
+	ld color1LSB,a
+
+	;gray
+	ld a,#$84
+	ld color2MSB,a
+	ld a,#$10
+	ld color2LSB,a
+
+	;white
+	ld a,#$ff
+	ld color3MSB,a
+	ld color3LSB,a
+
+	;red
+	ld a,#$f8
+	ld color4MSB,a
+	ld a,#$00
+	ld color4LSB,a
+	
+	RET
+
+
+
+;----------------------------------------------------;
+;-                setPalete2                      -;
+;----------------------------------------------------;
+setPalet2:
+	;blue 31 103 177 -> 4 26 44
+	ld a,#$43
+	ld color4MSB,a
+	ld a,#$3C
+	ld color4LSB,a
+	
+	RET
+
+
+;----------------------------------------------------;
 ;-            decompress a picture                  -;
 ;----------------------------------------------------;
 ; p: sprite
@@ -765,33 +820,35 @@ boucl_dsp_title
 			;:: case 0:
 				cp a,#0
 				jrne dsp_sprite_col2
-				ld a,#$0
-				ld colorMSB,a 		;: colorMSB = 0x00
-				ld colorLSB,a 		;: colorLSB = 0x00
+				ld a,color1MSB
+				ld colorMSB,a
+				ld a,color1LSB
+				ld colorLSB,a
 				jp end_dsp_sprite_col	;: break
 dsp_sprite_col2
 			;:: case: 64
 				cp a,#64
 				jrne dsp_sprite_col3
-				ld a,#$84
-				ld colorMSB,a 		;: colorMSB = 0x84
-				ld a,#$10
-				ld colorLSB,a 		;: colorLSB = 0x10
+				ld a,color2MSB
+				ld colorMSB,a
+				ld a,color2LSB
+				ld colorLSB,a
 				jp end_dsp_sprite_col 	;: break
 dsp_sprite_col3
 			;:: case: 128
 				cp a,#128
 				jrne dsp_sprite_col4
-				ld a,#$ff
-				ld colorMSB,a 		;: colorMSB = 0xff
-				ld colorLSB,a 		;: colorLSB = 0xff
+				ld a,color3MSB
+				ld colorMSB,a
+				ld a,color3LSB
+				ld colorLSB,a
 				jp end_dsp_sprite_col 	;: break
 dsp_sprite_col4
 			;:: default:
-				ld a,#$f8
-				ld colorMSB,a 		;: colorMSB = 0xf8
-				ld a,#$00
-				ld colorLSB,a 		;: colorLSB = 0x00
+				ld a,color4MSB
+				ld colorMSB,a
+				ld a,color4LSB
+				ld colorLSB,a
 		;:: end switch
 end_dsp_sprite_col
 

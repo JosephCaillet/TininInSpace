@@ -62,8 +62,9 @@ ST7/
 	EXTERN	scoreU.B
 	EXTERN	numX.B
 	EXTERN	numY.B
-
-
+;setPalet
+	EXTERN	setPalet1
+	EXTERN	setPalet2
 
 ;************************************************************************
 ;
@@ -171,6 +172,8 @@ init:
 
 	ld a,#0
 	ld shipState,a
+	
+	CALL	setPalet1
 
 	ret
 
@@ -343,8 +346,6 @@ dsp_title_screen:
 	LD	A,#22
 	LD	numSprite,A
 	CALL	setSprite
-	LD	A,#2
-	LD	dspCoef,A
 	LD	A,#40
 	LD	dsp0Y,A
 	CALL	dspSprite
@@ -352,8 +353,6 @@ dsp_title_screen:
 	LD	A,#24
 	LD	numSprite,A
 	CALL	setSprite
-	LD	A,#2
-	LD	dspCoef,A
 	LD	A,#80
 	LD	dsp0Y,A
 	CALL	dspSprite
@@ -361,14 +360,67 @@ dsp_title_screen:
 	LD	A,#26
 	LD	numSprite,A
 	CALL	setSprite
-	LD	A,#2
-	LD	dspCoef,A
 	LD	A,#120
 	LD	dsp0Y,A
 	CALL	dspSprite
 
 	pop a
 	ret
+
+
+
+;----------------------------------------------------;
+;-               display bsod screen               -;
+;----------------------------------------------------;
+dspBsodScreen:
+	PUSH A
+	
+	CALL	setPalet2
+	
+	LD	A,#36
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#2
+	LD	dspCoef,A
+	LD	A,#0
+	LD	dsp0X,A
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#38
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#40
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#40
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#60
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#42
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#80
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#44
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#120
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	CALL	setPalet2
+	
+	POP	A
+	RET
+
+
 
 ;----------------------------------------------------;
 ;-                   display ship                   -;
@@ -1035,6 +1087,7 @@ main:
 	call init
 
 	call dsp_title_screen
+	CALL	dspBsodScreen
 wait_game_start
 	ld a,shipState
 	cp a,#0
