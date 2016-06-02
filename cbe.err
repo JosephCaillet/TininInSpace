@@ -10530,3 +10530,160 @@ No errors on assembly of 'E:\Projet\code\st7lite2.asm'
 No errors on assembly of 'E:\Projet\code\initport.asm'
 No errors on assembly of 'E:\Projet\code\screenlib.asm'
 No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+No errors on assembly of 'E:\Projet\code\sprites.asm'
+No errors on assembly of 'E:\Projet\code\time.asm'
+No errors on assembly of 'E:\Projet\code\st7lite2.asm'
+No errors on assembly of 'E:\Projet\code\initport.asm'
+No errors on assembly of 'E:\Projet\code\screenlib.asm'
+No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+E:\Projet\code\sprites.asm(30): as1 : Warning 73: Couldn't find entry for segment 'ram0' in Mapfile 'Debug\tintin.map'
+No errors on assembly of 'E:\Projet\code\sprites.asm'
+No errors on assembly of 'E:\Projet\code\time.asm'
+No errors on assembly of 'E:\Projet\code\st7lite2.asm'
+No errors on assembly of 'E:\Projet\code\initport.asm'
+No errors on assembly of 'E:\Projet\code\screenlib.asm'
+No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+No errors on assembly of 'E:\Projet\code\sprites.asm'
+No errors on assembly of 'E:\Projet\code\sprites.asm'
+No errors on assembly of 'E:\Projet\code\time.asm'
+No errors on assembly of 'E:\Projet\code\time.asm'
+No errors on assembly of 'E:\Projet\code\st7lite2.asm'
+No errors on assembly of 'E:\Projet\code\st7lite2.asm'
+No errors on assembly of 'E:\Projet\code\initport.asm'
+No errors on assembly of 'E:\Projet\code\initport.asm'
+No errors on assembly of 'E:\Projet\code\screenlib.asm'
+No errors on assembly of 'E:\Projet\code\screenlib.asm'
+E:\Projet\code\main.asm(654): as1 : Error 50: Doubly defined label! 'lvlUp_skip_5'
+1 error on assembly of 'E:\Projet\code\main.asm'
+E:\Projet\code\main.asm(654): as1 : Error 50: Doubly defined label! 'lvlUp_skip_5'
+1 error on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+E:\Projet\code\sprites.asm(30): as1 : Warning 73: Couldn't find entry for segment 'ram0' in Mapfile 'Debug\tintin.map'
+No errors on assembly of 'E:\Projet\code\sprites.asm'
+No errors on assembly of 'E:\Projet\code\time.asm'
+No errors on assembly of 'E:\Projet\code\st7lite2.asm'
+No errors on assembly of 'E:\Projet\code\initport.asm'
+No errors on assembly of 'E:\Projet\code\screenlib.asm'
+No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+E:\Projet\code\sprites.asm(30): as1 : Warning 73: Couldn't find entry for segment 'ram0' in Mapfile 'Debug\tintin.map'
+No errors on assembly of 'E:\Projet\code\sprites.asm'
+No errors on assembly of 'E:\Projet\code\time.asm'
+No errors on assembly of 'E:\Projet\code\st7lite2.asm'
+No errors on assembly of 'E:\Projet\code\initport.asm'
+No errors on assembly of 'E:\Projet\code\screenlib.asm'
+No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+E:\Projet\code\sprites.asm(30): as1 : Warning 73: Couldn't find entry for segment 'ram0' in Mapfile 'Debug\tintin.map'
+No errors on assembly of 'E:\Projet\code\sprites.asm'
+No errors on assembly of 'E:\Projet\code\time.asm'
+No errors on assembly of 'E:\Projet\code\st7lite2.asm'
+No errors on assembly of 'E:\Projet\code\initport.asm'
+No errors on assembly of 'E:\Projet\code\screenlib.asm'
+No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+
+E:\Projet\code\sprites.asm(365): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+E:\Projet\code\sprites.asm(365): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+
+E:\Projet\code\sprites.asm(367): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+E:\Projet\code\sprites.asm(367): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+
+E:\Projet\code\sprites.asm(368): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+E:\Projet\code\sprites.asm(368): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+
+E:\Projet\code\sprites.asm(373): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+E:\Projet\code\sprites.asm(373): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+
+E:\Projet\code\sprites.asm(391): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+E:\Projet\code\sprites.asm(391): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+
+E:\Projet\code\sprites.asm(397): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+
+E:\Projet\code\sprites.asm(397): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+E:\Projet\code\sprites.asm(377): as1 : Error 56: unrecognised opcode '	DC.B128, 192, 128, 196, 128, 193, 128, 194, 128, 195, 128'
+E:\Projet\code\sprites.asm(378): as1 : Error 56: unrecognised opcode '	DC.B192, 128, 192, 128, 192, 128, 192, 128, 193, 128, 206'
+
+E:\Projet\code\sprites.asm(446): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+E:\Projet\code\sprites.asm(377): as1 : Error 56: unrecognised opcode '	DC.B128, 192, 128, 196, 128, 193, 128, 194, 128, 195, 128'
+E:\Projet\code\sprites.asm(378): as1 : Error 56: unrecognised opcode '	DC.B192, 128, 192, 128, 192, 128, 192, 128, 193, 128, 206'
+
+E:\Projet\code\sprites.asm(446): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+E:\Projet\code\sprites.asm(377): as1 : Error 56: unrecognised opcode '	DC.B128, 192, 128, 196, 128, 193, 128, 194, 128, 195, 128'
+E:\Projet\code\sprites.asm(378): as1 : Error 56: unrecognised opcode '	DC.B192, 128, 192, 128, 192, 128, 192, 128, 193, 128, 206'
+
+E:\Projet\code\sprites.asm(448): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+E:\Projet\code\sprites.asm(377): as1 : Error 56: unrecognised opcode '	DC.B128, 192, 128, 196, 128, 193, 128, 194, 128, 195, 128'
+E:\Projet\code\sprites.asm(378): as1 : Error 56: unrecognised opcode '	DC.B192, 128, 192, 128, 192, 128, 192, 128, 193, 128, 206'
+
+E:\Projet\code\sprites.asm(448): as1 : Fatal 58: No more than 16 numerics allowed in one line! '!'
+
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+E:\Projet\code\sprites.asm(377): as1 : Error 56: unrecognised opcode '	DC.B128, 192, 128, 196, 128, 193, 128, 194, 128, 195, 128'
+E:\Projet\code\sprites.asm(378): as1 : Error 56: unrecognised opcode '	DC.B192, 128, 192, 128, 192, 128, 192, 128, 193, 128, 206'
+2 errors on assembly of 'E:\Projet\code\sprites.asm'
+E:\Projet\code\sprites.asm(377): as1 : Error 56: unrecognised opcode '	DC.B128, 192, 128, 196, 128, 193, 128, 194, 128, 195, 128'
+E:\Projet\code\sprites.asm(378): as1 : Error 56: unrecognised opcode '	DC.B192, 128, 192, 128, 192, 128, 192, 128, 193, 128, 206'
+E:\Projet\code\sprites.asm(410): as2 : Error 46: Illegal undefined label 'v129, 192, 129, 193, 129, 193, 128, 192, 128, 192, 130, 194'
+3 errors on assembly of 'E:\Projet\code\sprites.asm'
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+No errors on assembly of 'E:\Projet\code\sprites.asm'
+E:\Projet\code\sprites.asm(410): as2 : Error 46: Illegal undefined label 'v129, 192, 129, 193, 129, 193, 128, 192, 128, 192, 130, 194'
+1 error on assembly of 'E:\Projet\code\sprites.asm'
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+No errors on assembly of 'E:\Projet\code\sprites.asm'
+No errors on assembly of 'E:\Projet\code\sprites.asm'
+No errors on assembly of 'E:\Projet\code\time.asm'
+No errors on assembly of 'E:\Projet\code\st7lite2.asm'
+No errors on assembly of 'E:\Projet\code\initport.asm'
+No errors on assembly of 'E:\Projet\code\screenlib.asm'
+No errors on assembly of 'E:\Projet\code\main.asm'
+No errors on assembly of 'E:\Projet\code\mapping.asm'
+E:\Projet\code\sprites.asm(30): as1 : Warning 73: Couldn't find entry for segment 'ram0' in Mapfile 'Debug\tintin.map'
+No errors on assembly of 'E:\Projet\code\sprites.asm'
+No errors on assembly of 'E:\Projet\code\time.asm'
+No errors on assembly of 'E:\Projet\code\st7lite2.asm'
+No errors on assembly of 'E:\Projet\code\initport.asm'
+No errors on assembly of 'E:\Projet\code\screenlib.asm'
+No errors on assembly of 'E:\Projet\code\main.asm'
