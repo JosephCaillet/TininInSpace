@@ -392,6 +392,27 @@ dsp_ship_cp_x_axe_end
 
 
 ;----------------------------------------------------;
+;-                display broken ship               -;
+;----------------------------------------------------;
+dsp_broken_ship:
+	push a
+
+	ld a,shipY
+	ld dsp0Y,a
+	ld a,#shipX
+	ld dsp0X,a
+	ld a,#1
+	ld dspCoef,a
+	ld a,#28
+	ld numSprite,a
+	call setSprite
+	call dspSprite
+
+	pop a
+	ret
+
+
+;----------------------------------------------------;
 ;-                    moove ship                    -;
 ;----------------------------------------------------;
 moove_ship:
