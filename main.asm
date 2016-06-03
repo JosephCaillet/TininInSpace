@@ -112,12 +112,14 @@ obsMoveStep DS.B 1
 obsDir DS.B 1
 obsNb DS.B 1
 
-xObsHB	DS	1;HB = hitbox
-yObsHB	DS	1
-x1ShipHB	DS	1
-x2ShipHB	DS	1
-yShipHB	DS	1
+xObsHB	DS.B	1;HB = hitbox
+yObsHB	DS.B	1
+x1ShipHB	DS.B	1
+x2ShipHB	DS.B	1
+yShipHB	DS.B	1
 
+gameMode	DS.B	1; 0 = 1joueur, 1 = 2joueur
+p2Lose	DS.B	1;is second player winner
 
 
 ;************************************************************************
@@ -208,14 +210,14 @@ init_masks:
 	or	a,#%00000011
 	ld	EISR,a
 	
-	;liaison série PA7 reception, PA4 emmission
+	;liaison série PA7 reception, PA4 emmission, switch PA0
 	LD	A,PADDR
-	AND	A,#%01111111
+	AND	A,#%01111110
 	OR	A,#%00010000
 	LD	PADDR,A
 
 	LD	A,PAOR
-	OR	A,#%10010000
+	OR	A,#%10010001
 	LD	PAOR,A
 	
 	LD	A,EICR
@@ -314,13 +316,16 @@ init_game:
 	ld a,#SUB_TIMER_INIT
 	ld timerLvl,a
 	CALL initTimer
-	;tc
+	;obstacles
 	ld a,#1
 	ld obsMoveStep,a
 	ld a,#3
 	ld obsNb,a
 
 	clr obsDir
+	
+	;secondplayer
+	CLR	p2Lose
 
 	call initObsTab
 	
@@ -415,7 +420,7 @@ dspBsodScreen:
 	LD	dsp0Y,A
 	CALL	dspSprite
 	
-	CALL	setPalet2
+	CALL	setPalet1
 	
 	POP	A
 	RET
@@ -474,7 +479,7 @@ dsp_broken_ship:
 	ld dsp0X,a
 	ld a,#1
 	ld dspCoef,a
-	ld a,#28
+	ld a,#34
 	ld numSprite,a
 	call setSprite
 	call dspSprite
@@ -669,7 +674,9 @@ end_if_upd_timer:
 ;----------------------------------------------------;
 gameOver:
 	PUSH	A
-
+	
+	;CALL	check2pMode
+	
 	LD	A,#$00
 	LD	colorMSB,A
 	LD	A,#$00
@@ -708,10 +715,42 @@ gameOver:
 	LD	numY,a
 	LD	a,#49
 	LD	numX,a
-	LD	a,#2
-	LD	dspCoef,a
 	call	dspNum
 	
+	
+	LD	A,#46
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#30
+	LD	dsp0X,A
+	LD	A,#130
+	LD	dsp0Y,A
+	LD	A,#1
+	LD	dspCoef,A
+	CALL	dspSprite
+	
+	LD	A,p2Lose
+	CP	A,#1	;si p2 perd
+	JREQ	draw_p1Win	;p1 gagne
+	
+draw_p1Lose
+	LD	A,#48
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#65
+	LD	dsp0X,A
+	CALL	dspSprite
+	JP	end_gameOver
+	
+draw_p1Win
+	LD	A,#50
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#73
+	LD	dsp0X,A
+	CALL	dspSprite
+
+end_gameOver
 	POP	A
 	RET
 	
@@ -1071,7 +1110,9 @@ for_collision
 			ADD	A,shipMoveStep
 			ADD	A,shipMoveStep
 			LD	height,A
-			CALL	fillRectTFT
+			;CALL	fillRectTFT
+			
+			CALL	dsp_broken_ship
 			
 			LD	A,#140
 			LD	shipY,A
@@ -1089,6 +1130,42 @@ end_for_collision
 	RET
 
 
+
+;-----------------------------------------;
+;-       check if 2p mode is on          -;
+;-----------------------------------------;
+check2pMode:
+	PUSH	A
+	
+	LD	A,PADR
+	AND	A,#%00000001
+	LD	gameMode,A
+	
+	POP	A
+	RET
+	
+
+
+;-----------------------------------------;
+;-       send info to second player      -;
+;-----------------------------------------;
+send2p:
+	PUSH	A
+	
+	LD	A,PADR
+	AND	A,#%11101111
+	LD	PADR,A
+	
+	CALL	wait500ms
+	
+	LD	A,PADR
+	OR	A,#%00010000
+	LD	PADR,A
+	
+	POP	A
+	RET
+
+	
 
 ;************************************************************************
 ;
@@ -1124,9 +1201,17 @@ boucl
 	CALL	collisionObs
 	CALL	updateTimer
 	
+	LD	A,p2Lose
+	CP	A,#1
+	JRNE skip_p2_lose
+	CALL	gameOver
+	JP	wait_game_start
+	
+skip_p2_lose
 	LD	A,timer
 	CP	A,#160
 	JRNE	skip_game_over
+	CALL	send2p
 	CALL	gameOver
 	JP	wait_game_start
 	
@@ -1168,6 +1253,10 @@ i_obs_dir:
 	ld a,LTCSR2
 	iret
 
+i_reception_data:
+	LD	A,#1
+	LD	p2Lose,A
+	IRET
 
 ;************************************************************************
 ;
@@ -1190,7 +1279,7 @@ AVD_it		DC.W	dummy_rt	; Adresse FFEC-FFEDh
 lt_RTC2_it	DC.W	i_obs_dir	; Adresse FFF0-FFF1h
 ext3_it		DC.W	i_ship_forward	; Adresse FFF2-FFF3h
 ext2_it		DC.W	dummy_rt	; Adresse FFF4-FFF5h
-ext1_it		DC.W	dummy_rt	; Adresse FFF6-FFF7h
+ext1_it		DC.W	i_reception_data	; Adresse FFF6-FFF7h
 ext0_it		DC.W	i_ship_backward	; Adresse FFF8-FFF9h
 AWU_it		DC.W	dummy_rt	; Adresse FFFA-FFFBh
 softit		DC.W	dummy_rt	; Adresse FFFC-FFFDh
