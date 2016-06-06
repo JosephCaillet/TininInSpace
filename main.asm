@@ -1125,8 +1125,8 @@ for_collision
 			;end
 			
 			ld a,norrisMode
-			cp a,#1
-			jrne collisionObs_no_chuck
+			cp a,#0
+			jreq collisionObs_no_chuck
 				ld a,#$ff
 				ld (obsTab,x),a
 
