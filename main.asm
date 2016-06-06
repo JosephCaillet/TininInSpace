@@ -119,8 +119,11 @@ x1ShipHB	DS.B	1
 x2ShipHB	DS.B	1
 yShipHB	DS.B	1
 
-gameMode	DS.B	1; 0 = 1joueur, 1 = 2joueur
+norrisMode	DS.B	1; 0 = 1joueur, 1 = 2joueur
 p2Lose	DS.B	1;is second player winner
+
+;------ Surprise ! -------;
+easterCpt DS.B 1
 
 
 ;************************************************************************
@@ -308,6 +311,7 @@ init_game:
 	ld shipState,a
 
 	clr lvl
+	clr easterCpt
 
 	clr scoreD
 	clr scoreU
@@ -337,6 +341,7 @@ init_game:
 	CLR	p2Lose
 
 	call initObsTab
+	call checkNorrisMode
 	
 	ret
 
@@ -382,9 +387,28 @@ dsp_title_screen:
 	ret
 
 
+;----------------------------------------------------;
+;-                   check easter                   -;
+;----------------------------------------------------;
+checkEaster:
+	ld a,easterCpt
+	cp a,#20
+	jrne checkEaster_ret
+		call dspBsodScreen
+checkEaster_ret
+	ret
+
+checkEasterBP:
+	BTJT	PBDR,#0,checkEasterBP_ret
+	BTJT	PADR,#3,checkEasterBP_ret
+	inc easterCpt
+checkEasterBP_ret
+	ret
+	
+
 
 ;----------------------------------------------------;
-;-               display bsod screen               -;
+;-               display bsod screen                -;
 ;----------------------------------------------------;
 dspBsodScreen:
 	PUSH A
@@ -430,6 +454,10 @@ dspBsodScreen:
 	CALL	dspSprite
 	
 	CALL	setPalet1
+
+dspBsodScreen_yolo
+	wfi ;#saveTheTrees
+	jp dspBsodScreen_yolo
 	
 	POP	A
 	RET
@@ -590,6 +618,7 @@ inc_score_n_inc_u
 		;--- then{ ---
 	clr scoreD
 	clr scoreCarry
+	call dspBsodScreen
 	jp inc_score_n_inc_d
 		;--- }end_then ---
 		;--- else{ ---
@@ -684,7 +713,7 @@ end_if_upd_timer:
 gameOver:
 	PUSH	A
 	
-	;CALL	check2pMode
+	;CALL	checkNorrisMode
 	
 	LD	A,#$00
 	LD	colorMSB,A
@@ -1104,29 +1133,38 @@ for_collision
 				JRUGT	end_if_collision_ennemi_actif
 			;end
 			
-			LD	A,#$00
-			LD	colorMSB,A
-			LD	A,#$00
-			LD	colorLSB,A
-			LD	A,#shipX
-			LD	x0win,A
-			LD	A,shipY
-			SUB	A,shipMoveStep
-			LD	y0win,A
-			LD	A,#11
-			LD	width,A
-			LD	A,#18
-			ADD	A,shipMoveStep
-			ADD	A,shipMoveStep
-			LD	height,A
-			;CALL	fillRectTFT
-			
-			CALL	dsp_broken_ship
-			
-			LD	A,#140
-			LD	shipY,A
-			
-			JP	end_for_collision
+			ld a,norrisMode
+			cp a,#1
+			jrne collisionObs_no_chuck
+				ld a,#$ff
+				ld (obsTab,x),a
+
+				jp end_if_collision_ennemi_actif
+collisionObs_no_chuck
+
+				LD	A,#$00
+				LD	colorMSB,A
+				LD	A,#$00
+				LD	colorLSB,A
+				LD	A,#shipX
+				LD	x0win,A
+				LD	A,shipY
+				SUB	A,shipMoveStep
+				LD	y0win,A
+				LD	A,#11
+				LD	width,A
+				LD	A,#18
+				ADD	A,shipMoveStep
+				ADD	A,shipMoveStep
+				LD	height,A
+				;CALL	fillRectTFT
+				
+				CALL	dsp_broken_ship
+				
+				LD	A,#140
+				LD	shipY,A
+				
+				JP	end_for_collision
 		;end
 end_if_collision_ennemi_actif
 	INC	X
@@ -1139,20 +1177,18 @@ end_for_collision
 	RET
 
 
-
 ;-----------------------------------------;
 ;-       check if 2p mode is on          -;
 ;-----------------------------------------;
-check2pMode:
+checkNorrisMode:
 	PUSH	A
 	
 	LD	A,PADR
 	AND	A,#%00000001
-	LD	gameMode,A
+	LD	norrisMode,A
 	
 	POP	A
 	RET
-	
 
 
 ;-----------------------------------------;
@@ -1173,7 +1209,6 @@ send2p:
 	
 	POP	A
 	RET
-
 	
 
 ;************************************************************************
@@ -1247,6 +1282,7 @@ i_ship_forward:
 pb0_push
 	ld a,#1
 	ld shipState,a
+	call checkEasterBP
 	iret
 
 i_ship_backward:
@@ -1256,6 +1292,7 @@ i_ship_backward:
 pa3_push
 	ld a,#2
 	ld shipState,a
+	call checkEasterBP
 	iret
 
 i_obs_dir:
