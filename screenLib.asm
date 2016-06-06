@@ -981,7 +981,7 @@ clrScreenZoomIn:
 	PUSH Y
 	PUSH X
 	
-	;x = 0
+	;x = 64
 	LD	X,#64
 while_zoom_in
 		CP	X,#255
