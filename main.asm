@@ -121,6 +121,9 @@ yShipHB	DS.B	1
 gameMode	DS.B	1; 0 = 1joueur, 1 = 2joueur
 p2Lose	DS.B	1;is second player winner
 
+;------ Surprise ! -------;
+easterCpt DS.B 1
+
 
 ;************************************************************************
 ;
@@ -299,6 +302,7 @@ init_game:
 	ld shipState,a
 
 	clr lvl
+	clr easterCpt
 
 	clr scoreD
 	clr scoreU
@@ -373,9 +377,28 @@ dsp_title_screen:
 	ret
 
 
+;----------------------------------------------------;
+;-                   check easter                   -;
+;----------------------------------------------------;
+checkEaster:
+	ld a,easterCpt
+	cp a,#20
+	jrne checkEaster_ret
+		call dspBsodScreen
+checkEaster_ret
+	ret
+
+checkEasterBP:
+	BTJT	PBDR,#0,checkEasterBP_ret
+	BTJT	PADR,#3,checkEasterBP_ret
+	inc easterCpt
+checkEasterBP_ret
+	ret
+	
+
 
 ;----------------------------------------------------;
-;-               display bsod screen               -;
+;-               display bsod screen                -;
 ;----------------------------------------------------;
 dspBsodScreen:
 	PUSH A
@@ -421,6 +444,10 @@ dspBsodScreen:
 	CALL	dspSprite
 	
 	CALL	setPalet1
+
+dspBsodScreen_yolo
+	wfi ;#saveTheTrees
+	jp dspBsodScreen_yolo
 	
 	POP	A
 	RET
@@ -581,6 +608,7 @@ inc_score_n_inc_u
 		;--- then{ ---
 	clr scoreD
 	clr scoreCarry
+	call dspBsodScreen
 	jp inc_score_n_inc_d
 		;--- }end_then ---
 		;--- else{ ---
@@ -1237,6 +1265,7 @@ i_ship_forward:
 pb0_push
 	ld a,#1
 	ld shipState,a
+	call checkEasterBP
 	iret
 
 i_ship_backward:
@@ -1246,6 +1275,7 @@ i_ship_backward:
 pa3_push
 	ld a,#2
 	ld shipState,a
+	call checkEasterBP
 	iret
 
 i_obs_dir:
