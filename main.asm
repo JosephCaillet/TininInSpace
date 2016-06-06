@@ -1238,7 +1238,8 @@ wait_game_start
 
 	call init_game
 boucl
-	
+
+	call checkNorrisMode
 	call checkEaster
 	call dsp_ship
 	call moove_ship
