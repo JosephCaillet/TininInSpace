@@ -32,6 +32,7 @@ ST7/
 	EXTERN initTFT
 	
 	EXTERN	fillRectTFT
+	EXTERN	clrScreenZoomIn
 	EXTERN	fillScreenTFT
 	EXTERN	drawPixel
 	EXTERN	setSprite
@@ -170,7 +171,7 @@ init:
 	call init_masks
 	rim
 
-	call init_st7_timer
+	;call init_st7_timer
 
 	ld a,#0
 	ld shipState,a
@@ -284,11 +285,19 @@ initObsTabEndWhile
 ;-                    init game                     -;
 ;----------------------------------------------------;
 init_game:
+	LD	A,#$FF
+	LD	colorMSB,A
+	LD	A,#$FF
+	LD	colorLSB,A
+	
+	;CALL	clrScreenZoomIn
+	
 	LD	A,#$00
 	LD	colorMSB,A
 	LD	A,#$00
 	LD	colorLSB,A
-	CALL	fillScreenTFT
+	
+	CALL	clrScreenZoomIn
 
 	ld a,#140
 	ld shipY,a
@@ -1185,7 +1194,8 @@ main:
 	call init
 
 	call dsp_title_screen
-	CALL	dspBsodScreen
+	
+	;CALL	dspBsodScreen
 wait_game_start
 	ld a,shipState
 	cp a,#0
