@@ -288,12 +288,6 @@ initObsTabEndWhile
 ;-                    init game                     -;
 ;----------------------------------------------------;
 init_game:
-	LD	A,#$FF
-	LD	colorMSB,A
-	LD	A,#$FF
-	LD	colorLSB,A
-	
-	;CALL	clrScreenZoomIn
 	
 	LD	A,#$00
 	LD	colorMSB,A
