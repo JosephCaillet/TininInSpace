@@ -22,6 +22,7 @@ ST7/
 	PUBLIC	initTFT
 	
 	PUBLIC	fillRectTFT
+	PUBLIC	clrScreenZoomIn
 	PUBLIC	fillScreenTFT
 	PUBLIC	drawPixel
 	PUBLIC	setSprite
@@ -971,6 +972,64 @@ dspNum:
 	POP	A
 	RET
 
+
+;----------------------------------------------------;
+;-              clear screen zoom in                -;
+;----------------------------------------------------;
+clrScreenZoomIn:
+	PUSH A
+	PUSH Y
+	PUSH X
+	
+	;x = 0
+	LD	X,#64
+while_zoom_in
+		CP	X,#255
+			JREQ	end_while_zoom_in
+		;drawRect en haut
+		LD	x0win,X
+		LD	y0win,X
+		LD	A,#128
+		LD	temp,X
+		SUB	A,temp
+		SUB	A,temp
+		LD	width,A
+		LD	A,#1
+		LD	height,A
+		CALL	fillRectTFT
+		;drawRect en bas
+		LD	A,#160
+		LD	temp,X
+		SUB	A,temp
+		LD	y0win,A
+		CALL	fillRectTFT
+		;drawRect à gauche
+		LD	y0win,X
+		LD	A,#1
+		LD	width,A
+		LD	A,#160
+		LD	temp,X
+		SUB	A,temp
+		SUB	A,temp
+		LD	height,A
+		CALL	fillRectTFT
+		;drawRect à droite
+		LD	A,#127
+		LD	temp,X
+		SUB	A,temp
+		LD	x0win,A
+		CALL	fillRectTFT
+		;x++
+		DEC	X
+		JP	while_zoom_in
+	;end
+end_while_zoom_in	
+
+	POP	X
+	POP	Y
+	POP	A
+	RET
+	
 
 
 ;----------------------------------------------------;
