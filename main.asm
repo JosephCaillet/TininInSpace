@@ -1179,6 +1179,7 @@ checkNorrisMode:
 	
 	LD	A,PADR
 	AND	A,#%00000001
+	CPL	A
 	LD	norrisMode,A
 	
 	POP	A
