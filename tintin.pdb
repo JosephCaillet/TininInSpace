@@ -4,7 +4,7 @@ McuOption=64751
 CommunicationParameters=
 [DebugState_v1-Debug.DebugContext]
 DumpRWOnFly=0
-WatchVariables1=obsNb!0;temp!0;
+WatchVariables1=obsNb!0;temp!0;easterCpt!0;
 FormatWatch1=0
 FormatViewType1=1
 FormatViewAddress1=1

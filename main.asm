@@ -174,7 +174,7 @@ init:
 	call init_masks
 	rim
 
-	;call init_st7_timer
+	call init_st7_timer
 
 	ld a,#0
 	ld shipState,a
