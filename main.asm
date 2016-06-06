@@ -1178,8 +1178,8 @@ checkNorrisMode:
 	PUSH	A
 	
 	LD	A,PADR
-	AND	A,#%00000001
 	CPL	A
+	AND	A,#%00000001
 	LD	norrisMode,A
 	
 	POP	A
