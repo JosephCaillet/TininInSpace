@@ -1229,6 +1229,7 @@ wait_game_start
 	call init_game
 boucl
 	
+	call checkEaster
 	call dsp_ship
 	call moove_ship
 	call dspObs
