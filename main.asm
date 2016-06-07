@@ -501,7 +501,7 @@ dspChuckScreen:
 	;display quote
 	CALL	setPalet1
 	
-	LD	A,#62
+	LD	A,#66
 	LD	numSprite,A
 	CALL	setSprite
 	LD	A,#132
@@ -510,7 +510,7 @@ dspChuckScreen:
 	LD	dsp0X,A
 	CALL	dspSprite
 	
-	LD	A,#64
+	LD	A,#68
 	LD	numSprite,A
 	CALL	setSprite
 	LD	A,#148
