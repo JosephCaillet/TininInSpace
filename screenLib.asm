@@ -59,6 +59,7 @@ ST7/
 	PUBLIC	setPalet1
 	PUBLIC	setPalet2
 	PUBLIC	setPalet3
+	PUBLIC	setPalet4
 	
 DELAY EQU $80
 
@@ -797,10 +798,42 @@ setPalet3:
 	LD A,#$40
 	LD color2LSB,A
 
-	;marron clAir 164 104 50 -> 20 26 6
+	;marron clair 164 104 50 -> 20 26 6
 	LD A,#$A3
 	LD color3MSB,A
 	LD A,#$46
+	LD color3LSB,A
+
+	;beige 243 211 162 -> 30 53 20
+	LD A,#$F6
+	LD color4MSB,A
+	LD A,#$B4
+	LD color4LSB,A
+	
+	RET
+	
+	
+;----------------------------------------------------;
+;-                setPalete4                      -;
+;----------------------------------------------------;
+setPalet4:
+	;black
+	LD A,#$0
+	LD color1MSB,A
+	LD color1LSB,A
+
+	;bleu 68 162 255 -> 9 41 31
+	;LD A,#$4D
+	LD A,#$FA
+	LD color2MSB,A
+	;LD A,#$3F
+	LD A,#$08
+	LD color2LSB,A
+
+	;marron foncé 96 41 0 -> 12 10 0
+	LD A,#$61
+	LD color3MSB,A
+	LD A,#$40
 	LD color3LSB,A
 
 	;beige 243 211 162 -> 30 53 20

@@ -67,6 +67,7 @@ ST7/
 	EXTERN	setPalet1
 	EXTERN	setPalet2
 	EXTERN	setPalet3
+	EXTERN	setPalet4
 
 ;************************************************************************
 ;
@@ -458,6 +459,68 @@ dspBsodScreen_yolo
 	RET
 
 
+;----------------------------------------------------;
+;-              display chuck screen                -;
+;----------------------------------------------------;
+dspChuckScreen:
+	PUSH A
+	
+	CALL	setPalet4
+	
+	LD	A,#54
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#2
+	LD	dspCoef,A
+	LD	A,#0
+	LD	dsp0X,A
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#56
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#40
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#58
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#80
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	LD	A,#60
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#120
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	;display quote
+	CALL	setPalet1
+	
+	LD	A,#62
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#132
+	LD	dsp0Y,A
+	LD	A,#2
+	LD	dsp0X,A
+	CALL	dspSprite
+	
+	LD	A,#64
+	LD	numSprite,A
+	CALL	setSprite
+	LD	A,#148
+	LD	dsp0Y,A
+	CALL	dspSprite
+	
+	POP	A
+	RET
+
+
 
 ;----------------------------------------------------;
 ;-                   display ship                   -;
@@ -721,8 +784,13 @@ end_if_upd_timer:
 gameOver:
 	PUSH	A
 	
-	;CALL	checkNorrisMode
-	
+	LD	A,norrisMode
+	CP	A,#0
+	JREQ	normal_game_over
+		CALL	dspChuckScreen
+		JP	end_gameOver
+
+normal_game_over
 	LD	A,#$00
 	LD	colorMSB,A
 	LD	A,#$00
@@ -1238,7 +1306,7 @@ main:
 	RSP
 	call init
 	call dsp_title_screen
-
+	
 wait_game_start
 	ld a,shipState
 	cp a,#0
