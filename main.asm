@@ -503,7 +503,7 @@ dsp_ship_cp_x_axe_end
 	ld a,dsp0X
 	ld x0win,a
 	ld a,shipMoveStep
-	add a,#2
+	;add a,#2
 	ld height,a
 	ld a,#11
 	ld width,a
