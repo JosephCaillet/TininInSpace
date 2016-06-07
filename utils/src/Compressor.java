@@ -68,7 +68,7 @@ public class Compressor
 				}
 				else
 				{
-					repetition += addColorBit(lastColor, c1, c2, c3, c4);
+					repetition += addColorBit(lastColor, c1, c2, c3, c4, y);
 
 					result += repetition + ", ";
 
@@ -77,7 +77,7 @@ public class Compressor
 				}
 			}
 
-			repetition += addColorBit(lastColor, c1, c2, c3, c4);
+			repetition += addColorBit(lastColor, c1, c2, c3, c4, y);
 			result += repetition + "\n";
 		}
 
@@ -86,7 +86,7 @@ public class Compressor
 		return result;
 	}
 
-	private static int addColorBit(Color current, Color c1, Color c2, Color c3, Color c4)
+	private static int addColorBit(Color current, Color c1, Color c2, Color c3, Color c4, int line)
 	{
 		imageSize++;
 		if(current.equals(c1))
@@ -109,6 +109,7 @@ public class Compressor
 			//System.out.println("Rouge");
 			return Integer.parseInt("11000000",2);
 		}
+		System.out.println("Error color line : " + line);
 		return -255;
 	}
 }
