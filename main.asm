@@ -503,6 +503,7 @@ dsp_ship_cp_x_axe_end
 	ld a,dsp0X
 	ld x0win,a
 	ld a,shipMoveStep
+	inc a
 	ld height,a
 	ld a,#11
 	ld width,a
@@ -1145,6 +1146,7 @@ for_collision
 			jreq collisionObs_no_chuck
 				ld a,#$ff
 				ld (obsTab,x),a
+				dec obsNb
 
 				jp end_if_collision_ennemi_actif
 collisionObs_no_chuck
