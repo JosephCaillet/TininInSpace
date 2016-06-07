@@ -66,6 +66,7 @@ ST7/
 ;setPalet
 	EXTERN	setPalet1
 	EXTERN	setPalet2
+	EXTERN	setPalet3
 
 ;************************************************************************
 ;
@@ -469,10 +470,22 @@ dsp_ship:
 	ld dsp0X,a
 	ld a,#1
 	ld dspCoef,a
+	
+	LD a,norrisMode
+	CP a,#0
+	JREQ	set_ship_sprite
+		CALL	setPalet3
+		LD	A,#52
+		JP	end_set_sprite
+	
+set_ship_sprite	
 	ld a,#28
+
+end_set_sprite
 	ld numSprite,a
 	call setSprite
 	call dspSprite
+	CALL	setPalet1
 
 	ld a,shipY
 	cp a,shipYPrev
@@ -1222,10 +1235,8 @@ send2p:
 main:
 	RSP
 	call init
-
 	call dsp_title_screen
-	
-	;CALL	dspBsodScreen
+
 wait_game_start
 	ld a,shipState
 	cp a,#0

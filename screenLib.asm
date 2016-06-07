@@ -58,6 +58,7 @@ ST7/
 ;setPalet
 	PUBLIC	setPalet1
 	PUBLIC	setPalet2
+	PUBLIC	setPalet3
 	
 DELAY EQU $80
 
@@ -742,26 +743,26 @@ setSprite:
 ;----------------------------------------------------;
 setPalet1:
 	;black
-	ld a,#$0
-	ld color1MSB,a
-	ld color1LSB,a
+	LD A,#$0
+	LD color1MSB,A
+	LD color1LSB,A
 
 	;gray
-	ld a,#$84
-	ld color2MSB,a
-	ld a,#$10
-	ld color2LSB,a
+	LD A,#$84
+	LD color2MSB,A
+	LD A,#$10
+	LD color2LSB,A
 
 	;white
-	ld a,#$ff
-	ld color3MSB,a
-	ld color3LSB,a
+	LD A,#$FF
+	LD color3MSB,A
+	LD color3LSB,A
 
 	;red
-	ld a,#$f8
-	ld color4MSB,a
-	ld a,#$00
-	ld color4LSB,a
+	LD A,#$F8
+	LD color4MSB,A
+	LD A,#$00
+	LD color4LSB,A
 	
 	RET
 
@@ -772,10 +773,41 @@ setPalet1:
 ;----------------------------------------------------;
 setPalet2:
 	;blue 31 103 177 -> 4 26 44
-	ld a,#$43
-	ld color4MSB,a
-	ld a,#$3C
-	ld color4LSB,a
+	LD A,#$43
+	LD color4MSB,A
+	LD A,#$3C
+	LD color4LSB,A
+	
+	RET
+
+
+
+;----------------------------------------------------;
+;-                setPalete3                      -;
+;----------------------------------------------------;
+setPalet3:
+	;black
+	LD A,#$0
+	LD color1MSB,A
+	LD color1LSB,A
+
+	;marron foncé 96 41 0 -> 12 10 0
+	LD A,#$61
+	LD color2MSB,A
+	LD A,#$40
+	LD color2LSB,A
+
+	;marron clAir 164 104 50 -> 20 26 6
+	LD A,#$A3
+	LD color3MSB,A
+	LD A,#$46
+	LD color3LSB,A
+
+	;beige 243 211 162 -> 30 53 20
+	LD A,#$F6
+	LD color4MSB,A
+	LD A,#$B4
+	LD color4LSB,A
 	
 	RET
 
