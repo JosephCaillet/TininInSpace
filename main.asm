@@ -69,8 +69,6 @@ ST7/
 	EXTERN	setPalet3
 	EXTERN	setPalet4
 
-;timer
-	PUBLIC LTCNTR
 
 ;************************************************************************
 ;

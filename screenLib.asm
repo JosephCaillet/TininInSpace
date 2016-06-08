@@ -61,8 +61,6 @@ ST7/
 	PUBLIC	setPalet3
 	PUBLIC	setPalet4
 
-;timer
-	EXTERN LTCNTR
 	
 DELAY EQU $80
 
