@@ -523,6 +523,8 @@ dspChuckScreen:
 		LD	dsp0Y,A
 		CALL	dspSprite
 
+		jp dspChuckScreenEndIf1
+
 dspChuckScreenElse1
 	;:: else
 
