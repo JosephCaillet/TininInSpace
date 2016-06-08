@@ -836,6 +836,7 @@ setPalet4:
 			LD color2MSB,A
 			LD A,#$08
 			LD color2LSB,A
+			jp setPalet4EndSwitch
 setPalet4S1
 		;:: case 1 :
 		cp a,#1
@@ -844,6 +845,7 @@ setPalet4S1
 			LD color2MSB,A
 			LD A,#$3F
 			LD color2LSB,A
+			jp setPalet4EndSwitch
 setPalet4S2
 		;:: case 2 :
 		cp a,#2
@@ -852,12 +854,14 @@ setPalet4S2
 			LD color2MSB,A
 			LD A,#$00
 			LD color2LSB,A
+			jp setPalet4EndSwitch
 setPalet4S3
 		;:: default :
 			LD A,#$3B
 			LD color2MSB,A
 			LD A,#$83
 			LD color2LSB,A
+setPalet4EndSwitch
 
 	;marron foncé 96 41 0 -> 12 10 0
 	LD A,#$61
