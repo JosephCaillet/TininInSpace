@@ -856,9 +856,9 @@ setPalet4S2
 			LD color2LSB,A
 setPalet4S3
 		;:: default :
-			LD A,#$4D
+			LD A,#$3B
 			LD color2MSB,A
-			LD A,#$3F
+			LD A,#$83
 			LD color2LSB,A
 
 	;marron foncé 96 41 0 -> 12 10 0
