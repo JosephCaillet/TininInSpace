@@ -60,6 +60,9 @@ ST7/
 	PUBLIC	setPalet2
 	PUBLIC	setPalet3
 	PUBLIC	setPalet4
+
+;timer
+	EXTERN LTCNTR
 	
 DELAY EQU $80
 
@@ -823,12 +826,40 @@ setPalet4:
 	LD color1LSB,A
 
 	;bleu 68 162 255 -> 9 41 31
-	;LD A,#$4D
-	LD A,#$FA
-	LD color2MSB,A
-	;LD A,#$3F
-	LD A,#$08
-	LD color2LSB,A
+
+	;:: Switch(LTCNTR)
+		ld a,LTCNTR
+		cpl a
+		and a,#%00000011
+		;:: case 0 :
+		cp a,#0
+		jrne setPalet4S1
+			LD A,#$FA
+			LD color2MSB,A
+			LD A,#$08
+			LD color2LSB,A
+setPalet4S1
+		;:: case 1 :
+		cp a,#1
+		jrne setPalet4S2
+			LD A,#$4D
+			LD color2MSB,A
+			LD A,#$3F
+			LD color2LSB,A
+setPalet4S2
+		;:: case 2 :
+		cp a,#2
+		jrne setPalet4S3
+			LD A,#$FA
+			LD color2MSB,A
+			LD A,#$00
+			LD color2LSB,A
+setPalet4S3
+		;:: default :
+			LD A,#$4D
+			LD color2MSB,A
+			LD A,#$3F
+			LD color2LSB,A
 
 	;marron foncé 96 41 0 -> 12 10 0
 	LD A,#$61

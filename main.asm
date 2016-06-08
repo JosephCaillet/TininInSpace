@@ -69,6 +69,9 @@ ST7/
 	EXTERN	setPalet3
 	EXTERN	setPalet4
 
+;timer
+	PUBLIC LTCNTR
+
 ;************************************************************************
 ;
 ;  FIN DE LA ZONE DE DECLARATION DES SYMBOLES
@@ -501,21 +504,48 @@ dspChuckScreen:
 	;display quote
 	CALL	setPalet1
 	
-	LD	A,#66
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#132
-	LD	dsp0Y,A
-	LD	A,#2
-	LD	dsp0X,A
-	CALL	dspSprite
-	
-	LD	A,#68
-	LD	numSprite,A
-	CALL	setSprite
-	LD	A,#148
-	LD	dsp0Y,A
-	CALL	dspSprite
+	;:: if(obsDir = 0) then
+	ld a,obsDir
+	cp a,#0
+	jrne dspChuckScreenElse1
+
+		LD	A,#66
+		LD	numSprite,A
+		CALL	setSprite
+		LD	A,#132
+		LD	dsp0Y,A
+		LD	A,#2
+		LD	dsp0X,A
+		CALL	dspSprite
+		
+		LD	A,#68
+		LD	numSprite,A
+		CALL	setSprite
+		LD	A,#148
+		LD	dsp0Y,A
+		CALL	dspSprite
+
+dspChuckScreenElse1
+	;:: else
+
+		LD	A,#62
+		LD	numSprite,A
+		CALL	setSprite
+		LD	A,#132
+		LD	dsp0Y,A
+		LD	A,#2
+		LD	dsp0X,A
+		CALL	dspSprite
+		
+		LD	A,#64
+		LD	numSprite,A
+		CALL	setSprite
+		LD	A,#148
+		LD	dsp0Y,A
+		CALL	dspSprite
+
+dspChuckScreenEndIf1
+	;:: end if
 	
 	POP	A
 	RET
