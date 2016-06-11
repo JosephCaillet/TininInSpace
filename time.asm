@@ -1,9 +1,9 @@
 ST7/
 
 ;************************************************************************
-; TITLE:                
-; AUTHOR:               
-; DESCRIPTION:          
+; TITLE:           time.asm     
+; AUTHOR:          Joseph CAILLET & Thomas COUSSOT     
+; DESCRIPTION:     Contient les fonctions d'attentes ainsi que la correction d'oscillateur     
 ;************************************************************************
 
 	TITLE "time.ASM"
@@ -38,7 +38,7 @@ RCCR0 EQU $FFDE
 	BYTES
 	segment byte 'ram0'
 
-waitTime DS.B 1
+waitTime DS.B 1;permet de définir le temps d'attente de la fonction wait
 
 ;************************************************************************
 ;

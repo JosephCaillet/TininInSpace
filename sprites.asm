@@ -1,9 +1,9 @@
 ST7/
 
 ;************************************************************************
-; TITLE:                
-; AUTHOR:               
-; DESCRIPTION:          
+; TITLE:          sprites.asm      
+; AUTHOR:         Joseph CAILLET & Thomas COUSSOT      
+; DESCRIPTION:    Contient les sprites compréssés      
 ;************************************************************************
 
 	TITLE "screen_lib.ASM"
@@ -38,7 +38,9 @@ ST7/
 	WORDS
 	segment byte 'rom'
 
+;NB : les images non compréssées sont trouvables dans le sous-dossier utils.
 
+;ecran titre
 title1	DC.B	64, 20
 	DC.B	63
 	DC.B	18, 128, 43
@@ -139,6 +141,7 @@ title4	DC.B	64, 20
 	DC.B	127
 	DC.B	127
 
+;fusée
 rocket	DC.B	11, 18
 	DC.B	4, 192, 4
 	DC.B	4, 192, 4
@@ -159,6 +162,7 @@ rocket	DC.B	11, 18
 	DC.B	193, 6, 193
 	DC.B	193, 6, 193
 
+;texte "GAME"
 game	DC.B	28, 14
 	DC.B	132, 4, 128, 3, 129, 0, 129, 2, 132
 	DC.B	128, 67, 4, 128, 3, 129, 0, 129, 2, 128, 67
@@ -176,6 +180,7 @@ game	DC.B	28, 14
 	DC.B	132, 2, 128, 2, 128, 1, 128, 2, 128, 2, 132
 	DC.B	68, 2, 64, 2, 64, 1, 64, 2, 64, 2, 68
 
+;texte "OVER"
 over	DC.B	28, 14
 	DC.B	132, 2, 128, 2, 128, 1, 132, 2, 132
 	DC.B	128, 66, 128, 2, 128, 2, 128, 1, 128, 67, 2, 128, 66, 128
@@ -192,6 +197,7 @@ over	DC.B	28, 14
 	DC.B	132, 4, 128, 3, 132, 2, 128, 1, 64, 128
 	DC.B	68, 4, 64, 3, 68, 2, 64, 2, 64
 
+;numéros 0 à 9
 nb0	DC.B	5, 10
 	DC.B	132
 	DC.B	132
@@ -312,6 +318,7 @@ nb9	DC.B	5, 10
 	DC.B	2, 129
 	DC.B	2, 129
 
+;fusée brisée
 rocketBroken 	DC.B	11, 18
 	DC.B	6, 192, 2
 	DC.B	2, 192, 0, 128, 0, 193, 1
@@ -332,6 +339,7 @@ rocketBroken 	DC.B	11, 18
 	DC.B	0, 192, 1, 128, 5
 	DC.B	0, 192, 8
 
+;blue screen of death
 bsod1:	DC.B	64, 20
 	DC.B	255
 	DC.B	255
@@ -463,6 +471,7 @@ bsod4:		DC.B	64, 20
 	DC.B	255
 	DC.B	255
 
+;texte "YOU"
 you:	DC.B	21, 14
 	DC.B	128, 2, 128, 2, 132, 2, 128, 2, 128
 	DC.B	128, 2, 128, 2, 128, 66, 128, 2, 128, 2, 128
@@ -479,6 +488,7 @@ you:	DC.B	21, 14
 	DC.B	1, 128, 4, 132, 2, 132
 	DC.B	1, 64, 4, 68, 2, 68
 
+;texte "LOSE"
 lose:	DC.B	29, 14
 	DC.B	128, 6, 132, 2, 132, 2, 132
 	DC.B	128, 6, 128, 66, 128, 2, 128, 67, 2, 128, 67
@@ -495,6 +505,7 @@ lose:	DC.B	29, 14
 	DC.B	132, 2, 132, 2, 132, 2, 132
 	DC.B	68, 2, 68, 2, 68, 2, 68
 
+;texte "WIN"
 win:	DC.B	21, 14
 	DC.B	128, 6, 128, 2, 128, 2, 128, 2, 128
 	DC.B	128, 6, 128, 2, 64, 2, 129, 1, 128
@@ -511,6 +522,7 @@ win:	DC.B	21, 14
 	DC.B	129, 64, 2, 64, 129, 2, 128, 2, 128, 2, 128
 	DC.B	65, 4, 65, 2, 64, 2, 64, 2, 64
 
+;tête de chuck norris
 norris:	DC.B	11, 18
 	DC.B	10
 	DC.B	10
@@ -531,6 +543,7 @@ norris:	DC.B	11, 18
 	DC.B	10
 	DC.B	10
 
+;chuck norris en kimono
 c1:	DC.B	64, 20
 	DC.B	63
 	DC.B	63
@@ -618,7 +631,8 @@ c4:	DC.B	64, 20
 	DC.B	63
 	DC.B	63
 	DC.B	63
-	
+
+;chuc norris fact 1
 cnf11:	DC.B	61, 5
 	DC.B	130, 0, 128, 0, 128, 0, 128, 0, 128, 0, 130, 0, 128, 4
 	DC.B	128, 1, 128, 0, 130, 0, 129, 1, 129, 1, 130, 1, 129, 2
@@ -656,6 +670,7 @@ cnf12:	DC.B	62, 5
 	DC.B	130, 0, 128, 1, 128, 1, 129, 2, 128, 2, 128, 2, 128, 0
 	DC.B	128, 0, 130, 0, 128, 2, 128
 
+;chuc norris fact 2
 cnf21:		DC.B	54, 5
 	DC.B	130, 0, 128, 0, 128, 0, 128, 0, 128, 0, 130, 0, 128, 4
 	DC.B	129, 1, 130, 0, 128, 1, 128, 0, 128, 0, 130, 2, 128, 0
@@ -693,6 +708,9 @@ cnf22:	DC.B	64, 6
 	DC.B	128, 1, 128, 2, 130, 1, 128, 1, 130, 0, 128
 	DC.B	13, 128, 48
 
+;tableau contenant les adresse des différents sprites
+;le nombre en commentaire indique l'index des sprites dans le tableau
+;czt index evolue de 2 en 2 car une adresse tient sur 2 octets
 tabSprite	DC.W	nb0, nb1, nb2, nb3, nb4, nb5, nb6, nb7, nb8, nb9	;0 2 4 6 8 10 12 14 16 18
 	DC.W	title1, title2, title3, title4	;20 22 24 26
 	DC.W	rocket,	;28

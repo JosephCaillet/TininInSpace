@@ -3,7 +3,7 @@
 ; ** Copyright STMicroelectronics (c) 1999, all rights reserved **
 ;  Level 1
 ;  Date  06/10/16
-;  Time  10:44:53
+;  Time  16:49:04
 ;
-<tvdebug\confmenu.cpp:167-10:44:53> 
+<tvdebug\confmenu.cpp:167-16:49:04> 
 Error: resource handle has not been restored in U:\gui\stvd\src\stvdebug\mainfrm.cpp:2973

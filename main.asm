@@ -1,9 +1,9 @@
 ST7/
 
 ;************************************************************************
-; TITLE:                
-; AUTHOR:               
-; DESCRIPTION:          
+; TITLE:            main.asm    
+; AUTHOR:           Joseph CAILLET & Thomas COUSSOT    
+; DESCRIPTION:      Contient les fonction du jeu    
 ;************************************************************************
 
 	TITLE "SQUELET.ASM"
@@ -81,15 +81,14 @@ ST7/
 	
 	segment byte 'ram0'
 
-test DS.B 1
 ;************************************************************************
 ;
 ;  ZONE DE DECLARATION DES VARIABLES
 ;
 ;************************************************************************
-shipX EQU 59
+shipX EQU 59	;position x de la fusée
 ;obstacles
-OBS_MAX   EQU  27
+OBS_MAX   EQU  27	;nb max d'obstacle
 
 ;timer
 SUB_TIMER_INIT EQU 2
@@ -116,13 +115,13 @@ obsMoveStep DS.B 1
 obsDir DS.B 1
 obsNb DS.B 1
 
-xObsHB	DS.B	1;HB = hitbox
+xObsHB	DS.B	1;HB = hitbox = zone de sensibilité du vaisseau
 yObsHB	DS.B	1
 x1ShipHB	DS.B	1
 x2ShipHB	DS.B	1
 yShipHB	DS.B	1
 
-norrisMode	DS.B	1; 0 = 1joueur, 1 = 2joueur
+norrisMode	DS.B	1; is chuck norris mode on
 p2Lose	DS.B	1;is second player winner
 
 ;------ Surprise ! -------;
@@ -248,7 +247,7 @@ init_st7_timer:
 	or a,#%00000010
 	LD	LTCSR2,A
 
-	ld a,#$e5
+	ld a,#$e5 ;compter de 229 à 255 (revient à peu prés à compter de 0 à 27)
 	ld LTCARR,a
 
 	ret
@@ -499,7 +498,7 @@ dspChuckScreen:
 	LD	dsp0Y,A
 	CALL	dspSprite
 	
-	;display quote
+	;affiche aléatoirement l'un des deux chuck norris facts
 	CALL	setPalet1
 	
 	;:: if(obsDir = 0) then
@@ -739,6 +738,7 @@ inc_score_n_inc_d
 initTimer:
 	PUSH	A
 	
+	;Le timer comptera de 0 à 160, et sera decrementer au bout de subTimer + 1 cycle.
 	LD	A,#0 ; 0->159
 	LD	timer,A
 	LD	A,#0 ; 0->255
@@ -766,9 +766,10 @@ initTimer:
 ;----------------------------------------------------;
 ;-                 update timer                  -;
 ;----------------------------------------------------;
-;if sub == 255
-;		efacer barre timer
-;		sub = 0
+;Le timer comptera de 0 à 160, et sera decrementer au bout de subTimer + 1 cycle.
+;if subTimer == 255
+;		decrementer barre timer
+;		subTimer = 0
 ;		timer--
 ;else
 ;		sub++
@@ -814,13 +815,14 @@ end_if_upd_timer:
 gameOver:
 	PUSH	A
 	
+	;si mode chuck norris activé, ecran de fin special.
 	LD	A,norrisMode
 	CP	A,#0
 	JREQ	normal_game_over
 		CALL	dspChuckScreen
 		JP	end_gameOver
 
-normal_game_over
+normal_game_over	;sinon game over normal
 	LD	A,#$00
 	LD	colorMSB,A
 	LD	A,#$00
@@ -833,7 +835,7 @@ normal_game_over
 	LD	width,A
 	LD	A,#10
 	LD	height,A
-	CALL	fillRectTFT
+	CALL	fillRectTFT;efface score en bas
 	
 	LD	A,#30
 	LD	numSprite,A
@@ -844,7 +846,7 @@ normal_game_over
 	LD	dsp0X,A
 	LD	A,#18
 	LD	dsp0Y,A
-	CALL	dspSprite
+	CALL	dspSprite;affiche "game"
 	
 	LD	A,#32
 	LD	numSprite,A
@@ -853,13 +855,13 @@ normal_game_over
 	LD	dsp0X,A
 	LD	A,#57
 	LD	dsp0Y,A
-	CALL	dspSprite
+	CALL	dspSprite;affiche "over"
 	
 	LD	a,#96
 	LD	numY,a
 	LD	a,#49
 	LD	numX,a
-	call	dspNum
+	call	dspNum;affiche le score au millieu
 	
 	
 	LD	A,#46
@@ -871,11 +873,11 @@ normal_game_over
 	LD	dsp0Y,A
 	LD	A,#1
 	LD	dspCoef,A
-	CALL	dspSprite
+	CALL	dspSprite;affiche "you"
 	
 	LD	A,p2Lose
 	CP	A,#1	;si p2 perd
-	JREQ	draw_p1Win	;p1 gagne
+		JREQ	draw_p1Win	;p1 gagne
 	
 draw_p1Lose
 	LD	A,#48
@@ -883,7 +885,7 @@ draw_p1Lose
 	CALL	setSprite
 	LD	A,#65
 	LD	dsp0X,A
-	CALL	dspSprite
+	CALL	dspSprite;affiche "lose"
 	JP	end_gameOver
 	
 draw_p1Win
@@ -892,7 +894,7 @@ draw_p1Win
 	CALL	setSprite
 	LD	A,#73
 	LD	dsp0X,A
-	CALL	dspSprite
+	CALL	dspSprite;affiche "win"
 
 end_gameOver
 	POP	A
@@ -914,7 +916,7 @@ lvlUp:
 	LD	numX,a
 	LD	a,#1
 	LD	dspCoef,a
-	call	dspNum
+	call	dspNum;affichage du score en bas
 	
 	ld a,lvl
 	cp a,#5
@@ -928,7 +930,7 @@ lvlUp_skip_5
 		ld timerLvl,a
 lvlUp_skip_15
 
-	CALL	initTimer
+	CALL	initTimer; reset du timer
 
 	call incObs
 	
@@ -1103,7 +1105,6 @@ for_move_obs
 				JRNE	else_va_gauche
 					;effacer ennemie
 					call erase_obs
-
 					LD	A,#0
 					LD	(obsTab,X),A;obsTab[i] = 0 ;positionner ennemi tout à gauche
 					JP	end_if_ennemi_actif
@@ -1158,7 +1159,7 @@ erase_obs:
 	ld a,#$00
 	ld colorMSB,a
 	ld colorLSB,a
-	call fillRectTFT
+	call fillRectTFT;efface un ennemi
 	ret
 	
 	
@@ -1194,7 +1195,7 @@ for_collision
 			ADD	A,#4
 			LD	yShipHB, A
 			
-			;if(yShip > yObs)
+			;if(yShip > yObs) Si ennemi au dessus de la hitbox, pas de colision.
 			CP A,yObsHB
 				;continue
 				JRUGT	end_if_collision_ennemi_actif
@@ -1205,7 +1206,7 @@ for_collision
 			ADD	A,#11
 			LD	yShipHB,A
 			
-			;if(yShip < yObs)
+			;if(yShip < yObs)	Si ennemi au dessous de la hitbox, pas de colision.
 			CP A,yObsHB
 				;continue
 				JRULT	end_if_collision_ennemi_actif
@@ -1221,7 +1222,7 @@ for_collision
 			AND	A,#%01111111
 			LD	xObsHB,A
 			
-			;if(xObs < x1Ship)
+			;if(xObs < x1Ship)	Si ennemi a gauche de la hitbox, pas de colision.
 			CP	A,x1ShipHB
 				JRULT	end_if_collision_ennemi_actif
 			;end
@@ -1233,12 +1234,14 @@ for_collision
 			LD	x2ShipHB,A
 			POP	A
 			
-			;if(xObs > x2Ship)
+			;if(xObs > x2Ship) Si ennemi a doite de la hitbox, pas de colision.
 			CP A,x2ShipHB
 				;continue
 				JRUGT	end_if_collision_ennemi_actif
 			;end
 			
+			;si ennemi ni en haut, bas droite ou gauche de la hitbox,
+			;il est dedans, donc colision.
 			ld a,norrisMode
 			cp a,#0
 			jreq collisionObs_no_chuck
@@ -1285,12 +1288,12 @@ end_for_collision
 
 
 ;-----------------------------------------;
-;-       check if 2p mode is on          -;
+;-  check if chuck norris mode is on     -;
 ;-----------------------------------------;
 checkNorrisMode:
 	PUSH	A
 	
-	LD	A,PADR
+	LD	A,PADR;lecture du switch
 	CPL	A
 	AND	A,#%00000001
 	LD	norrisMode,A
@@ -1307,13 +1310,13 @@ send2p:
 	
 	LD	A,PADR
 	AND	A,#%11101111
-	LD	PADR,A
+	LD	PADR,A	;bit de start / font descandant
 	
 	CALL	wait500ms
 	
 	LD	A,PADR
 	OR	A,#%00010000
-	LD	PADR,A
+	LD	PADR,A	;bit de stop / font montant
 	
 	POP	A
 	RET
@@ -1356,14 +1359,14 @@ boucl
 	
 	LD	A,p2Lose
 	CP	A,#1
-	JRNE skip_p2_lose
+	JRNE skip_p2_lose;si le second joueur perd, on gagne
 	CALL	gameOver
 	JP	wait_game_start
 	
 skip_p2_lose
 	LD	A,timer
 	CP	A,#160
-	JRNE	skip_game_over
+	JRNE	skip_game_over;si time arrivé au bout, on perd et on avertit la seconde carte
 	CALL	send2p
 	CALL	gameOver
 	JP	wait_game_start

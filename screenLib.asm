@@ -1,9 +1,9 @@
 ST7/
 
 ;************************************************************************
-; TITLE:                
-; AUTHOR:               
-; DESCRIPTION:          
+; TITLE:          screenLib.asm      
+; AUTHOR:         Joseph CAILLET & Thomas COUSSOT      
+; DESCRIPTION:    driver ecran tiré du code C fourni + fonction graphique de notre cru      
 ;************************************************************************
 
 	TITLE "screen_lib.ASM"
@@ -137,10 +137,14 @@ ST7735_GMCTRN1 EQU  $E1
 	BYTES
 	segment byte 'ram0'
 
-var	DS.B	1	;fourre tout pour contrer limitation mode d'adressage
+var	DS.B	1	;variable tepmoraire pour contrer limitation mode d'adressage
+temp	DS.B	1;variable tepmoraire pour contrer limitation mode d'adressage
 
-dataout	DS.B	1;p write*
-temp	DS.B	1
+;Les variable ci-dessous sont précédées du nom de la fonction qui les utilise.
+;Un p indique que la variable est un paramètre.
+
+;writeData & writeCmd & writeSPI
+dataout	DS.B	1;p
 
 ;commandList
 addr	DS.B	1; p
@@ -192,7 +196,7 @@ numY DS.B 1
 	segment byte 'rom'
 	
 
-	
+;tableaux de commandes pour configurer l'écran
 Rcmd1	DC.B   15,
 	DC.B   ST7735_SWRESET,   DELAY,
 	DC.B     150,
@@ -265,29 +269,21 @@ Rcmd3 DC.B 4,
 ; macro pour 'et' bit à bit et complement a un ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 MandComp MACRO dest mask
-	;PUSH	X
-	;PUSH	A
 	LD	X,mask
 	CPL	X
 	LD	var,X
 	LD	A,dest
 	AND	A,var
 	LD	dest,A
-	;POP A
-	;POP X
 	MEND
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; macro pour 'or' bit à bit ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Mor MACRO dest src
-	;PUSH X
-	;PUSH A
 	LD	A,dest
 	OR	A,src
 	LD	dest,A
-	;POP A
-	;POP X
 	MEND
 
 
@@ -295,16 +291,17 @@ Mor MACRO dest src
 ; macro pour 'and' bit à bit ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Mand MACRO dest src
-	;PUSH X
-	;PUSH A
 	LD	A,dest
 	AND	A,src
 	LD	dest,A
-	;POP A
-	;POP X
 	MEND
 	
-	
+;---------------------------------------------------	
+;Fonctions du driver traduit du code C
+;un p indique une varible ayant le role de parametre
+;un u indique une varible utilisée en interne
+;---------------------------------------------------
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; envoi de donnees sur port spi ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -313,9 +310,9 @@ Mand MACRO dest src
 writeSPI:
 	PUSH A
 	LD	A,dataout
-	LD	SPIDR,A
+	LD	SPIDR,A	;ecriture de la donnée
 boucle_wait_spi:
-	LD	A,SPISR
+	LD	A,SPISR	;wait for conversion completed
 	AND A,#128
 	CP	A,#0
 	JREQ boucle_wait_spi
@@ -362,7 +359,7 @@ writeData:
 ; execute liste de cmd ;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
-;partie faisant la lecture depuis la bonne source indiquee par Y
+;partie faisant la lecture dans A depuis la bonne source indiquee par Y à l'index X
 read_src:
 	CP	Y,#1
 	JREQ	read_from_rcmd1
@@ -383,7 +380,7 @@ read_from_rcmd3:
 	INC	X
 	RET
 
-;plusieur point d'entree pour le meme sous programme, afin de choisir la bonne source
+;plusieurs points d'entrées pour le meme sous programme, afin de choisir la bonne source
 cmdList1:
 	PUSH	Y
 	PUSH	X
@@ -392,7 +389,7 @@ cmdList1:
 	LD Y,#1
 	CLR	X
 	LD	A,(Rcmd1,X)
-	LD	numCmd,A
+	LD	numCmd,A	;Number of commands to follow
 	INC	X
 	JP while_num_cmd
 
@@ -404,7 +401,7 @@ cmdList2:
 	LD Y,#2
 	CLR	X
 	LD	A,(Rcmd2red,X)
-	LD	numCmd,A
+	LD	numCmd,A	;Number of commands to follow
 	INC	X
 	JP while_num_cmd
 
@@ -416,7 +413,7 @@ cmdList3:
 	LD Y,#3
 	CLR	X
 	LD	A,(Rcmd3,X)
-	LD	numCmd,A
+	LD	numCmd,A	;Number of commands to follow
 	INC	X
 	JP while_num_cmd
 
@@ -427,27 +424,26 @@ while_num_cmd:
 	JREQ end_while_num_cmd
 	DEC	numCmd
 	
-	CALL read_src	;write cmd
+	CALL read_src	;Read, issue command
 	LD	dataout,A
 	CALL writeCmd
 	
-	CALL read_src	;numARg=
+	CALL read_src	;Number of args to follow
 	LD	numArg,A
-	
-	;LD A,numArg	;ms =
-	AND	A,#DELAY
+
+	AND	A,#DELAY	;If hibit set, delay follows args
 	LD	ms,A
 	
-	;MandComp numArg, #DELAY	;numArg&=
+	;Mask out delay bit
 	Mand numArg, #$7F	;numArg&= DELAY EQU $80
 	
 while_num_arg:
-	LD	A,numArg
+	LD	A,numArg	;For each argument...
 	CP	A,#0
 	JREQ	end_while_num_arg
 	DEC	numArg
 	
-	CALL read_src	;write cmd
+	CALL read_src	;Read, issue argument
 	LD	dataout,A
 	CALL writeData
 	JP while_num_arg
@@ -457,13 +453,12 @@ end_while_num_arg:
 	CP	A,#0
 	JREQ while_num_cmd
 	
-	CALL read_src
+	CALL read_src	;Read post-command delay time (ms)
 	LD	ms,A
 	
-	;LD A,ms
 	CP	A,#255
 	JRNE skip_ms_eq_255
-	CALL wait500ms
+	CALL wait500ms	;If 255, delay for 500 ms
 	JP while_num_cmd
 	
 skip_ms_eq_255:
@@ -485,11 +480,9 @@ initTFT:
 	PUSH A
 	
 	Mor	PBDR, #$10
-	;MandComp	PBDR, $20
 	Mand	PBDR, #$DF
 	CALL wait500ms
 	
-	;MandComp	PBDR, $10
 	Mand	PBDR, #$EF
 	CALL wait500ms
 	
@@ -512,11 +505,12 @@ initTFT:
 	LD	dataout,A
 	CALL	writeData
 	
-	;CALL	test_aff
 	
 	POP A
 	RET
-	
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; select a window to write pixel ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -526,6 +520,7 @@ initTFT:
 ;y1win	DS.B	1;p
 setAddrWindow:
 	PUSH	A
+	
 	LD A,#ST7735_CASET
 	LD dataout,A
 	CALL writeCmd
@@ -592,6 +587,9 @@ fillRectTFT:
 	PUSH	X
 	PUSH	Y
 	
+	;Les tests ont étés retirés afin de gagner en perfomance.
+	;De plus, si on déborde de l'écran, ce dernier ne bugge pas.
+	
 	LD	A,x0win
 	ADD	A,width
 	DEC A
@@ -602,23 +600,26 @@ fillRectTFT:
 	DEC A
 	LD	y1win,A
 	
-	CALL setAddrWindow
+	CALL setAddrWindow ;select window 
 	
 	Mor	PBDR, #$04
 	Mand	PBDR, #$DF
 
 	LD	Y,height
-	
+
+;for(y=h; y>0; y--)
 fill_rect_for_y:
 	CP	Y,#0
 	JRULE	end_fill_rect_for_y
 
 	LD	X,width
-	
+
+;for(x=w; x>0; x--)
 fill_rect_for_x:
 	CP	X,#0
 	JRULE	end_fill_rect_for_x
 	
+	;write pixel in the window
 	LD A,colorMSB
 	LD dataout,A
 	CALL writeSPI
@@ -724,16 +725,16 @@ setSprite:
 	PUSH	Y
 	
 	LD	X,numSprite
-	LD	A,(tabSprite,X)
+	LD	A,(tabSprite,X)	;chargement MSB adresse du spite
 	
 	LD	Y,#0
-	LD	(sprite,Y),A
+	LD	(sprite,Y),A	;ecriture MSB adresse du spite
 	
 	INC	X
-	LD	A,(tabSprite,X)
+	LD	A,(tabSprite,X)	;chargement LSB adresse du spite
 	
 	INC	Y
-	LD	(sprite,Y),A
+	LD	(sprite,Y),A	;ecriture LSB adresse du spite
 	
 	POP	Y
 	POP	X
@@ -743,6 +744,7 @@ setSprite:
 ;----------------------------------------------------;
 ;-                setPalete1                      -;
 ;----------------------------------------------------;
+;palette normalle
 setPalet1:
 	;black
 	LD A,#$0
@@ -773,6 +775,7 @@ setPalet1:
 ;----------------------------------------------------;
 ;-                setPalete2                      -;
 ;----------------------------------------------------;
+;palette blue screen of death
 setPalet2:
 	;blue 31 103 177 -> 4 26 44
 	LD A,#$43
@@ -787,6 +790,7 @@ setPalet2:
 ;----------------------------------------------------;
 ;-                setPalete3                      -;
 ;----------------------------------------------------;
+;palette tête chuck norris
 setPalet3:
 	;black
 	LD A,#$0
@@ -817,6 +821,7 @@ setPalet3:
 ;----------------------------------------------------;
 ;-                setPalete4                      -;
 ;----------------------------------------------------;
+;palette kimono chuck norris, avec couleur aléatoire du kimono
 setPalet4:
 	;black
 	LD A,#$0
@@ -879,7 +884,7 @@ setPalet4EndSwitch
 
 
 ;----------------------------------------------------;
-;-            decompress a picture                  -;
+;-    decompress a picture / draw a sprite          -;
 ;----------------------------------------------------;
 ; p: sprite
 ; p: dspCoef
@@ -1023,6 +1028,9 @@ dspNum:
 	PUSH	X
 	
 	;dizaine
+	;Etant donné que les chiffre on été placés en tout début du tableau de sprite
+	;et que les indices vont de 2 en 2, il suffit de multiplier par 2 le chiffre
+	;que l'on veut afficher pour obtenir son index.
 	LD	A,scoreD
 	LD	X,#2
 	MUL	X,A
@@ -1042,6 +1050,8 @@ dspNum:
 	LD	numSprite,A
 	CALL setSprite
 	
+	;ces calculs servent à décaller le chiffre des unitées
+	;par rapport à celui des dizaines.
 	LD	A,dspCoef
 	LD	X,#4
 	MUL	X,A
@@ -1074,15 +1084,18 @@ dspNum:
 ;----------------------------------------------------;
 ;-              clear screen zoom in                -;
 ;----------------------------------------------------;
+;déssine un rectangle qui grossit du centre vers l'exterieur de l'ecran
+;en tracant plusieures lignes vertcales et horizontales (de taille croissante)
+;du centre vers les bords de l'écran.
 clrScreenZoomIn:
 	PUSH A
 	PUSH Y
 	PUSH X
 	
-	;x = 64
+	;x = 64 //64 = 128/2
 	LD	X,#64
 while_zoom_in
-		CP	X,#255
+		CP	X,#255; 255 ~= -1 (car entier non signé)
 			JREQ	end_while_zoom_in
 		;drawRect en haut
 		LD	x0win,X

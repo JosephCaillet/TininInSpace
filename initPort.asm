@@ -1,9 +1,9 @@
 ST7/
 
 ;************************************************************************
-; TITLE:                
-; AUTHOR:               
-; DESCRIPTION:          
+; TITLE:           initPort.asm     
+; AUTHOR:          Joseph CAILLET & Thomas COUSSOT     
+; DESCRIPTION:     initialisation des port spi pour l'écran
 ;************************************************************************
 
 	TITLE "initPort.asm"
@@ -30,7 +30,7 @@ ST7/
 	BYTES
 	segment byte 'ram0'
 
-var DS.B 1	;fourre tout pour contrer limitation mode d'adressage
+var DS.B 1	;var temporaire pour contrer limitation mode d'adressage
 
 ;************************************************************************
 ;
@@ -51,47 +51,35 @@ var DS.B 1	;fourre tout pour contrer limitation mode d'adressage
 ; macro pour 'et' bit à bit et complement a un ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 MandComp MACRO dest mask
-	;PUSH	X
-	;PUSH	A
 	LD	X,mask
 	CPL	X
 	LD	var,X
 	LD	A,dest
 	AND	A,var
 	LD	dest,A
-	;POP A
-	;POP X
 	MEND
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; macro pour 'or' bit à bit ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Mor MACRO dest src
-	;PUSH X
-	;PUSH A
 	LD	A,dest
 	OR	A,src
 	LD	dest,A
-	;POP A
-	;POP X
 	MEND
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; macro pour 'and' bit à bit ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Mand MACRO dest src
-	;PUSH X
-	;PUSH A
 	LD	A,dest
 	AND	A,src
 	LD	dest,A
-	;POP A
-	;POP X
 	MEND
 
 
 	
-;LEs fonction d'init qui ne seront apelé qu'une fois en début de prgm ne sauvent pas les registres.
+;Les fonction d'init qui ne seront apelé qu'une fois en début de prgm ne sauvent pas les registres.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; initialisation port spi ;
@@ -107,76 +95,21 @@ initPortSPI:
 	
 	
 	Mor PBOR, #$04
-	;LD	A,PBOR	;PB2
-	;OR	A,$04
-	;LD	A,PBOR
-	
 	Mor PBDDR, #$04
-	;LD	A,PBDDR
-	;OR	A,$04
-	;LD	A,PBDDR
-	
 	
 	Mor PBOR, #$10
-	;LD	A,PBOR	;PB4
-	;OR	A,$10
-	;LD	A,PBOR
-	
 	Mor PBDDR, #$10
-	;LD 	A,PBDDR
-	;OR	A,$10
-	;LD	A,PBDDR
-	
 	
 	Mor PBOR, #$20
-	;LD	A,PBOR	;PB5
-	;OR	A,$20
-	;LD	A,PBOR
-	
 	Mor PBDDR, #$20
-	;LD	A,PBDDR
-	;OR	A,$20
-	;LD	A,PBDDR
 	
-	
-	;MandComp PBDR, $04
 	Mand PBDR, #$FB
-	;LD	X,$04	;PB2
-	;CPL	X
-	;LD	var,X
-	;LD	A,PBDR
-	;AND	A,var
-	;LD	PBDR,A
-	
-	;MandComp PBDR, $10
 	Mand PBDR, #$EF
-	;LD	X,$10	;PB4
-	;CPL	X
-	;LD	var,X
-	;LD	A,PBDR
-	;AND	A,var
-	;LD	PBDR,A
-	
 	Mor PBDR, #$20
-	;LD	A,PBDR	;PB5
-	;OR	A,$20
-	;LD	A,PBDR
-	
 	
 	Mor PAOR, #$04
-	;LD	A,PAOR	;PA2
-	;OR	A,$04
-	;LD	A,PAOR
-	
 	Mor PADDR, #$04
-	;LD	A,PADDR	;PA2
-	;OR	A,$04
-	;LD	A,PADDR
-	
 	Mor PADR, #$04
-	;LD	A,PADR	;PA2
-	;OR	A,$04
-	;LD	A,PADR
 	
 	RET
 
@@ -185,20 +118,3 @@ initPortSPI:
 	END
 
 ;************************************************************************
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
