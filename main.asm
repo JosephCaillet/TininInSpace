@@ -263,7 +263,7 @@ initObsTab:
 	;initialisation du tableau des obstacles
 
 	clr y
-	ld a,#$ff
+	ld a,#$ff	;ff = pas d'obstacles
 
 initObsTabWhile
 	;:: while (y <= 27)

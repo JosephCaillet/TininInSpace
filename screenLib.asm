@@ -588,7 +588,8 @@ fillRectTFT:
 	PUSH	Y
 	
 	;Les tests ont étés retirés afin de gagner en perfomance.
-	;De plus, si on déborde de l'écran, ce dernier ne bugge pas.
+	;De plus, si on déborde de l'écran, ce dernier ne bugge pas,
+	;il gére la situation correctement tout seul.
 	
 	LD	A,x0win
 	ADD	A,width
