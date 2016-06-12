@@ -886,6 +886,8 @@ setPalet4EndSwitch
 ;----------------------------------------------------;
 ;-    decompress a picture / draw a sprite          -;
 ;----------------------------------------------------;
+;Fonction de décompression de sprite.
+;On utilise directement le format de l'image pour dessiner à l'écran, ce qui évite de perdre de la ressource à décompresser l'image avant affichage.
 ; p: sprite
 ; p: dspCoef
 ; p: dspOX
@@ -905,6 +907,7 @@ dspSprite:
 	ld y,#2
 
 boucl_dsp_title
+	;tant qu'on a pas affiché toutes les lignes de l'image :
 	;:: while(y0win - dspOY < sprite[1] * dspCoef) do
 	ld  x,#1
 	ld x,([sprite.w],x)
@@ -978,6 +981,7 @@ end_dsp_sprite_col
 
 		inc y 						;: y++
 
+		;Si on arrive au bout de la ligne actuelle, on passe à la suivante
 		;:: if(x0win - dspOX >= sprite[0] * dspCoef) then
 		ld x,[sprite.w]
 		ld a,dspCoef

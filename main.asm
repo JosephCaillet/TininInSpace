@@ -190,6 +190,8 @@ init:
 ;-                    init masks                    -;
 ;----------------------------------------------------;
 init_masks:
+	;On initialise les masques des différents ports/gestions des interruptions
+	;qui nous serons utiles dans le programme.
 	ld	a,PADDR
 	and	a,#%11110111
 	ld	PADDR,a
@@ -243,11 +245,12 @@ init_masks:
 ;----------------------------------------------------;
 
 init_st7_timer:
+	;On initialise le timer du st7 afin qu'il compte de 229 à 255 de manière continue.
 	LD	A,LTCSR2
 	or a,#%00000010
 	LD	LTCSR2,A
 
-	ld a,#$e5 ;compter de 229 à 255 (revient à peu prés à compter de 0 à 27)
+	ld a,#$e5 ;compter de 229 à 255 (revient à peu près à compter de 0 à 26)
 	ld LTCARR,a
 
 	ret
@@ -257,7 +260,8 @@ init_st7_timer:
 ;-                    init obsTab                   -;
 ;----------------------------------------------------;
 initObsTab:
-	
+	;initialisation du tableau des obstacles
+
 	clr y
 	ld a,#$ff
 
@@ -289,6 +293,9 @@ initObsTabEndWhile
 ;----------------------------------------------------;
 ;-                    init game                     -;
 ;----------------------------------------------------;
+;initialisation des différentes variables servant dans le jeu.
+;Cette fonction est appelée à chaque nouvelle partie.
+
 init_game:
 	
 	LD	A,#$00
@@ -345,6 +352,7 @@ init_game:
 ;----------------------------------------------------;
 ;-               display title screen               -;
 ;----------------------------------------------------;
+;Affichage de l'écran d'accueil
 dsp_title_screen:
 	push a
 
@@ -386,6 +394,8 @@ dsp_title_screen:
 ;----------------------------------------------------;
 ;-                   check easter                   -;
 ;----------------------------------------------------;
+;Ces deux fonctions sont présentes pour le BSOD
+;Si le compteur easterCpt atteint 20, le BSOD est affiché
 checkEaster:
 	ld a,easterCpt
 	cp a,#20
@@ -406,6 +416,7 @@ checkEasterBP_ret
 ;----------------------------------------------------;
 ;-               display bsod screen                -;
 ;----------------------------------------------------;
+;Affiche l'écran de BSOD
 dspBsodScreen:
 	PUSH A
 	
@@ -462,6 +473,7 @@ dspBsodScreen_yolo
 ;----------------------------------------------------;
 ;-              display chuck screen                -;
 ;----------------------------------------------------;
+;affiche l'écran de fin spécial Chuck Norris
 dspChuckScreen:
 	PUSH A
 	
@@ -554,8 +566,9 @@ dspChuckScreenEndIf1
 ;----------------------------------------------------;
 ;-                   display ship                   -;
 ;----------------------------------------------------;
+;Affiche le vaisseau dans le jeu et efface le reste de l'ancien sprite
 dsp_ship:
-
+	
 	ld a,shipY
 	ld dsp0Y,a
 	ld a,#shipX
@@ -563,6 +576,7 @@ dsp_ship:
 	ld a,#1
 	ld dspCoef,a
 	
+	;si l'on est en mode Chuck Norris, on charge un sprite différent et on applique une palette de couleur différente également
 	LD a,norrisMode
 	CP a,#0
 	JREQ	set_ship_sprite
@@ -579,6 +593,8 @@ end_set_sprite
 	call dspSprite
 	CALL	setPalet1
 
+	;on regarde l'ancienne position du vaissau par rapport à l'actuelle. Cela permet de nettoyer l'écran au dessus ou en dessous de la fusée
+	;selon les anciennes coordonnées.
 	ld a,shipY
 	cp a,shipYPrev
 	jrugt dsp_ship_cp_x_axe
@@ -607,6 +623,7 @@ dsp_ship_cp_x_axe_end
 ;----------------------------------------------------;
 ;-                display broken ship               -;
 ;----------------------------------------------------;
+;On affiche le sprite de la fusée cassée à l'emplacement actuel de la fusée
 dsp_broken_ship:
 	push a
 
@@ -628,6 +645,8 @@ dsp_broken_ship:
 ;----------------------------------------------------;
 ;-                    moove ship                    -;
 ;----------------------------------------------------;
+;On change les coordonnées du vaisseau en fonction de la variable d'état du vaisseau (0:arrêt/1:avance/2:recule)
+;Si le vaisseau atteint le haut de l'écran, on efface le vaisseau et on le téléporte en bas de l'écran.
 moove_ship:
 	ld a,shipY
 	ld shipYPrev,a 	;: shipYPrev = shipY
@@ -686,6 +705,7 @@ moove_ship_nothing
 ;----------------------------------------------------;
 ;-                 Increment score                  -;
 ;----------------------------------------------------;
+;On utilise le compteur modulo 100 réalisé en tp pour incrémenter le score (l'unité et la dizaine du score sont dans deux variables séparées)
 inc_score:
 	
 	ld a,scoreU
@@ -718,7 +738,7 @@ inc_score_n_inc_u
 		;--- then{ ---
 	clr scoreD
 	clr scoreCarry
-	call dspBsodScreen
+	call dspBsodScreen 		;Si le compteur atteint 100, on affiche un BSOD
 	jp inc_score_n_inc_d
 		;--- }end_then ---
 		;--- else{ ---
@@ -733,8 +753,9 @@ inc_score_n_inc_d
 	ret
 
 ;----------------------------------------------------;
-;-                 init timer                     -;
+;-                 init timer                       -;
 ;----------------------------------------------------;
+;Initialisation du timer du jeu
 initTimer:
 	PUSH	A
 	
@@ -764,7 +785,7 @@ initTimer:
 
 
 ;----------------------------------------------------;
-;-                 update timer                  -;
+;-                 update timer                     -;
 ;----------------------------------------------------;
 ;Le timer comptera de 0 à 160, et sera decrementer au bout de subTimer + 1 cycle.
 ;if subTimer == 255
@@ -810,8 +831,9 @@ end_if_upd_timer:
 
 
 ;----------------------------------------------------;
-;-                 game over                  -;
+;-                 game over                        -;
 ;----------------------------------------------------;
+;Affiche l'écran de fin du jeu
 gameOver:
 	PUSH	A
 	
@@ -904,6 +926,9 @@ end_gameOver
 ;----------------------------------------------------;
 ;-                    next level                    -;
 ;----------------------------------------------------;
+;Dès que le joueur atteint le haut de l'écran, il passe au niveau suivant.
+;A chaque niveau, on augmente le nombre d'obstalces (max 27) et on reset le timer du jeu
+;Aux niveaux 5 et 15, le compteur décroit plus vite
 lvlUp:
 	PUSH	A
 	
@@ -941,6 +966,12 @@ lvlUp_skip_15
 ;----------------------------------------------------;
 ;-                   inc obstacle                   -;
 ;----------------------------------------------------;
+;Incrémentation du nombre d'obstacle
+;Les obstacles sont placés dans un tableau de 27 éléments (donc max 27 obstacles)
+;Le sens des projectiles est défini par le premier bit de l'octet du projectile
+;Une case du tableau qui ne contient pas de projectile est égale à 255
+;L'ajout d'obstacles est réalisé grâce à deux variables : le compteur LTCNTR et obsDir
+;obsDir est modifié à chaque fois que le compteur atteint la valeur max (grâce à un sous-programme d'interruption)
 incObs:
 	
 	;:: if(obsNb < OBS_MAX) then
@@ -983,6 +1014,8 @@ incObsEndIf1
 ;----------------------------------------------------;
 ;-                 display obstacle                 -;
 ;----------------------------------------------------;
+;On affiche les obstacles après avoir effacé celui-ci à sa position précédente.
+;La position précédente est déterminée grâce au sens de l'obstacle et sa vitessse de déplacement (obsMoveStep)
 dspObs:
 	clr y
 	;LD	colorMSB,A
@@ -1079,8 +1112,10 @@ dspObsEndWhile
 	
 	
 ;----------------------------------------------------;
-;-                 move obstacle                 -;
+;-                 move obstacle                    -;
 ;----------------------------------------------------;
+;On déplace les obstalces en fonction de leur sens.
+;S'ils arrivent à un côté de l'écran, on les efface et on les téléporte de l'autre côté.
 moveObs:
 	PUSH	A
 	PUSH	X
@@ -1167,6 +1202,11 @@ erase_obs:
 ;----------------------------------------------------;
 ;-            test collision obstacle               -;
 ;----------------------------------------------------;
+;On teste si les obstacles sont dans la hitbox du vaisseau
+;On teste la position des obstacles par rapport à celle du vaisseau.
+;Si un projectile est sur la même ligne, on teste s'il se trouve dans la bonne tranche en coordonnée x
+;En cas de collision, on affiche le sprite de fusée cassée et on téléporte celle-ci en bas
+;En mode Chuck Norris et en cas de collision, on supprime le projectile au lieu de détruire le vaisseau
 collisionObs:
 	PUSH	X
 	PUSH	Y
@@ -1242,6 +1282,8 @@ for_collision
 			
 			;si ennemi ni en haut, bas droite ou gauche de la hitbox,
 			;il est dedans, donc colision.
+
+			;en cas de mode Chuck Norris, on supprime le projectile. Il est automatiquement effacé par le sprite du vaisseau (ou de la tête de Chuck dans le cas présent)
 			ld a,norrisMode
 			cp a,#0
 			jreq collisionObs_no_chuck
@@ -1345,7 +1387,7 @@ wait_game_start
 	cp a,#0
 	jreq wait_game_start
 
-	call init_game
+	call init_game ;A chaque nouvelle partie on initialise le jeu
 boucl
 
 	call checkNorrisMode
